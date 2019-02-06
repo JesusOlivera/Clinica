@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title><ui:insert name="title">Demo Presentacion NEW HUMAN</ui:insert></title>
+</h:head>
+
+<h:body>
+	<h:outputStylesheet name="login.css" library="css"/>
+	<table width="100%">
+	<tr style="width: 100%">
+		
+	</tr>
+	<tr style="height: 10px">
+	</tr>
+	<tr style="width: 100%" >
+		
+		<td width="80%" >
+			<div id="contenido" style="margin-left: 4px;    " >
+					<ui:insert name="contenido">
+					</ui:insert>
+			</div>
+		</td>
+
+		</tr>
+	</table>
+	<p:dialog showHeader="false" modal="true" widgetVar="statusDialog" header="Status"   
+              draggable="false" closable="false"
+              position="center"
+              resizable="false">
+        <h:outputText value="Espere porfavor..."/><br/>
+        <p:graphicImage value="resources/img/Ajaxloading.gif"/>
+    </p:dialog>
+    
+</h:body>
+</html>

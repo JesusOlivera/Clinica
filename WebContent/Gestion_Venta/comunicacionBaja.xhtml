@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Comprobantes" url="#" />
+    				<p:menuitem value="Comprobantes Emitidos" url="comunicacionBaja" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px"> 				
+				<p:panel >				
+					<h:panelGroup columns="6">	
+						<h:panelGrid columns="6" cellpadding="10">
+							#{"Periodo:"}						 
+								<p:selectOneMenu style="width:120px"
+									value="#{comunicacionBajaMB.mes}">
+									<f:selectItem  itemLabel="Enero" itemValue="01" />
+									<f:selectItem  itemLabel="Febrero" itemValue="02" />
+									<f:selectItem  itemLabel="Marzo" itemValue="03" />
+									<f:selectItem  itemLabel="Abril" itemValue="04" />
+									<f:selectItem  itemLabel="Mayo" itemValue="05" />
+									<f:selectItem  itemLabel="Junio" itemValue="06" />
+									<f:selectItem  itemLabel="Julio" itemValue="07" />
+									<f:selectItem  itemLabel="Agosto" itemValue="08" />
+									<f:selectItem  itemLabel="Setiembre" itemValue="09" />
+									<f:selectItem  itemLabel="Octubre" itemValue="10" />
+									<f:selectItem  itemLabel="Noviembre" itemValue="11" />
+									<f:selectItem  itemLabel="Diciembre" itemValue="12" />
+								</p:selectOneMenu>
+								<p:selectOneMenu style="width:100px"
+									value="#{comunicacionBajaMB.anio}">
+									<f:selectItem  itemLabel="2014" itemValue="2014" />
+									<f:selectItem  itemLabel="2015" itemValue="2015" />
+									<f:selectItem  itemLabel="2016" itemValue="2016" />
+									<f:selectItem  itemLabel="2017" itemValue="2017" />
+									<f:selectItem  itemLabel="2018" itemValue="2018" />
+									<f:selectItem  itemLabel="2019" itemValue="2019" />
+									<f:selectItem  itemLabel="2020" itemValue="2020" />
+								</p:selectOneMenu>
+								
+								#{"Tipo de Documento:"}					        
+								<p:selectOneMenu style="width:400px" value="#{comunicacionBajaMB.tipo_comprobante}"  >
+									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItems value="#{comunicacionBajaMB.listTablaTablasDetallesComprobante}" 
+									var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
+									
+									<p:ajax event="itemSelect" listener="#{comunicacionBajaMB.onItemDocumento}" update="buscarRespuesta"/>
+									
+								</p:selectOneMenu>
+						</h:panelGrid>
+						
+
+						
+					</h:panelGroup>								
+				</p:panel>
+				
+				<h:panelGrid columns="4" id="buscarRespuesta">	
+				
+					<h:commandLink 
+						style="padding: 3px 30px;
+						background: #C0C0C0; 
+						text-decoration: none; 
+						border: solid 1px #624B1E; 
+						font-weight: bold;
+						 color: #1C190A;" 
+						 actionListener="#{comunicacionBajaMB.imprimirLista()}" 
+						 value="Descarga Masiva" 
+						 disabled="#{comunicacionBajaMB.disableRespuesta}">		
+					</h:commandLink>
+										
+					<p:commandButton value="Leer Respuestas" icon="icon-consultamovimiento" update=":frmListaDocumentos :msgGeneral"  disabled="#{comunicacionBajaMB.disableRespuesta}"
+						actionListener="#{comunicacionBajaMB.leerRespuesta()}" 
+						onstart="PF('BlockUIWidget').block();" oncomplete="PF('BlockUIWidget').unblock();"/>
+						
+					<p:commandButton value="Buscar"  actionListener="#{comunicacionBajaMB.listarComprobantesFiltros()}" disabled="#{comunicacionBajaMB.disableBuscar}"
+						update=":frmListaDocumentos :msgGeneral" icon="icon-search" 
+						onstart="PF('BlockUIWidget').block();" oncomplete="PF('BlockUIWidget').unblock();"/>
+						
+				</h:panelGrid>
+				
+			</h:form>
+			
+			
+			<h:form id="frmListaDocumentos">
+					<pe:blockUI  widgetVar="BlockUIWidgetPage">        
+				        <h:graphicImage library="resources/img" value="/resources/img/ajax-loader1.gif"  style="margin-right: 12px; vertical-align: middle;" />  
+				        <h:outputText value="Cambiando de página, espere por favor..." style="white-space: nowrap; font-weight:bold; color: #036fab"/> 
+				    </pe:blockUI>
+					<p:dataTable  var="crg" value="#{comunicacionBajaMB.listaComprobante}"  
+						lazy="true" paginator="true" filteredValue="#{comunicacionBajaMB.listaFiltroComprobante}" 
+						emptyMessage="No hay Comprobantes Disponibles." rowIndexVar="nro" style="FONT-SIZE: 10px;" id="dataTableComprobantes"
+						rows="10" paginatorPosition="bottom"  rowsPerPageTemplate="10,100,200,500" widgetVar="dataTableComprobantes"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  sortField="#{cgr.numero_serie_documento_cab}" sortOrder="DESCENDING">
+						
+
+						<p:blockUI block="dataTableComprobantes" trigger="dataTableComprobantes">
+					        <h:graphicImage library="resources/img" value="/resources/img/ajax-loader1.gif"  
+					        style="margin-right: 12px; vertical-align: middle;" />  
+				        	<h:outputText value="Buscando, espere por favor..." 
+				        		style="white-space: nowrap; font-weight:bold; color: #036fab"/>
+					    </p:blockUI>
+						<f:facet name="header">Lista de Comprobantes Emitidos</f:facet>
+						<p:ajax event="page" onstart="PF('BlockUIWidgetPage').block();"  oncomplete="PF('BlockUIWidgetPage').unblock();"/>
+						
+						<p:column headerText="Orden" width="20" >
+							#{nro+1}
+						</p:column>
+
+						<p:column width="70" headerText="Cliente" filterBy="#{crg.cliente.nombre_cab}" filterMatchMode="contains" filterStyle="width: 95%" >
+							<h:outputText value="#{crg.cliente.nombre_cab}" />
+						</p:column>
+						<p:column width="70" headerText="Tipo Comprobante" filterBy="#{crg.descripcion_tipo_comprobante}" filterMatchMode="contains" filterStyle="width: 95%">
+							<h:outputText value="#{crg.descripcion_tipo_comprobante}" />
+						</p:column>
+						<p:column width="70" headerText="Numero" filterBy="#{crg.numero_serie_documento_cab}" filterMatchMode="contains" filterStyle="width: 95%">
+							<h:outputText value="#{crg.numero_serie_documento_cab}" />
+						</p:column>
+						<p:column width="70" headerText="Domicilio Fiscal" filterBy="#{crg.descripcion_domicilio}" filterMatchMode="contains" filterStyle="width: 95%">
+							<h:outputText value="#{crg.domicilioFiscal.descripcion_domicilio}" />
+						</p:column>
+						<p:column width="70" headerText="Tipo Operacion" filterBy="#{crg.descripcion_tipo_operacion}" filterMatchMode="contains" filterStyle="width: 95%">
+							<h:outputText value="#{crg.descripcion_tipo_operacion}" />
+						</p:column>
+						<p:column width="70" headerText="Fecha Emision" filterBy="#{crg.fecha_emision_cab}" filterMatchMode="contains" filterStyle="width: 95%">
+							<h:outputText value="#{crg.fecha_emision_cab}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+						</p:column>
+						<p:column width="70" headerText="Fecha Vencimiento" filterBy="#{crg.fecha_vencimiento_cab}" filterMatchMode="contains" filterStyle="width: 95%">
+							<h:outputText value="#{crg.fecha_vencimiento_cab}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+						</p:column>
+						<p:column width="50" headerText="Importe" >
+							<h:outputText value="#{crg.importe_total_venta_cab}" converter="montoDefaultConverter" />
+						</p:column>
+												
+						<p:column width="50" headerText="Estado Sunat" filterBy="#{crg.estado_sunat}" filterMatchMode="contains" filterStyle="width: 95%"  >
+							<h:outputText value="#{crg.estado_sunat}" />
+						</p:column>
+						
+						<p:column headerText="Envio Sunat" width="35"  >
+							<p:commandButton title="Comunicar Sunat" disabled="#{crg.estado_sunat eq 'ENVIADO'}"
+										 actionListener="#{comunicacionBajaMB.enviarSunat(crg)}"
+										 icon="icon-plantilla" update="frmListaDocumentos"/>
+						</p:column>
+						
+						<p:column width="50" headerText="Estado Respuesta Sunat" filterBy="#{crg.estado_respuesta_sunat}" filterMatchMode="contains" filterStyle="width: 95%" >
+							<h:outputText value="#{crg.estado_respuesta_sunat}" />
+						</p:column>
+						<p:column width="70" headerText="Respuesta Sunat" filterBy="#{crg.descripcion_respuesta_sunat}" filterMatchMode="contains" filterStyle="width: 95%"  >
+							<h:outputText value="#{crg.descripcion_respuesta_sunat}" />
+						</p:column>
+						<p:column width="70" headerText="Estado Comunicacion" >
+							<h:outputText value="#{crg.estado_comunicacion_baja ? 'De Baja': 'Sin Baja'}" />
+						</p:column>	
+						
+						<p:column headerText="Comunicar Baja" width="45">
+							<p:commandButton title="Comunicar Baja"  update=":dlgDetNuevo"  disabled="#{crg.estado_sunat eq 'TRUE'}"
+										 actionListener="#{comunicacionBajaMB.prepararComunicacionBaja(crg)}"
+										 oncomplete="PF('dlgNuevo').show();" icon="icon-prep"/>
+						</p:column>
+						
+						<p:column headerText="Descargar" width="40">
+							<p:commandButton title="Descargar pdf"  ajax="false"  
+								icon="icono-pdf" actionListener="#{comunicacionBajaMB.imprimirComprobante(crg)}" >  
+						    </p:commandButton>
+						</p:column>
+						
+						<p:column headerText="Imprimir" width="40">
+							<p:commandButton title="Imprimir"  ajax="false"  
+								icon="icon-recibo" actionListener="#{comunicacionBajaMB.imprimirComprobanteTicket(crg)}" >  
+						    </p:commandButton>
+						</p:column>
+
+						
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+		
+			<p:dialog header="Comunicacion Baja" widgetVar="dlgNuevo" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevo" modal="true">
+					
+					<h:form>
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">
+
+						#{"Fecha Emisión:"}						 
+        				 <p:calendar id="fecha_emision_cab" value="#{comunicacionBajaMB.comunicacionBajaSelec.fecha_emision_cab}" showOn="button"
+        				 	pattern="MM/dd/yyyy"/>
+							
+						#{"Tipo Comprobante:"}						
+						<p:selectOneMenu style="width:200px" value="#{comunicacionBajaMB.comunicacionBajaSelec.tipo_comprobante}"  
+							required="true" requiredMessage="Se necesita un domicilio fiscal" >
+							<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+							<f:selectItems value="#{comunicacionBajaMB.listTablaTablasDetallesComprobante}" 
+								var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
+						</p:selectOneMenu>
+													
+						#{"Número Documento:"}
+						<p:inputText value="#{comunicacionBajaMB.comunicacionBajaSelec.numero_serie_documento_cab}" id="numero_serie_documento_cab"
+							required="true" maxlength="50" label="numero de serie" requiredMessage="Se necesita un numero documento"
+							style="width:200px;" />
+							
+						#{"Fecha Comunicación:"}
+						<p:calendar id="fecha_comunicacion_cba" value="#{comunicacionBajaMB.comunicacionBajaSelec.fecha_comunicacion_cba}" showOn="button"
+        				 	pattern="MM/dd/yyyy"/>
+        				 		
+							
+						#{"Descripción:"}
+						<p:inputTextarea value="#{comunicacionBajaMB.comunicacionBajaSelec.descripcion_motivo_cba}" id="descripcion_motivo_cba"
+							required="true" label="nombre" requiredMessage="Se necesita un nombre"
+							style="width:200px;" />
+						
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{comunicacionBajaMB.guardarComunicacionBaja()}"
+						update=":frmListaDocumentos msgNuevo" onstart="PF('dlgNuevo').hide();" oncomplete="validar(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevo').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+		
+		
+		<script>
+			
+			function validar(xhr, status, args) {
+				if (args.validationFailed) {
+					
+				} else {
+					PF('dlgNuevo').hide();
+				}
+			}
+	
+			function validarGuardar(xhr, status, args) {
+				if (!args.esValido) {
+					jQuery('#dlgDetNuevo').effect("shake", {
+						times : 1
+					}, 100);
+				} else {
+					
+				}
+			}
+			
+			function start() {
+			    PF('statusDialog').show();
+			}
+			 
+			function stop() {
+			    PF('statusDialog').hide();
+			}
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

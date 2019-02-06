@@ -1,0 +1,909 @@
+html, body {
+    font-family:Lucida Grande, Lucida Sans, Arial, sans-serif;font-size:12px;
+}
+/*       ICONOS        */
+
+.icon-key {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-key.png") !important;
+}
+.icon-home {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-home.png") !important;
+}
+
+.icon-priori{
+	width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-priori.png") !important;
+}
+
+.icon_expedientepresentados{
+	width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_expedientepresentados.png") !important;
+}
+
+.icon_estadomorosidad{
+	width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_estadomorosidad.png") !important;
+}
+
+.icon-controlcalidad{
+	width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-controlcalidad.png") !important;
+}
+
+.icon-search {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-search.png") !important;
+}
+.icon-mant {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-mant.png") !important;
+}
+.icon-music {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-music.png") !important;
+}
+.icon-artist {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-artist.png") !important;
+}
+.icon-album {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-album.png") !important;
+}
+.icon-title {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-title.png") !important;
+}
+.icon-report {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-report.png") !important;
+}
+.icon-security {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-security.png") !important;
+}
+.icon-rol {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-rol.png") !important;
+}
+.icon-user {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-user.png") !important;
+}
+.icon-pref {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-pref.png") !important;
+}
+.icon-exit {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-exit.png") !important;
+}
+
+.icon-password{
+    width:16px;
+    height:16px;
+    margin-right: 1px;
+    background-image:url("./../../resources/img/icon-password.png") !important;
+}
+
+.icon-add {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-add.png") !important;
+}
+.icon-edit {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-pencil.png") !important;
+}
+.icon-delete {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-bin.png") !important;
+}
+.icon-true {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-status-true.png") !important;
+}
+.icon-false {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-status-false.png") !important;
+}
+.icon-disk {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-disk.png") !important;
+}
+.icon-cancel {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-cancel.png") !important;
+}
+.icon-update {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-update.png") !important;
+}
+.icon-map-add{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-map-add.png") !important;
+}
+
+
+.icon-layout-add{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-layout-add.png") !important;
+}
+
+.icon-photo-add{
+	width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-photo-add.png") !important;
+}
+
+
+.icon-printer{
+	width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-printer.png") !important;
+}
+
+.icon-semaforo{
+	width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-semaforo.png") !important;
+}
+
+.icon-hape-square-add{
+	width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-hape-square-add.png") !important;
+}
+
+.icon-prep {
+    width:16px;
+    height:18px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-prep.png") !important;
+}
+
+.icon-pdf {
+    width:26px;
+    height:24px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-pdf.png") !important;
+}
+
+.icon-date-add {
+    width:24px;
+    height:24px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-date-add.png") !important;
+}
+
+.icon-crop {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-crop.png") !important;
+}
+
+.icon-configuration {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-configuration.png") !important;
+}
+
+.icon-documental{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-documental.png") !important;
+}
+
+.icon-docs{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-docs.png") !important;
+}
+
+.icon-cargo{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-cargo.png") !important;
+}
+
+.icon-recibo{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-recibo.png") !important;
+}
+
+.icon-printer1{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-printer1.png") !important;
+}
+
+.icon-prepare{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-prepare.png") !important;
+}
+
+.icon-preparedocs{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-preparedocs.png") !important;
+}
+
+.icon-look{
+    width:16px;
+    height:16px;
+    margin-right: 4px;#7CC96A
+    background-image:url("./../../resources/img/icon-look.png") !important;
+}
+
+.icon-worker{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-worker.png") !important;
+}
+
+.icon-monitor{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-monitor.png") !important;
+}
+
+.icon-operator{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-operator.png") !important;
+}
+
+.icon-indice{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-indice.png") !important;
+}
+
+.icon-modules{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-modules.png") !important;
+}
+
+.icon-open{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-open.png") !important;
+}
+
+.icon-close{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-close.png") !important;
+}
+
+.icon-stop{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-stop.png") !important;
+}
+
+
+.icon-cliente{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-cliente.png") !important;
+}
+
+
+.icono-pdf{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icono-pdf.png") !important;
+}
+
+.icon-resultados{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-resultados.png") !important;
+}
+.icon-asignacion{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-asignacion.png") !important;
+}
+.icon-modificacionexpediente{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-modificacionexpediente.png") !important;
+}
+.icon-parametros{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-parametros.png") !important;
+}
+.icon-requisito{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-requisito.png") !important;
+}
+
+.icon-resultado{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-resultado.png") !important;
+}
+
+.icon-reasignacion{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-reasignacion.png") !important;
+}
+
+.icon-consultamovimiento{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-consultamovimiento.png") !important;
+}
+
+.icon-cambioestado{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-cambioestado.png") !important;
+}
+
+
+.icon-consultaestado{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-consultaestado.png") !important;
+}
+
+.icon-lote{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-lote.png") !important;
+}
+
+.icon-produccionexpediente{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-produccionexpediente.png") !important;
+}
+
+.icon-reportesestadoobservado{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-reportesestadoobservado.png") !important;
+}
+
+.icon-vencimiento{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-vencimiento.png") !important;
+}
+
+.icon-oficina{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-oficina.png") !important;
+}
+
+.icon-tipomoneda{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-tipomoneda.png") !important;
+}
+
+.icon-categoriaestado{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-categoriaestado.png") !important;
+}
+
+.icon-estado{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-estado.png") !important;
+}
+
+
+.icon-ubigeo{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-ubigeo.png") !important;
+}
+
+.icon-indicadores{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-indicadores.png") !important;
+}
+
+.icon-indicadorescall{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-indicadorescall.png") !important;
+}
+
+.icon-base{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-base.png") !important;
+}
+
+.icon-indecopi{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-indecopi.png") !important;
+}
+
+.icon-personal{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-personal.png") !important;
+}
+
+.icon-territorio{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-territorio.png") !important;
+}
+
+.icon-explorer{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-explorer.png") !important;
+}
+
+.icon-extraer{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-extraer.png") !important;
+}
+
+.icon-persistir{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-persistir.png") !important;
+}
+
+.icon-next{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-next.png") !important;
+}
+
+.icon-validate{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-validate.png") !important;
+}
+
+.icon-reiniciaclave{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-reiniciaclave.png") !important;
+}
+
+.icon-plantilla{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-plantilla.png") !important;
+}
+
+.icon-asignacionexpedientes{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-asignacionexpedientes.png") !important;
+}
+
+.icon-telefonosexcluidos{
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-telefonosexcluidos.png") !important;
+}
+
+
+
+.active{    
+    background-image: none !important;
+    display:none !important;   
+}
+
+.passive td.ui-selection-column input {
+
+        display:none !important;   
+    }
+    
+.passive ui-chkbox input {
+
+        display:none !important;   
+}
+
+.messagesform
+{
+	list-style-type:square;
+	list-style-position: inside;
+ 	border:1px solid #d0d6dc;
+ 	padding-top:2px;#7CC96A
+ 	padding-bottom:2px;
+ 	padding-right:10px;
+ 	padding-left:10px;
+	background-color: #f4f4f4;
+}
+.errorMessage
+{
+	color: red;
+	background-color: #f4f4f4;
+}
+.infoMessage
+{
+	color: blue;
+	background-color: #f4f4f4;
+}
+.requiredField
+{
+	color: red;
+
+}
+
+
+
+.ui-message-info {
+	color: #ffffff;
+	background-color: #A68E4C!important;
+}
+
+
+
+
+
+
+
+.titulo1{
+	text-shadow: 0px 1px 1px #4d4d4d;
+        color: #222;
+        font: 30px 'LeagueGothicRegular';
+}
+
+.titulo2{
+	text-shadow: 0px 1px 1px #4d4d4d;
+        color: #222;
+        font: 25px 'LeagueGothicRegular';
+}
+
+.titulo3{
+	text-shadow: 0px 1px 1px #4d4d4d;
+        color: #222;
+        font: 20px 'LeagueGothicRegular';
+}
+
+.titulo4{
+	text-shadow: 0px 1px 1px #4d4d4d;
+        color: #222;
+        font: 15px 'LeagueGothicRegular';
+}
+
+.filaOdd{
+	background:#FBF8A9;
+	color: black;
+}
+
+.companyHeaderGrid2 {
+    border: none;  
+    border-color: transparent;    
+    font-size: 10px;
+    
+}
+
+.companyHeaderGrid2 tr, .companyHeaderGrid2 td {
+    border: none;  
+    border-color: transparent;    
+    font-size: 10px;
+    
+}
+.companyHeaderGrid tr, .companyHeaderGrid td {
+    border: none;  
+    border-color: darkkhaki;    
+    font-size: 10px;
+    
+}
+
+.order-table{   
+    border-collapse:collapse;
+    border: 1px solid #EBE8E8;
+    margin: 0px;
+    padding: 0px;
+}
+ 
+.order-table-header{
+    text-align:center;
+    background:none repeat scroll 0 0 #E5E5E5;
+    border-bottom:1px solid #BBBBBB;
+    padding:1px;
+    margin: 0px;
+}
+
+.order-table-odd-row{
+    text-align:center;
+    background:none repeat scroll 0 0;
+    
+}
+ 
+.order-table-odd-row2{
+    text-align:center;
+    background:none repeat scroll 0 0 #FFFFFFF;
+    border-top:1px solid #BBBBBB;
+    padding:0px;
+    margin: 0px;
+}
+ 
+.order-table-even-row{
+    text-align:center;
+    background:none repeat scroll 0 0 #F9F9F9;
+    border-top:1px solid #BBBBBB;
+}
+
+.ui-picklist .ui-picklist-list {
+    height: 370px;
+    width: 300px;
+     margin: 0; 
+     overflow: auto; 
+     padding: 0;
+}
+
+.ui-picklist-button-add-all {
+   visibility: hidden !important;
+}
+
+.ui-picklist-button-remove-all {
+   visibility: hidden !important;
+}
+
+.highlightTablePer{
+   background: #FCB9B9 !important;
+   font-weight: bold;  
+   color: red !important;
+}
+
+
+.icon-tranckingexpedientes {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-tranckingexpedientes.png") !important;
+}
+
+.icon-reasignarbases {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-reasignarbases.png") !important;
+}
+
+.icon-eliminaciontelefono {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-eliminaciontelefono.png") !important;
+}
+
+.icon-cargabasebanco {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-cargabasebanco.png") !important;
+}
+
+.icon-bolsatrabajo {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-bolsatrabajo.png") !important;
+}
+
+.icon-asignarjecutivo {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-asignarejecutivo.png") !important;
+}
+
+.icon-facturacion {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-facturacion.png") !important;
+}
+
+
+.icon-expedientes {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-expedientes.png") !important;
+}
+
+.icon-referidos {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-referidos.png") !important;
+}
+
+
+
+.icon-consolidadobases {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_consolidadobases.png") !important;
+}
+
+.icon-deciles {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_deciles.png") !important;
+}
+
+.icon-feedback {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_feedback.png") !important;
+}
+
+.icon-indicadoresseguimiento {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_indicadoresseguimiento.png") !important;
+}
+
+.icon-relacionpromotores {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_relacionpromotores.png") !important;
+}
+
+.icon-consultaejecutivo {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_consultaejecutivo.png") !important;
+}
+
+.icon-ciu {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_ciu.png") !important;
+}
+
+.icon-asignacionajuste {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon_asignacionajuste.png") !important;
+}
+
+.icon-asignacionsupervisorabn {
+    width:16px;
+    height:16px;
+    margin-right: 4px;
+    background-image:url("./../../resources/img/icon-asignacionsupervisorabn.png") !important;
+}

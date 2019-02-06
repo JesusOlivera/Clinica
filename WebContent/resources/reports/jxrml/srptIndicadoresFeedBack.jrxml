@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="srptIndicadoresFeedBack" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b8c707c6-fed4-40f3-9dde-fe071cbb72cf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="des_ctgCall" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="id_indicadores_call" class="java.lang.String"/>
+	<field name="tipo_planilla" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<crosstab>
+				<reportElement uuid="256d13f2-89b2-44ef-a3e8-fcb787bffcb7" x="0" y="0" width="555" height="42"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement uuid="2e7f7151-0afd-4615-b452-419ba2e84a97" style="Crosstab Data Text" x="0" y="0" width="300" height="30"/>
+							<textElement textAlignment="Left"/>
+							<text><![CDATA[BASE EFECTIVA]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="des_ctgCall" width="100">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{des_ctgCall}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="a1d49467-f68e-4158-9ec0-d204dbdeb5a2" style="Crosstab Data Text" isPrintRepeatedValues="false" x="0" y="0" width="100" height="25" isPrintWhenDetailOverflows="true"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{des_ctgCall}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="descripcion" width="200">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{descripcion}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="4642c478-6988-464b-8468-e33d80245a08" style="Crosstab Data Text" x="0" y="0" width="200" height="25" isPrintWhenDetailOverflows="true"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{descripcion}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="tipo_planilla" height="30" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{tipo_planilla}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="cantidadMeasure" class="java.lang.Integer" calculation="Sum">
+					<measureExpression><![CDATA[$F{cantidad}]]></measureExpression>
+				</measure>
+				<crosstabCell width="77" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isStretchWithOverflow="true">
+							<reportElement uuid="95d12ad6-74f1-4467-92b2-46ea392a816a" style="Crosstab Data Text" x="0" y="0" width="77" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="des_ctgCall">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="71611703-f799-4df8-ac4a-2f5efb052928" style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" height="25" columnTotalGroup="tipo_planilla">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="86773a98-a254-43b1-900c-3ab37f86daf1" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="des_ctgCall" columnTotalGroup="tipo_planilla">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="6058510e-9de5-4b96-ac1d-3f1042485c1b" style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="descripcion">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="963997ad-da38-4342-8658-f4c806cbc2f8" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="descripcion" columnTotalGroup="tipo_planilla">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="42b76bcf-70d7-4a92-887c-8f7a2476fdc7" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

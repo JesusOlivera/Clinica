@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Principal1" language="groovy" pageWidth="800" pageHeight="842" columnWidth="760" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5ee3fcf-913c-4329-9e29-c7bd4a179482">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="290"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="699"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\MUNDO_J\\JAVA\\FORMATOS_JASPER\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipo_comprobante" class="java.lang.String"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="año" class="java.lang.String"/>
+	<parameter name="nombreComprobante" class="java.lang.String"/>
+	<parameter name="ruc" class="java.lang.String"/>
+	<parameter name="razonSocial" class="java.lang.String"/>
+	<parameter name="descripcionMes" class="java.lang.String"/>
+	<parameter name="sucursal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select e.id_comprobante,tp.descripcion_largo as tipo,
+e.fecha_emision_cab as fecha_emision,e.importe_total_venta_cab as total,
+e.numero_serie_documento_cab as serie,
+cl.numero_docu_iden_cab as ruc, cl.nombre_cab as razon_social, e.estado_sunat as estado, e.estado_respuesta_sunat as estadoRespuesta
+		from t_comprobante e
+		inner join t_tabla_tablas_detalle tdi on  cast (e.tipo_docu_iden_cab as varchar) = tdi.codigo_catalogo  and tdi.id_maestra=6
+		inner join t_cliente cl on cl.id_cliente=e.id_cliente
+		inner join t_tabla_tablas_detalle tp on e.tipo_comprobante = tp.codigo_catalogo and tp.id_maestra=1
+		inner join t_tabla_tablas_detalle top on cast ( e.tipo_operacion_cab as int)=  cast (top.codigo_catalogo as int )and top.id_maestra=51
+		inner join t_domicilio_fiscal dom on dom.id_domicilio_fiscal_cab=e.id_domicilio_fiscal_cab
+		inner join t_emisor em on em.id_emisor=e.id_emisor
+
+where e.tipo_comprobante=$P{tipo_comprobante}
+and extract(month from e.fecha_emision_cab)= cast($P{mes} as integer)
+and  extract(year from e.fecha_emision_cab)=cast($P{año} as integer)
+order by serie asc]]>
+	</queryString>
+	<field name="id_comprobante" class="java.lang.Integer"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="fecha_emision" class="java.sql.Timestamp"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="serie" class="java.lang.String"/>
+	<field name="ruc" class="java.lang.String"/>
+	<field name="razon_social" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String"/>
+	<field name="estadoRespuesta" class="java.lang.String"/>
+	<variable name="total_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="154" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="50" width="430" height="34" uuid="b5735d8d-161c-4dbc-a887-e34143416605"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTOS DETALLADOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="20" width="60" height="30" uuid="23c65950-9312-4d5a-a4f4-07d28021cd33"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="134" width="55" height="20" uuid="27dc0e98-8521-4f4d-a1d9-123cafc28533"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="235" y="134" width="345" height="20" uuid="70a68a97-d3b9-4ac4-978e-da86b74ed782"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreComprobante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="20" width="238" height="30" uuid="74347196-fe3f-4343-9f70-2e4056afcbf3"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ruc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="461" height="20" uuid="5decaccc-3e2f-4fc0-b212-77746cf14d07"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{razonSocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="554" y="0" width="184" height="20" uuid="165a3ae3-519d-4550-80ee-c54721d834c3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{descripcionMes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="84" width="760" height="50" uuid="e212afac-f498-47d2-9ee2-e01c85eae44e"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Local: " + $P{sucursal} + "- Todas las Cajas - Todos los Turnos - Todos los Pedidos - Todos Los Clientes - Todas las Estados" ]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="244" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="140" width="760" height="95" isRemoveLineWhenBlank="true" uuid="f0b8748c-19aa-41bd-86c9-0af4dab60f2e"/>
+				<subreportParameter name="id_comprobante">
+					<subreportParameterExpression><![CDATA[$F{id_comprobante}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Principal1_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="180" y="20" width="364" height="20" uuid="4859f669-0b3e-4b35-a5ac-10e07a11f54d"/>
+				<textFieldExpression><![CDATA[$F{ruc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="180" height="20" uuid="458adeed-cc32-400b-8855-c8374a3dbc90"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ruc/DNI]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="40" width="580" height="20" uuid="d9b6653c-43c8-4465-89ea-cc45266581ea"/>
+				<textFieldExpression><![CDATA[$F{razon_social}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="180" height="20" uuid="969fce89-bb35-45d2-a836-12705283c534"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Razon Social/Nombre]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="60" width="364" height="20" uuid="101856d6-e03a-4a26-8307-383846da9a9c"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="180" height="20" uuid="5dd507e5-0fc7-41d9-9519-70466561db44"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="80" width="364" height="20" uuid="a6d62c17-7498-4949-92de-1f554b9167c2"/>
+				<textFieldExpression><![CDATA[$F{fecha_emision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="180" height="20" uuid="01434c44-f972-4277-81ac-388407694a48"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Emisión]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="100" width="364" height="20" uuid="51d26bde-442c-47a5-a4b6-1098af39a399"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="180" height="20" uuid="78efe93c-839c-4f48-9fc6-1f00068bccef"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Importe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="20" uuid="fd85409a-903a-4a14-97c3-0a6c22608c34"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serie:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="0" width="580" height="20" uuid="ea9a3e70-47d5-4c80-9ddf-2ea4c11d6fd4"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serie}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="120" width="180" height="20" uuid="14cb75de-6325-4833-8ac9-c04267497123"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="180" y="120" width="364" height="20" uuid="4180449b-e97f-4b80-9c6f-51691baf4ca2"/>
+				<textFieldExpression><![CDATA[$F{estado} +" / " + $F{estadoRespuesta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="660" y="0" width="100" height="20" uuid="9c6a3a37-28fe-44cf-acbc-a93c98ffe48f"/>
+				<textFieldExpression><![CDATA[$V{total_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="507" y="0" width="148" height="20" uuid="b3e9f656-1a49-41f5-b63a-09e6de565d87"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PERIODO]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

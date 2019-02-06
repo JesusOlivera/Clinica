@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptDocRecib_Fechas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="de6b5813-d13a-45dc-8628-ce0fceddc0c2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="19"/>
+	<subDataset name="dataset1" uuid="83dee311-60d9-4599-8f4e-8a5b1fdac1fc"/>
+	<parameter name="P_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/diana/Escritorio/RptCertiScan/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="razonsocial_cliente" class="java.lang.String"/>
+	<field name="fecha_Inicio" class="java.lang.String"/>
+	<field name="fecha_Fin" class="java.lang.String"/>
+	<field name="ruc_cliente" class="java.lang.String"/>
+	<field name="docRecibDS" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="totalFolios" class="java.lang.String"/>
+	<field name="totalUR" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100">
+			<staticText>
+				<reportElement uuid="51f8d04c-6acd-461e-ae0a-c1d287f4e149" x="173" y="20" width="290" height="26"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE DOCUMENTOS RECIBIDOS]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="f11b1aaf-7c00-4c6c-8168-1e8434632415" x="22" y="6" width="94" height="79"/>
+				<imageExpression><![CDATA[$P{P_LOGO}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="23b648c5-6af0-4f5e-b7b2-92a58a1ba9f1" x="165" y="65" width="124" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rango Fechas:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="eb0265b8-f855-4897-91a2-89376c3b365a" x="301" y="65" width="97" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_Inicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="70839646-befe-43ce-a812-67d3ffc34dc1" x="398" y="65" width="16" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e91faa4f-7d44-451a-85da-6636a188fcab" x="414" y="65" width="95" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_Fin}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="169" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="80480c4c-e1a7-43c0-bd54-07e8aee6163a" x="22" y="22" width="62" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="71db9c99-7acf-47d8-8b99-14ceeca78e83" x="101" y="22" width="134" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razonsocial_cliente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="e0687f5a-a929-402b-928f-fc9439a1b938" x="22" y="53" width="503" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="127da4bd-b908-451e-9807-cf9d5780392f" x="269" y="22" width="62" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c4eb2c5b-6c67-477c-ac85-20e998ae2078" x="331" y="22" width="100" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ruc_cliente}]]></textFieldExpression>
+			</textField>
+			<subreport runToBottom="true">
+				<reportElement uuid="d2f728de-6d2a-450a-bdba-7a1aa69f6e4e" x="42" y="66" width="467" height="100"/>
+				<dataSourceExpression><![CDATA[$F{docRecibDS}]]></dataSourceExpression>
+				<subreportExpression><![CDATA["srptDocByTD.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="32">
+			<staticText>
+				<reportElement uuid="66db1309-e945-41fa-a7df-5efcb3813120" x="199" y="0" width="134" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Documentos: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="51eb4b51-20c0-4989-a905-67c37d80067c" x="320" y="0" width="42" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalFolios}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="499922ac-9d18-4e17-be12-a5b43068a9ee" x="385" y="0" width="66" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total UR: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b3728b19-4732-4ecc-a3c7-01ac11145160" x="441" y="0" width="34" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalUR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

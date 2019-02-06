@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+         <link href="#{request.contextPath}/resources/css/login.css" rel="stylesheet" type="text/css"/>
+              
+         <link rel="stylesheet" href="#{request.contextPath}/resources/css/jquery.Jcrop.min.css" type="text/css" />
+         <link rel="stylesheet" href="#{request.contextPath}/resources/css/principal.css" type="text/css" />     
+         <link rel="icon" type="image/png" href="./resources/img/icon.png" />  
+         <script src="#{request.contextPath}/resources/js/jquery.Jcrop.min.js"></script>
+         
+         <h:outputScript library="js" name="calendar_es.js" />
+         
+        <title><ui:insert name="title">..:: SIEMCO ::.</ui:insert></title>
+</h:head>
+
+<h:body>
+
+<script>
+	//log jquery
+		jQuery.fn.log = function (msg) {
+      		console.log("%s: %o", msg, this);
+      		return this;
+  		};
+
+</script>
+
+
+<p:layout fullPage="true"  style="padding: 0px;margin: 0px;" >  
+    
+    <!-- Cabeza -->
+    <p:layoutUnit position="north" size="60" header="" collapsible="true" styleClass="companyHeaderGrid" style="border: 0px solid;" gutter="0">  
+       
+       <div id="top"  style="padding: 0px;margin: 0px;">
+    
+             
+            <div style="color: #093F6D;padding: 0px 0px;margin: 0px 0px; background: #CCCCC;" >
+              <table width="100%" style="padding: 0px 0px;margin: 0px 0px;">
+	            <tr>
+	            	<td align="left">
+				<h:form>
+					<h:panelGroup >							
+						<h:outputText value="Usuario: " style="font-size: 12px; FONT-FAMILY: 'Arial'; COLOR: #093F6D;" />
+						<h:outputText value="#{loginMB.usuario.nombre}	#{loginMB.usuario.apellido_paterno} 	
+							#{loginMB.usuario.apellido_materno}" style="font-size: 12px; FONT-FAMILY: 'Arial'; COLOR: #093F6D; font-weight:bold;" />
+						<h:outputText value="  |  " style="COLOR: #ffffff; font-size: 12px;" />
+						<h:outputText value="Código: " style="font-size: 12px; FONT-FAMILY: 'Arial'; COLOR: #093F6D;" />
+						<h:outputText value="#{loginMB.usuario.codigoBanco}" style="font-size: 12px; FONT-FAMILY: 'Arial'; COLOR: #093F6D; font-weight:bold;" />
+						<br/>
+						<h:outputText value="Perfil: " style="font-size: 12px; FONT-FAMILY: 'Arial'; COLOR: #093F6D;" />
+						<h:outputText value="#{loginMB.perfilUsuario.descripcion}" style="font-size: 12px; FONT-FAMILY: 'Arial'; COLOR: #093F6D; font-weight:bold;" />
+					</h:panelGroup>
+				</h:form>
+				</td>
+	            	<td align="right" style="padding-right: 20px">
+	            	
+					<h:outputText value="Fecha de Último Acceso: " style="font-size: 12px; FONT-FAMILY: 'Arial'; COLOR: #093F6D;" />
+					<h:outputText value="#{loginMB.fechaAcceso}"	style="font-size: 12px; FONT-FAMILY: 'Arial'; COLOR: #093F6D; font-weight:bold;"/>
+					
+	            	</td>
+	            </tr>
+            </table>
+									
+			</div>
+		</div>
+       
+    </p:layoutUnit>  
+  
+  	 <!-- Pie -->
+    <p:layoutUnit position="south"  style="border: 0px solid">  
+       
+       <div style="  background-color: #093F6D;padding: 3px;">
+       		<div style=" width:400px; FONT-SIZE: small; FONT-FAMILY: 'Arial'; COLOR: #ffffff; font-weight:bold;margin:auto;" >
+            	<h:outputText value="Quentin. Derechos Reservados &reg; V.1.9.2018"/>
+            </div>		
+		</div>
+       
+    </p:layoutUnit>  
+    
+     <!-- Menu -->
+    <p:layoutUnit position="west" size="220" header="Menu" collapsible="true" gutter="0">  
+    	<div id="menu" style="margin-bottom: 8px;">
+			<ui:insert name="menu">
+				<h:form id="formMenu"  >
+					<p:panelMenu rendered="#{not loginMB.usuario.es_nuevo}" autoDisplay="true" expanded="true"  autoSubmenuDisplay="true" model="#{loginMB.model}"
+								type="sliding" style="width:190px;font-size:10px"  />
+				</h:form>
+			</ui:insert>		
+		</div>
+    </p:layoutUnit>  
+  
+  	 <!-- Contenido -->
+    <p:layoutUnit position="center" style="border: 0px solid;" gutter="0">  
+       <div id="contenido" style="margin-left: 4px;">
+			<ui:insert name="contenido">
+
+
+			</ui:insert>
+		</div>
+    </p:layoutUnit>  
+  
+</p:layout>
+	<p:dialog showHeader="false" modal="true" widgetVar="statusDialog"
+		header="Status" draggable="false" closable="false" position="center"
+		resizable="false">
+		<h:outputText value="Espere porfavor..." />
+		<br />
+		<p:graphicImage value="resources/img/Ajaxloading.gif" />
+	</p:dialog>
+
+	<ui:debug/> 
+
+
+</h:body>
+</html>

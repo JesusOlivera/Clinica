@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptExPorValidar" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b39488bd-e64e-4662-abb6-3c07198019af">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_LOGO" class="java.lang.String"/>
+	<parameter name="P_OFICINA" class="java.lang.String"/>
+	<parameter name="P_LOTE" class="java.lang.String"/>
+	<parameter name="P_TOTAL" class="java.lang.String"/>
+	<parameter name="P_FECHA" class="java.lang.String"/>
+	<field name="nrosolicitud" class="java.lang.String"/>
+	<field name="nropedido" class="java.lang.String"/>
+	<field name="nrodocumento" class="java.lang.String"/>
+	<field name="razonsocial" class="java.lang.String"/>
+	<field name="fecrecepcion" class="java.util.Date"/>
+	<field name="fec_rec" class="java.util.Date"/>
+	<field name="descanal" class="java.lang.String"/>
+	<field name="destipoorden" class="java.lang.String"/>
+	<field name="desestado" class="java.lang.String"/>
+	<field name="desresultado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d41fce65-fdab-4277-bd94-776cb7020ad1" x="152" y="15" width="250" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXPEDIENTES NO RECIBIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="295ed5c9-1e0e-4480-8e77-458a52c088cb" x="14" y="65" width="38" height="18"/>
+				<textElement/>
+				<text><![CDATA[Oficina :]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="33394aa1-db06-41f8-9b14-bfeaad772451" x="32" y="15" width="103" height="38"/>
+				<imageExpression><![CDATA[$P{P_LOGO}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="2746c359-5043-4b41-a06e-813fb8d5445d" x="370" y="65" width="32" height="18"/>
+				<textElement/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2e5fa3c9-4c7a-4899-b3a8-e5609ce7e136" x="169" y="65" width="36" height="18"/>
+				<textElement/>
+				<text><![CDATA[LOTE :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="736bfe53-937a-4331-8ed6-dab54afb0fd5" x="52" y="65" width="100" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_OFICINA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a3ad66de-92f9-4a89-9e8c-aa01bcc295c2" x="205" y="65" width="100" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_LOTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1cbe4a1e-c0d8-44d7-aa5a-b0771b80334c" x="425" y="40" width="114" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e8577b3e-d8a9-48d3-9af4-614c21ef94a9" x="405" y="65" width="100" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e6b39e18-5f53-40c6-ada8-216ba8d41c48" x="347" y="40" width="78" height="18"/>
+				<textElement/>
+				<text><![CDATA[Fecha Actual :]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="53f80087-91c9-42cf-94ad-441c6e340d84" x="0" y="6" width="555" height="15" backcolor="#999999"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="8a806d8e-e9fd-4c1b-99af-12acdac74678" x="4" y="6" width="48" height="15"/>
+				<textElement/>
+				<text><![CDATA[Nro Sol.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0cb16ee4-d4df-4bea-8177-63a48074e8d9" x="58" y="6" width="47" height="15"/>
+				<textElement/>
+				<text><![CDATA[Nro Ped.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b46091d0-515b-4930-af3e-35e2664d499e" x="210" y="6" width="53" height="14"/>
+				<textElement/>
+				<text><![CDATA[F. Registro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a773837b-028d-47ba-b1f1-83f895e946fb" x="269" y="6" width="43" height="14"/>
+				<textElement/>
+				<text><![CDATA[F.Recep]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eae0f672-0a9c-4822-bf06-3047ac750686" x="114" y="6" width="89" height="14"/>
+				<textElement/>
+				<text><![CDATA[Rz/Nombr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="602faf0c-e252-4192-9da2-f2d2dfb52722" x="320" y="6" width="47" height="14"/>
+				<textElement/>
+				<text><![CDATA[Canal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="384f9c20-0756-4ffa-bb9e-550880518562" x="500" y="6" width="49" height="14"/>
+				<textElement/>
+				<text><![CDATA[Resultado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d987fb35-baea-43fc-9148-820742b392e6" x="441" y="7" width="55" height="14"/>
+				<textElement/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4dc83c09-bf76-4f29-bb60-cb391be4e42b" x="375" y="7" width="50" height="14"/>
+				<textElement/>
+				<text><![CDATA[T. Orden]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0f2e055a-d1ae-448c-8451-7a42972e00d5" x="4" y="0" width="48" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nrosolicitud}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="540ad23c-3e5a-47c9-80a9-b06b40213656" x="114" y="1" width="89" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="59b5ef8f-dbaa-46e6-b750-30300ffe128b" x="321" y="1" width="47" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descanal}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="80129da8-a8ec-44d2-a087-30a878ef7dac" x="271" y="0" width="43" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fec_rec}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ec0622eb-7554-4f35-82e2-9e5986336959" x="58" y="0" width="47" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nropedido}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="22015417-71ab-4979-a7e5-36056ab261fa" x="500" y="1" width="50" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desresultado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="b83a9c5e-32ae-43b2-9e24-15d6cd0d007e" x="441" y="1" width="55" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desestado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="d9ca38bb-e822-45d7-9ee7-33b5266bcc05" x="209" y="0" width="53" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecrecepcion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="3564d9f9-8701-49d1-9f02-89bfc58d168d" x="374" y="1" width="51" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destipoorden}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="a68b6aff-8a94-4bdc-b87d-724289329252" x="522" y="34" width="33" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0e9a3c9e-c2e5-4545-8c24-5427fc3fe4e2" x="490" y="34" width="32" height="20"/>
+				<textElement/>
+				<text><![CDATA[Pag:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

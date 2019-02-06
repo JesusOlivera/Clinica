@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="http://ocpsoft.com/prettyfaces/3.3.3"
+	xmlns="http://ocpsoft.com/prettyfaces/3.3.3">
+
+	<url-mapping id="login">
+		<pattern value="/login" />
+		<view-id value="/faces/control_acceso/login.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="principal">
+		<pattern value="/" />
+		<view-id value="/faces/principal.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="cambioPass">
+		<pattern value="/cambioPass" />
+		<view-id value="/faces/control_acceso/cambiar_password.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="usuarios">
+		<pattern value="/seguridad/usuarios" />
+		<view-id value="/faces/control_acceso/usuarios.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="sistemas">
+		<pattern value="/seguridad/sistemas" />
+		<view-id value="/faces/control_acceso/sistemas.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="menuSistema">
+		<pattern value="/seguridad/menuSistema" />
+		<view-id value="/faces/control_acceso/addMenuSistema.xhtml" />
+	</url-mapping>
+
+
+	<url-mapping id="perfiles">
+		<pattern value="/seguridad/perfiles" />
+		<view-id value="/faces/control_acceso/perfiles.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="asignaPermisosPerfil">
+		<pattern value="/seguridad/asignaPermisosPerfil" />
+		<view-id value="/faces/control_acceso/asignarPermisos.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="addPerfilUsuario">
+		<pattern value="/seguridad/addPerfilUsuario" />
+		<view-id value="/faces/control_acceso/addPerfilUsuario.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="parametros">
+		<pattern value="/seguridad/parametros" />
+		<view-id value="/faces/control_acceso/parametros.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="rptAuditoria">
+		<pattern value="/auditoria" />
+		<view-id value="/faces/control_acceso/reporteAuditoria.xhtml" />
+	</url-mapping>
+
+
+	<url-mapping id="tipoDocumentos">
+		<pattern value="/tipoDocumentos" />
+		<view-id value="/faces/digitalizacion/configuracion/tipo_Documentos.xhtml" />
+	</url-mapping>
+
+
+	
+	<!-- reporte trazabilidad: 11-05-2013 -->
+	<url-mapping id="rptTrazabilidad">
+		<pattern value="/trazabilidad" />
+		<view-id value="/faces/digitalizacion/reporte/reporteTrazabilidad.xhtml" />
+	</url-mapping>
+	
+	
+	<url-mapping id="centro_atencion">
+		<pattern value="/proyecto" />
+		<view-id value="/faces/control_acceso/centro_atencion.xhtml" />
+	</url-mapping>
+	
+
+	<!-- SCPF -->
+	
+	
+	<url-mapping id="tablamaestra">
+		<pattern value="/tablamaestra" />
+		<view-id value="/faces/Configuracion/tablaMaestra.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="domiciliofiscal">
+		<pattern value="/domiciliofiscal" />
+		<view-id value="/faces/Configuracion/domicilioFiscal.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="emisor">
+		<pattern value="/emisor" />
+		<view-id value="/faces/Configuracion/emisor.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="cliente">
+		<pattern value="/cliente" />
+		<view-id value="/faces/Configuracion/cliente.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="producto">
+		<pattern value="/producto" />
+		<view-id value="/faces/Configuracion/producto.xhtml" />
+	</url-mapping>
+	
+    <url-mapping id="modoPago">
+		<pattern value="/modoPago" />
+		<view-id value="/faces/Configuracion/modoPago.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="comprobante">
+		<pattern value="/comprobante" />
+		<view-id value="/faces/Gestion_Venta/comprobante.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="comunicacionBaja">
+		<pattern value="/comunicacionBaja" />
+		<view-id value="/faces/Gestion_Venta/comunicacionBaja.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="correccion">
+		<pattern value="/correccion" />
+		<view-id value="/faces/Gestion_Venta/correccion.xhtml" />
+		
+	</url-mapping>
+	
+	<url-mapping id="vendedor"> 
+		<pattern value="/vendedor" />
+		<view-id value="/faces/Configuracion/vendedor.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="tipoServicio"> 
+		<pattern value="/tipoServicio" />
+		<view-id value="/faces/Configuracion/tipoServicio.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="especialidad"> 
+		<pattern value="/especialidad" />
+		<view-id value="/faces/Clinica/especialidad.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="medico"> 
+		<pattern value="/medico" />
+		<view-id value="/faces/Clinica/medico.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="paciente"> 
+		<pattern value="/paciente" />
+		<view-id value="/faces/Clinica/paciente.xhtml" />
+	</url-mapping>
+	
+
+</pretty-config>

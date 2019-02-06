@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="srptBaseNeta" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="993c9328-2723-4771-926a-b5b445667931">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<field name="tipo_planilla" class="java.lang.String"/>
+	<field name="estadoTrabajo" class="java.lang.Boolean"/>
+	<field name="cantNeta" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="100" splitType="Stretch">
+			<crosstab>
+				<reportElement uuid="c412eeb7-49d0-439a-a270-889835a95948" x="0" y="0" width="555" height="50"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement uuid="2b03e4df-4c17-45ec-ba1d-5961486372ef" style="Crosstab Data Text" x="0" y="0" width="300" height="30"/>
+							<textElement textAlignment="Left"/>
+							<text><![CDATA[BASE NETA]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="estadoTrabajo" width="300" totalPosition="End">
+					<bucket class="java.lang.Boolean">
+						<bucketExpression><![CDATA[$F{estadoTrabajo}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="f602b2a0-b349-48c8-bc9f-9f31db1be934" style="Crosstab Data Text" x="0" y="0" width="300" height="25"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[($V{estadoTrabajo}==true)?"CON DATO DE CONTACTO":"SIN DATO DE CONTACTO"]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement uuid="514ccea4-a7f6-4df7-97e0-61ec8a3f8c61" x="0" y="0" width="300" height="25"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[BASE ENTREGADA]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="tipo_planilla" height="30" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{tipo_planilla}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="18c1b676-bfe1-454d-8ecc-1d1a16893385" style="Crosstab Data Text" x="0" y="0" width="77" height="30"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$V{tipo_planilla}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement uuid="a2ba2638-9ee0-4f8f-a239-e16968a8ea48" x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="cantNetaMeasure" class="java.lang.Integer" calculation="Sum">
+					<measureExpression><![CDATA[$F{cantNeta}]]></measureExpression>
+				</measure>
+				<crosstabCell width="77" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="5fb72dad-17d2-44fd-a534-dc48f2a405be" style="Crosstab Data Text" x="0" y="0" width="77" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantNetaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="77" height="25" rowTotalGroup="estadoTrabajo">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="028a1b2a-5b57-4172-9bbc-170733e5809b" style="Crosstab Data Text" x="0" y="0" width="77" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantNetaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="tipo_planilla">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="dc3c11b0-6149-4bb9-8af1-fd693d551190" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantNetaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="estadoTrabajo" columnTotalGroup="tipo_planilla">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="386c5804-9594-49b1-a1ed-593b4be1f9a9" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{cantNetaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

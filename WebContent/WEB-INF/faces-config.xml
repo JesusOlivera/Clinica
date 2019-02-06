@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	
+ <!-- Mapeo de Manabeans -->
+ 
+ 
+	
+	    <lifecycle>
+	        <phase-listener>
+	            org.login.phaselistener.LoginPhaseListener
+	        </phase-listener>
+	    </lifecycle>   
+
+ <application>
+ 	<message-bundle>resources.application</message-bundle>
+  <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+  <locale-config>
+  	<default-locale>en</default-locale>
+  </locale-config>
+ </application>
+ 
+
+  
+ 
+ 
+</faces-config>

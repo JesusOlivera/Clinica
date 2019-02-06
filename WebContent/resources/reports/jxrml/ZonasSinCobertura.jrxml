@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZonasSinCobertura" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8565c6dd-6520-4517-9e51-9535b8f5e376">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_FSISTEMA" class="java.lang.String"/>
+	<parameter name="P_TOTAL" class="java.lang.String"/>
+	<parameter name="P_NEGOCIO" class="java.lang.String"/>
+	<field name="departamento" class="java.lang.String"/>
+	<field name="provincia" class="java.lang.String"/>
+	<field name="distrito" class="java.lang.String"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="des_negocio" class="java.lang.String"/>
+	<group name="NEGOCIO">
+		<groupExpression><![CDATA[$F{des_negocio}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement uuid="560288ad-9148-4c55-b900-7b2ee2dfc02b" x="0" y="0" width="100" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{des_negocio}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5d409cad-e597-4b4b-90ca-4e1dfca92fcd" x="0" y="19" width="264" height="45"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OFICINAS EXCLUIDAS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="12360d91-3e72-4209-98b0-54e30d1b043c" x="264" y="29" width="116" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FSISTEMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="38554dda-0553-4142-aaa0-3072bb519d8e" x="390" y="29" width="65" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="cc128719-5d72-46cb-805c-5db0be5f2377" x="468" y="29" width="100" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="acc8df9e-4fc0-4405-b5be-ff3f488108c8" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_NEGOCIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="58cc04ab-4233-4273-9a94-f271c7ecc38f" x="100" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d232b947-5cb7-4fb7-9708-5b6b6112a941" x="200" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROVINCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="32079eaf-543b-4246-876c-252d9e2aaaff" x="300" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DISTRITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c1f793d4-aa9a-4897-ba84-1706a4db9807" x="5" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="295efe08-b9ab-4385-b7cb-6ab8296d34d6" x="400" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="97a99e2b-b10e-4184-a2a2-226819168e0b" x="500" y="0" width="156" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NEGOCIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement uuid="2efb2e02-6209-4643-a6ac-d58e79b75369" x="300" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{distrito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="37cc0604-dfa7-423d-b6b2-fb953d1f2277" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d4702cdc-92c7-4419-8392-273363e38bdb" x="400" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cff98071-d8c5-4c21-8e7d-8eb7a2933880" x="500" y="0" width="156" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{des_negocio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4b4fabc7-0d5b-47bc-9ce4-943128bb22d8" x="200" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{provincia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="202747a7-5fde-4923-9a8d-3a3dfeeb1fdd" x="100" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{departamento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

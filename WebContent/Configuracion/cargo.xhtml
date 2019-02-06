@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+			<h:form>
+				<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Configuracion" url="#" />
+    				<p:menuitem value="Gestion de Cargo" url="cargo" />   
+				</p:breadCrumb>	
+			</h:form>
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+				<!-- listado de Cargo -->
+			<h:form id="formLista">
+				<p:commandButton value="Nuevo Cargo" icon="icon-add" update=":dlgDetNuevo" oncomplete="PF('dlgNuevo').show();"
+						actionListener="#{cargoMB.nuevoCargo()}"/>
+				<p:dataTable id="dataTable" var="p" value="#{cargoMB.listaCargos}" widgetVar="dtCargo" 
+					emptyMessage="No hay Cargo Disponibles." rowIndexVar="nro" 
+					paginator="true"
+					rows="10" paginatorPosition="bottom" 
+					 style="FONT-SIZE: 10px; width: 40%">
+										 
+					<f:facet name="header">Lista Cargos</f:facet>
+					
+					<p:column headerText="Orden" style="width:6%" >
+						#{nro+1}
+					</p:column>
+					
+					<p:column headerText="Descripcion" filterBy="#{p.descripcion}"  filterStyle="width:95%;" filterMatchMode="contains">
+						<h:outputText value="#{p.descripcion}" />
+					</p:column>
+					
+					<p:column style="width:8%; text-align: center" headerText="Estado">
+					
+						<p:commandLink update="@form :msgGeneral" actionListener="#{cargoMB.cambiarEstado(p)}"  > 
+							<h:graphicImage value="#{p.estado?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{p.estado?'Activo':'Bloqueado'}" />
+						</p:commandLink>
+						
+					</p:column>
+
+					<p:column headerText="Opciones" style="width:17%;text-align: center">
+					
+						<p:commandButton   
+							actionListener="#{cargoMB.editarCargo(p)}" update=":dlgDetNuevo"
+							oncomplete="PF('dlgNuevo').show();" title="Editar" icon="icon-edit" />
+
+						<p:commandButton 
+							actionListener="#{cargoMB.eliminarCargo(p)}"
+							oncomplete="PF('dlgEliminar').show();" title="Eliminar"
+							icon="icon-delete" />
+							
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- dialogo nuevo/editar Cargo -->
+			
+			<p:dialog header="Cargo" widgetVar="dlgNuevo" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevo" modal="true">
+					
+					<h:form>
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">
+
+						#{"Descripcion:"}
+						<p:inputText value="#{cargoMB.cargoSelec.descripcion}" id="nombre"
+							required="true" maxlength="50" label="nombre" requiredMessage="Se necesita un nombre"
+							style="width:200px;" />
+							
+						#{"Estado:"}
+						<p:selectOneMenu style="width:200px" value="#{cargoMB.cargoSelec.estado}" required="true" requiredMessage="Seleccione un Cargo">
+							<f:selectItem itemLabel="Seleccione..." itemValue="" />							
+							<f:selectItem itemLabel="ACTIVO" itemValue="TRUE" />
+							<f:selectItem itemLabel="DESACTIVO" itemValue="FALSE" />
+						</p:selectOneMenu>							
+
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{cargoMB.guardarCargo()}"
+						update=":formLista msgNuevo" oncomplete="validar(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevo').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminar" appendTo="@(body)"
+					message="¿Desea eliminar este Cargo" header="Eliminar Cargo"
+					severity="alert" widgetVar="dlgEliminar">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral"
+						actionListener="#{cargoMB.confirmaEliminar}"
+						oncomplete="PF('dlgEliminar').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminar').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+		<script>
+			
+		function validar(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevo').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevo').hide();
+				console.log("cerro")
+			}
+		}
+
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

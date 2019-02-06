@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="srptEjecutBackOfficexNegocio" language="groovy" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4ab3b9a4-fc2b-40f4-be25-7a9d2cfc45d2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="apellido_paterno" class="java.lang.String"/>
+	<field name="apellido_materno" class="java.lang.String"/>
+	<field name="des_cargo" class="java.lang.String"/>
+	<field name="nomSupervisor" class="java.lang.String"/>
+	<field name="id_supervisor" class="java.lang.Integer"/>
+	<field name="dni" class="java.lang.String"/>
+	<field name="fecha_ingreso" class="java.util.Date"/>
+	<field name="login" class="java.lang.String"/>
+	<field name="password" class="java.lang.String"/>
+	<field name="funcion" class="java.lang.String"/>
+	<field name="departamento" class="java.lang.String"/>
+	<field name="provincia" class="java.lang.String"/>
+	<field name="distrito" class="java.lang.String"/>
+	<field name="desTipoPlanilla" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="70d4016f-335e-410a-bcc7-4366663d4af4" x="114" y="0" width="97" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6033edfa-5825-4075-a4ec-1ed263890abf" x="211" y="0" width="97" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido_paterno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="b6b2aea6-c77b-4b74-9e88-e558d2f0e534" x="308" y="0" width="130" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido_materno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d536c729-6bb8-4e16-b7c5-4b2535ecfd33" x="438" y="0" width="114" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{des_cargo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/dd/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="c77e9406-3979-414b-944a-9cc7f93ec265" x="552" y="0" width="114" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f84eb5c2-73ec-40c9-974f-9083a5be9f77" x="0" y="0" width="114" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="92ed967c-9e9a-4c3a-a5b4-b7ad8b1374ac" x="666" y="0" width="86" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{login}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="20ee4a46-307e-478a-8cd5-e33fa3385174" x="752" y="0" width="100" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{password}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="68f2872a-219f-43bb-a345-9398f9b5ee81" x="852" y="0" width="100" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="cf38d9d0-f991-4055-8597-ca9e880fa285" x="952" y="0" width="100" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departamento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="df2e41d0-c4b5-40b1-bc3e-c4a9af5c15ba" x="1052" y="0" width="100" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{provincia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="21b4defb-08c9-4ca3-9cc8-9d7c180da970" x="1152" y="0" width="100" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{distrito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="334251f8-1ccf-40d7-ba70-b91fd976152e" x="1252" y="0" width="100" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desTipoPlanilla}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="4d7e0399-fb08-4585-8f07-75ccc2327800" x="0" y="0" width="53" height="20"/>
+				<textElement/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0d62fd2b-cc9a-41da-8379-dd4b6901c5af" x="53" y="0" width="61" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.Log">
+
+<resultMap id="logResult" type="com.certicom.scpf.domain.Log">
+	<id column="pk_log_id" property="pk_log_id" />
+	<result column="idusuario" property="idusuario" />
+	<result column="cod_menu" property="cod_menu"/>
+	<result column="descripcion" property="descripcion"/>
+	<result column="ip_client" property="ip_client"/>
+	<result column="host_client" property="host_client"/>
+	<result column="fecha" property="fecha"/>
+	<result column="hora" property="hora"/>
+	<result column="anio" property="anio"/>
+	<result column="ip_server_img" property="ip_server_img"/>
+
+</resultMap>
+
+	<select id="getLog_Jul_By_Login" parameterType="String" resultType="logResult">
+		SELECT a.pk_log_id,a.accion, a.descripcion, a.ip_client, a.fecha, a.hora, a.anio,a.ip_server_img, b.login , c.nombre as nombre_opMenu , d.nombre_sistema as modulo
+		FROM  t_log_jul a LEFT OUTER JOIN t_usuario b on (a.idusuario = b.idusuario)
+		LEFT OUTER JOIN t_opcion_menu c on (a.cod_menu = c.cod_menu)
+		LEFT OUTER JOIN t_sistema d on (c.cod_sistema = d.cod_sistema) WHERE
+		b.login=#{login}
+	</select>
+</mapper>	

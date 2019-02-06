@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+		<h:form>
+				<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Seguridad" url="#" />
+    				<p:menuitem value="Registro de  módulos" url="sistemas" />    
+				</p:breadCrumb>	
+			</h:form>	
+			
+			<br/>
+			<!-- message general -->
+			<!-- toolbar CRUD -->
+			<!-- lista de modulos -->
+			<h:form id="formLista">
+				<p:messages showDetail="false" showSummary="true" id="msgGeneral"  />
+				<p:commandButton value="Nuevo Módulo" icon="icon-add"  actionListener="#{sistemaMB.nuevoSistema()}" 
+						update=":dlgDetNuevo"  oncomplete="PF('dlgNuevo').show();">
+				</p:commandButton>
+				<p:dataTable id="dataTable" var="s" widgetVar="dtModulo"
+					value="#{sistemaMB.listaSistema}"
+					emptyMessage="No hay sistemas disponibles." paginator="true"
+					rows="10" paginatorPosition="bottom" rowKey="#{s.cod_sistema}"
+					style="FONT-SIZE: 10px; margin-top: 5px; width: 70%">
+					
+					<p:column style="width:17%" headerText="Nombre" filterBy="#{s.nombre_sistema}" filterStyle="width:95%;"  filterMatchMode="contains" >
+						<h:outputText value="#{s.nombre_sistema}" />
+					</p:column>
+
+
+					<p:column style="width:26%" headerText="Descripción"  filterBy="#{s.descripcion}"  filterStyle="width:95%;" filterMatchMode="contains">
+						<h:outputText value="#{s.descripcion}" />
+					</p:column>
+
+
+					<p:column style="width:5%; text-align: center;" headerText="Estado">
+						<p:commandLink update="@form" actionListener="#{sistemaMB.cambiarEstado(s)}" > 
+							<h:graphicImage value="#{s.ind_activo eq 1?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{s.ind_activo eq 1?'Activo':'Bloqueado'}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column style="width:8%; text-align: center">
+						<p:commandButton  update=":dlgDetNuevo" title="EDITAR"
+							oncomplete="PF('dlgNuevo').show();"  icon="icon-edit">
+							<f:setPropertyActionListener target="#{sistemaMB.editar}" value="#{true}" />
+							<f:setPropertyActionListener target="#{sistemaMB.sistema}" value="#{s}"/>	
+						</p:commandButton>
+
+						<p:commandButton 
+							actionListener="#{sistemaMB.newDelete(s.cod_sistema)}"
+							oncomplete="PF('dlgEliminar').show();" title="ELIMINAR"
+							icon="icon-delete" />
+							
+						<p:commandButton
+							action="#{sistemaMB.agregarMenu(s.cod_sistema)}" title="MENÚ"
+							icon="icon-pref">
+							<f:setPropertyActionListener value="#{s}"
+								target="#{sistemaMB.sistema}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+				
+				
+			</h:form>
+
+			<!-- dialogo nuevo/editar -->
+			<pe:blockUI  widgetVar="BlockUIWidget">        
+		        <h:graphicImage library="resources/img" value="/resources/img/ajax-loader1.gif"  style="margin-right: 12px; vertical-align: middle;" />  
+		        <h:outputText value="Guardando, espere por favor..." style="white-space: nowrap; font-weight:bold; color: #036fab"/> 
+		    </pe:blockUI>
+			<p:dialog header=" Módulo" widgetVar="dlgNuevo" appendTo="@(body)"  dynamic="true" closable="true"
+					resizable="false" id="dlgDetNuevo" closeOnEscape="true" modal="true">
+				
+					<p:messages showDetail="false" showSummary="true" id="smsNuevoEdit" />	
+					<h:form id="formNuevo"> 
+					
+					<h:panelGrid id="pgNuevo" columns="2">
+
+						#{"Nombre:"}
+						<p:inputText value="#{sistemaMB.sistema.nombre_sistema}" size="40"
+							 required="true" maxlength="50" requiredMessage="Se necesita un nombre"/>
+							 	 
+						#{"Descripcion:"}
+						<p:inputTextarea value="#{sistemaMB.sistema.descripcion}" cols="40" rows="4"
+							required="true" requiredMessage="Se necesita una descripción" />
+						
+						
+						#{"Estado:"}
+						<p:selectOneMenu rendered="#{not sistemaMB.editar}" value="#{sistemaMB.sistema.ind_activo}" style="width:270px;" effect="fade" 
+							required="true" requiredMessage="Se necesita un indicador">
+							<f:selectItem itemLabel="Activo" itemValue="1" />
+							<f:selectItem itemLabel="Inactivo" itemValue="0" />
+						</p:selectOneMenu>
+						
+						<p:selectOneMenu rendered="#{sistemaMB.editar}" value="#{sistemaMB.sistema.ind_activo}" style="width:270px;" effect="fade" 
+							required="true" requiredMessage="Se necesita un indicador">
+							<f:selectItem itemLabel="Activo" itemValue="1" />
+							<f:selectItem itemLabel="Inactivo" itemValue="0" />
+						</p:selectOneMenu>	
+				
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" action="#{sistemaMB.guardarSistema()}"
+						update=":formLista" onstart="PF('dlgNuevo').hide(); PF('BlockUIWidget').block()"
+						oncomplete=" PF('BlockUIWidget').unblock(); validarCampos(xhr, status, args);" icon="icon-disk" />
+					<p:commandButton value="Cancelar" onclick="PF('dlgNuevo').hide();"
+						icon="icon-cancel" />
+				</h:form>	
+			</p:dialog>
+
+
+
+				<!-- Dialogo eliminar -->
+		
+			<p:confirmDialog id="dlgDetEliminar"  appendTo="@(body)" closeOnEscape="true"
+					message="¿Desea eliminar este módulo?" header="Eliminar Modulo"
+					severity="alert" widgetVar="dlgEliminar">
+						
+					<h:form id="formEliminar">		
+						<pe:blockUI  widgetVar="BlockUIWidgetD">        
+					        <h:graphicImage library="resources/img" value="/resources/img/ajax-loader1.gif"  style="margin-right: 12px; vertical-align: middle;" />  
+					        <h:outputText value="Eliminando, espere por favor..." style="white-space: nowrap; font-weight:bold; color: #036fab"/> 
+					    </pe:blockUI>
+						<p:commandButton value="Eliminar"
+							update=":formLista" onstart="PF('dlgEliminar').hide(); PF('BlockUIWidgetD').block()"
+							actionListener="#{sistemaMB.eliminarSistema()}"
+							oncomplete="PF('BlockUIWidgetD').unblock(); setTimeout ( '$(\'#formLista\\\\:msgGeneral\').hide()', 3000);" icon="icon-delete" />
+
+						<p:commandButton value="Cancelar" 
+							oncomplete="PF('dlgEliminar').hide();" icon="icon-cancel" />
+					</h:form>
+			</p:confirmDialog>
+
+			
+			
+	
+	
+	
+	<script>
+		function validarCampos(xhr, status, args) {  
+			if(!args.esValido) {
+				PF('dlgNuevo').show();  
+				jQuery('#dlgDetNuevo').effect("shake", { times:1 }, 100);  
+			} else {
+				//limpiando
+				//PF('dtModulo').clearFilters();  
+				
+			}  
+			
+			setTimeout ( '$(\'#formLista\\\\:msgGeneral\').hide()', 3000);
+		}  
+	</script>
+	
+
+	</ui:define>
+</ui:composition>
+</html>

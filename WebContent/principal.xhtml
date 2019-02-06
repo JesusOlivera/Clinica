@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	    
+
+	    <h:panelGroup rendered="#{loginMB.usuario.es_nuevo}">
+	    
+	    <p:panel header="Cambiar contraseña"  style="width:420px;" >
+	    
+	    	<script>
+				jQuery(function(){
+					jQuery("#formMenu :input").log("deshabilitabdo todo").attr("disabled", true);
+					jQuery("#formMenu").stop().log("opacando").animate({"opacity": "0.2"}, "fast");
+				});
+   			 </script>
+	    
+	    
+	    	<h3>Por favor cambie su contraseña</h3>
+	    	<h:form>
+	    		<h:panelGrid columns="2">
+	    			#{"Nueva Contraseña:"}
+	    			<h:inputSecret value="#{loginMB.nuevoPass}" required="true" requiredMessage="Escriba una contraseña" />
+	    			
+	    			#{"Repita nueva contraseña"}
+	    			<h:inputSecret value="#{loginMB.nuevoPassRe}" required="true" requiredMessage="Repita la contraseña" />
+	    		</h:panelGrid>
+	    		<p:commandButton value="Cambiar contraseña"  update=":smsPass :formMenu" action="#{loginMB.cambiarPassword()}" />
+
+	    	</h:form>
+	    	<p:messages id="smsPass"  showDetail="false" showSummary="true" />
+	    </p:panel>
+	    
+	    </h:panelGroup>
+	   
+	    
+	    
+	</ui:define>
+</ui:composition>
+</html>

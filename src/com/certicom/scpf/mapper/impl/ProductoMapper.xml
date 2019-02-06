@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.ProductoMapper">
+
+<resultMap id="productoResult" type="com.certicom.scpf.domain.Producto">
+	<id column="id_producto" property="id_producto"/>
+	<result column="cod_prod_det" property="cod_prod_det"/>
+	<result column="tipo_prod_sunat_det" property="tipo_prod_sunat_det"/>
+	<result column="descripcion_prod_det" property="descripcion_prod_det"/>
+	<result column="valor_unitario_prod_det" property="valor_unitario_prod_det"/>
+	<result column="unidad_medida_det" property="unidad_medida_det"/>
+	<result column="stock" property="stock"/>
+	<result column="valor_unit_incluye_impuestos" property="valor_unit_incluye_impuestos"/>	
+	<result column="genera_cola" property="genera_cola"/>
+	<result column="genera_historia_clinica" property="genera_historia_clinica"/>
+	<result column="genera_ticket" property="genera_ticket"/>
+	<result column="examen_auxiliar" property="examen_auxiliar"/>
+	<result column="id_tipo_servicio" property="id_tipo_servicio"/>
+	
+	<association property="tipoServicio" column="id_tipo_servicio" select="selectTipoServicio"/>
+	
+</resultMap>
+
+	<select id="selectTipoServicio" parameterType="int" resultType="com.certicom.scpf.domain.TipoServicio">
+		SELECT * FROM t_tipo_servicio WHERE id_tipo_servicio=#{id_tipo_servicio}
+	</select>
+
+</mapper>	

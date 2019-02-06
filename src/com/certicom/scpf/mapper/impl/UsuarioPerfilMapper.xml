@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.certicom.scpf.mapper.UsuarioPerfilMapper">
+
+<resultMap id="usuarioPerfilResult" type="com.certicom.scpf.domain.UsuarioPerfil">
+	
+	<id column="idusuario" property="idusuario" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<id column="codigoPerfil" property="cod_perfil" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="nombre" property="nombre" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="descripcion" property="descripcion" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="ind_activo" property="ind_activo" javaType="java.lang.Boolean" jdbcType="BOOLEAN"/>
+	<result column="fecha_iniciovig" property="fecha_iniciovig" javaType="java.util.Date" jdbcType="DATE"/>
+	<result column="fecha_finvig" property="fecha_finvig" javaType="java.util.Date" jdbcType="DATE"/>
+	<result column="fecha_registro" property="fecha_registro" javaType="java.util.Date" jdbcType="DATE"/>
+	<result column="fecha_modif" property="fecha_modif" javaType="java.util.Date" jdbcType="DATE"/>
+	<result column="usuario_registro" property="usuario_registro" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="usuario_modif" property="usuario_modif" javaType="java.lang.String" jdbcType="VARCHAR"/>
+</resultMap>
+
+	
+	<select id="listarPerfilesPorUsuario" resultMap="usuarioPerfilResult" parameterType="int">			
+		select u.idusuario,p.cod_perfil,p.nombre,p.descripcion,up.ind_activo,up.fecha_iniciovig,
+		up.fecha_finvig,up.fecha_registro,up.fecha_modif,up.usuario_registro,up.usuario_modif
+		from t_perfil p 
+		join t_usuarioxperfil up
+		on up.cod_perfil=p.cod_perfil
+		join t_usuario u
+		on up.idusuario=u.idusuario
+		where u.idusuario=#{idusuario}		
+	</select>
+	
+	<insert id="insertUsuarioPeril" parameterType="com.certicom.scpf.domain.UsuarioPerfil">
+		INSERT INTO t_usuarioxperfil(idusuario,cod_perfil,ind_activo,fecha_iniciovig,fecha_finvig,
+		fecha_registro,fecha_modif,usuario_registro,usuario_modif)
+		values
+		(#{idusuario},#{cod_perfil},#{ind_activo},#{fecha_iniciovig},#{fecha_finvig},
+		#{fecha_registro},#{fecha_modif},#{usuario_registro},#{usuario_modif})
+	</insert>
+	
+</mapper>	

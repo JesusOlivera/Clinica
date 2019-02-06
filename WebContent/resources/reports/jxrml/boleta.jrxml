@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="boleta" language="groovy" pageWidth="270" pageHeight="842" columnWidth="270" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="883751cb-ff77-4472-aafb-09850fc91c5b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="80"/>
+	<parameter name="p_numero_documento" class="java.lang.String"/>
+	<parameter name="p_emisor_razonsocial" class="java.lang.String"/>
+	<parameter name="p_direccion_emisor" class="java.lang.String"/>
+	<parameter name="p_ruc" class="java.lang.String"/>
+	<parameter name="p_fec_emision" class="java.lang.String"/>
+	<parameter name="p_importe_total" class="java.lang.String"/>
+	<field name="des_producto" class="java.lang.String"/>
+	<field name="cant_unidades_item_det" class="java.lang.String"/>
+	<field name="precio_venta_unitario_det" class="java.lang.String"/>
+	<field name="valor_item" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="116" splitType="Stretch">
+			<textField>
+				<reportElement x="52" y="44" width="100" height="30" uuid="0fbeab11-17c1-49d2-9304-e734f217d793"/>
+				<textFieldExpression><![CDATA[$P{p_numero_documento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="1" width="60" height="12" uuid="86f270f5-534f-4813-9372-a0a6c9c5dc0a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="1" width="34" height="12" uuid="0aae5f45-4dca-44db-9362-226c965f335a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd0d0889-762e-4416-b994-640625ab4808"/>
+				</reportElement>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="1" width="38" height="12" uuid="13b460e1-3e85-471f-8a38-d5c77ac4d87b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d72eca2a-03ae-456b-833d-54ad7a027bb6"/>
+				</reportElement>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[valor_item]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="-121" width="216" height="12" uuid="76aecb4f-a710-4b67-bdbd-bf3b99585ed4"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ BOLETA DE VENTA ELECTRONICA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="0" width="60" height="10" uuid="2e46a861-4aa8-460b-bcea-71608bd5650e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4865162-50c7-4bb8-b4fa-898c1c2d9b26"/>
+				</reportElement>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{des_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="0" width="34" height="10" uuid="9427f384-1cd6-4983-9661-c1ae00bd025e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd0d0889-762e-4416-b994-640625ab4808"/>
+				</reportElement>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cant_unidades_item_det}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="98" y="0" width="38" height="10" uuid="66dbac8e-ed49-404b-b5d7-375253d56a4f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d72eca2a-03ae-456b-833d-54ad7a027bb6"/>
+				</reportElement>
+				<textElement>
+					<font size="5" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor_item}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="53" y="0" width="68" height="15" uuid="750dabf6-70bb-46a8-ad8f-faade32e95fe"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[TOTAL VENTA : S/       ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="17" width="172" height="61" uuid="e6571a8d-34d0-4b2f-85ea-49199c76e7a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Autorizado mediannte resolucion
+  Anexo III - R.S. 155-2017
+Representacion impresa de la
+  Boleta Electronica
+Consulte Utilizando su clave SOL en
+     el portal SUNAT
+Cualquier duda o consulta escribanos a:
+facturacionelectronica@suempresa.com]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="0" width="100" height="15" uuid="3d7154dc-d8c4-4e9f-bd75-55c11bdae541"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_importe_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Configuracion" url="#" />
+    				<p:menuitem value="Gestion de Tabla Maestra" url="tablamaestra" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px">
+				<h:panelGrid columns="4">						
+					<p:commandButton value="Nueva Tabla" icon="icon-add" update=":dlgDetNuevoTablaTablas" oncomplete="PF('dlgNuevoTablaTablas').show();"
+						actionListener="#{tablaMaestraMB.nuevaTablaTablas()}"/>
+				</h:panelGrid>
+			</h:form>
+			
+				<!-- listado de Planes -->
+			<h:form id="formLista">
+				<p:dataTable id="dataTablaTablas" var="p" value="#{tablaMaestraMB.listaTablaTablas}" widgetVar="dtTablaTablas" 
+					emptyMessage="No hay Tablas Maestras Disponibles." rowIndexVar="nro" 
+					 style="FONT-SIZE: 10px; ">
+					<f:facet name="header">Lista Tablas Maestras</f:facet>
+					
+					<p:column style="width:16px">
+			            <p:rowToggler />
+			        </p:column>
+					
+					<p:column headerText="Orden" width="25" style="width:3%" >
+						#{nro+1}
+					</p:column>					
+			        
+			        <p:column style="width:150px" headerText="Descripción">    <!-- Jesús -->
+						<h:outputText value="#{p.descripcion_maestra}"/>
+					</p:column>
+					
+					<p:column style="width:70px" headerText="Nro Catálogo">
+						<h:outputText value="#{p.nro_catalogo}"/>
+					</p:column>
+					
+					<p:rowExpansion>
+			        	<p:dataTable id="dataTablaTablasDetalle" var="q" value="#{p.listaTablaTablasDetalle}" widgetVar="dtTablaTablasDetalle" 
+							emptyMessage="No hay Tablas Maestras Detalle Disponibles." rowIndexVar="nro" 
+							paginator="true"
+							rows="10" paginatorPosition="bottom" 
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30"
+							 style="FONT-SIZE: 10px; ">
+							 
+							 <f:facet name="header">Lista Detalle</f:facet>
+							 
+							 <!-- Jesús -->
+							<p:column headerText="Codigo Catalogo">
+					            <h:outputText value="#{q.codigo_catalogo}" />
+					        </p:column>
+							 
+							<p:column headerText="Descripcion Larga" style="width:350px" > <!-- Jesús -->
+					            <h:outputText value="#{q.descripcion_largo}" />
+					        </p:column>
+					        
+					        <!-- Jesús 
+					        <p:column headerText="Descripcion Corta">
+					            <h:outputText value="#{q.descripcion_corto}" />
+					        </p:column>   -->
+					        
+					        <p:column headerText="Valor">
+					            <h:outputText value="#{q.valor}" />
+					        </p:column>   
+					        
+					        <p:column headerText="Atributo 1">
+					            <h:outputText value="#{q.atributo_1}" />
+					        </p:column> 
+					        
+					        <p:column headerText="Atributo 2">
+					            <h:outputText value="#{q.atributo_2}" />
+					        </p:column> 
+					        
+					        <!-- Jesús 
+					        <p:column headerText="Atributo 3">
+					            <h:outputText value="#{q.atributo_3}" />
+					        </p:column>  -->
+					        
+					        <p:column style="width:5%; text-align: center" headerText="Estado">
+								<p:commandLink update="@form :msgGeneral" actionListener="#{tablaMaestraMB.cambiarEstado(q)}" > 
+									<h:graphicImage value="#{q.ind_activo?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+									title="#{q.ind_activo?'Activo':'Bloqueado'}" />
+								</p:commandLink>
+							</p:column>				        
+					        
+					        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+					
+								<p:commandButton title="Editar"  update=":dlgDetNuevoTablaTablasDetalle" actionListener="#{tablaMaestraMB.editarTablaTablasDetalle(q)}"
+												 oncomplete="PF('dlgNuevoTablaTablasDetalle').show();" icon="icon-edit">
+								</p:commandButton>
+		
+								<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminarTablaTablasDetalle').show();" actionListener="#{tablaMaestraMB.eliminarTablaTablasDetalle(q)}" update=":dlgDetEliminarTablaTablasDetalle" icon="icon-delete">
+			
+								</p:commandButton>
+										
+							</p:column>
+							 <f:facet name="footer"><p:commandButton value="Nuevo Detalle" icon="icon-add" update=":dlgDetNuevoTablaTablasDetalle" oncomplete="PF('dlgNuevoTablaTablasDetalle').show();"
+								actionListener="#{tablaMaestraMB.nuevoTablaTablasDetalle(p)}"/></f:facet>
+						</p:dataTable>		        
+			        
+			        </p:rowExpansion>
+			        
+			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevoTablaTablas" actionListener="#{tablaMaestraMB.editarTablaTablas(p)}"
+										 oncomplete="PF('dlgNuevoTablaTablas').show();" icon="icon-edit">
+						</p:commandButton> 
+
+						<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminarTablaTablas').show();" actionListener="#{tablaMaestraMB.eliminarTablaTablas(p)}" 
+										 update=":dlgDetEliminarTablaTablas" icon="icon-delete">
+	
+						</p:commandButton>
+								
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Registrar Tabla Maestra" widgetVar="dlgNuevoTablaTablas" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoTablaTablas" modal="true">
+					
+					<h:form id="formTablaTablas">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">
+
+						#{"Descripcion:"} 
+						<p:inputText value="#{tablaMaestraMB.tablaTablasSelec.descripcion_maestra}" id="nombre"
+							required="true" label="nombre" requiredMessage="Se necesita una descripcion"
+							style="width:200px;" />
+							
+						#{"Nro Catálogo:"} 
+						<p:inputText value="#{tablaMaestraMB.tablaTablasSelec.nro_catalogo}" id="nro_catalogo"
+							required="true" label="nombre" requiredMessage="Se necesita una descripcion"
+							style="width:200px;" />
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{tablaMaestraMB.guardarTablaTablas()}"
+						update=":formLista msgNuevo" oncomplete="validarTablaTablas(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoTablaTablas').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminarTablaTablas" appendTo="@(body)"
+					message="¿Desea eliminar esta Tabla Maestra " header="Eliminar Tabla Maestra"
+					severity="alert" widgetVar="dlgEliminarTablaTablas">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral" 
+						actionListener="#{tablaMaestraMB.confirmaEliminarTablaTablas}"
+						oncomplete="PF('dlgEliminarTablaTablas').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminarTablaTablas').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+			
+			<!-- #############    TABLA DETALLE      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Registrar Detalle" widgetVar="dlgNuevoTablaTablasDetalle" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoTablaTablasDetalle" modal="true">
+					
+					<h:form id="formTablaTablasDetalle">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">
+
+						#{"Descripcion Largo:"}  
+						<p:inputText value="#{tablaMaestraMB.tablaTablasDetalleSelec.descripcion_largo}" id="descripcion_largo"
+							required="true" maxlength="50" label="nombre" requiredMessage="Se necesita una descripcion larga"
+							style="width:200px;" />
+							
+						#{"Descripcion Corto:"}  
+						<p:inputText value="#{tablaMaestraMB.tablaTablasDetalleSelec.descripcion_corto}" id="descripcion_corto"
+							required="true" maxlength="50" label="nombre" requiredMessage="Se necesita una descripcion corta"
+							style="width:200px;" />
+							
+						#{"Valor:"}  
+						<p:inputText value="#{tablaMaestraMB.tablaTablasDetalleSelec.valor}" id="valor"
+							required="true" maxlength="50" label="nombre" requiredMessage="Se necesita una descripcion"
+							style="width:200px;" />
+							
+						#{"Atributo 1:"}  
+						<p:inputText value="#{tablaMaestraMB.tablaTablasDetalleSelec.atributo_1}" id="atributo_1"
+							maxlength="50" label="nombre"
+							style="width:200px;" />
+							
+						#{"Atributo 2:"}  
+						<p:inputText value="#{tablaMaestraMB.tablaTablasDetalleSelec.atributo_2}" id="atributo_2"
+							maxlength="50" label="nombre" 
+							style="width:200px;" />
+							
+						#{"Atributo 3:"}  
+						<p:inputText value="#{tablaMaestraMB.tablaTablasDetalleSelec.atributo_3}" id="atributo_3"
+							maxlength="50" label="nombre" 
+							style="width:200px;" />
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{tablaMaestraMB.guardarTablaTablasDetalle()}"
+						update=":formLista msgNuevo" oncomplete="validarTablaTablasDetalle(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoTablaTablasDetalle').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminarTablaTablasDetalle" appendTo="@(body)"
+					message="¿Desea eliminar este Detalle " header="Eliminar Detalle"
+					severity="alert" widgetVar="dlgEliminarTablaTablasDetalle">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral" 
+						actionListener="#{tablaMaestraMB.confirmaEliminarTablaTablasDetalle}"
+						oncomplete="PF('dlgEliminarTablaTablasDetalle').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminarTablaTablasDetalle').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+		
+		</p:panel>
+		
+		<script>
+			
+		function validarTablaTablas(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoTablaTablas').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevoTablaTablas').hide();
+				console.log("cerro")
+			}
+		}
+		
+		function validarTablaTablasDetalle(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoTablaTablasDetalle').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevoTablaTablasDetalle').hide();
+				console.log("cerro")
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.TablaTablasDetalleMapper">
+
+<resultMap id="tablaTablaDetalleResult" type="com.certicom.scpf.domain.TablaTablasDetalle">
+	<id column="id_codigo" property="id_codigo"/>
+	<result column="id_maestra" property="id_maestra"/>
+	<result column="descripcion_largo" property="descripcion_largo"/>
+	<result column="descripcion_corto" property="descripcion_corto"/>
+	<result column="valor" property="valor"/>
+	<result column="atributo_1" property="atributo_1"/>
+	<result column="atributo_2" property="atributo_2"/>
+	<result column="atributo_3" property="atributo_3"/>
+	<result column="codigo_catalogo" property="codigo_catalogo"/> <!-- Jesús -->
+	<result column="ind_activo" property="ind_activo"/> 
+
+</resultMap>
+
+
+</mapper>	

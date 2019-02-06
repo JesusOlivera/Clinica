@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+		<h:form>
+				<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Seguridad" url="#" />
+    				<p:menuitem value="Gestion de Usuarios" url="usuarios" /> 
+    				<p:menuitem value="Añadir Perfil a un Usuario" url="#" />     
+				</p:breadCrumb>	
+		</h:form>	
+				
+			
+		<h:panelGrid columns="2">
+				#{"Usuario Seleccionado:"}
+				<h:outputText value=" #{addPerfilUsuarioMB.usuario.apellido_paterno} #{addPerfilUsuarioMB.usuario.apellido_materno} , #{addPerfilUsuarioMB.usuario.nombre}" 
+					style="font-weight:bold;font-size: 1.2em;" />
+		</h:panelGrid>
+		
+		<br/>		
+		<!-- toolbar -->
+		<h:form>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Asignar nuevo perfil" icon="icon-add"  onclick="PF('perfilDialog').show();" >
+					<p:resetInput target=":detPerfilDialog" />
+				</p:commandButton>
+				<p:commandButton value="Regresar" icon="icon-exit" action="pretty:usuarios" ajax="false" />
+			</h:panelGrid>
+		</h:form>		
+			
+		<br/>
+		
+		<!-- listado de perfiles -->
+		<h:form id="frmListaPerfil">
+			<p:messages showDetail="false" showSummary="true" id="msgGeneral" />
+			<p:dataTable value="#{addPerfilUsuarioMB.listaPerfilUsuario}" var="per" style="width:750px;FONT-SIZE: 10px;" 
+						 rowIndexVar="nro" >
+						 
+    			<f:facet name="header">Lista de Perfiles</f:facet>
+    			
+    			<p:column headerText="Nro" style="width: 3%" >
+    				#{nro+1}
+    			</p:column>
+    					 
+    			<p:column headerText="Nombre">
+    				#{per.nombre}
+    			</p:column>
+    			
+    			<p:column headerText="Descripcion">
+    				#{per.descripcion}
+    			</p:column>
+    					
+    			<p:column headerText="Fecha de creacion">
+    				<h:outputText value="#{per.fecha_registro}">
+    					<f:convertDateTime pattern="dd-MM-yyyy h:mm a"/>
+    				</h:outputText>
+    			</p:column>
+    					
+    			<p:column headerText="Eliminar">			
+    				<p:commandButton title="Eliminar" icon="icon-delete" oncomplete="PF('confirmation').show()"  >
+						<f:setPropertyActionListener target="#{addPerfilUsuarioMB.usuarioPerfil}" value="#{per}" />
+					</p:commandButton>
+    			</p:column>
+    			
+    		</p:dataTable>
+   		</h:form>
+ 		
+ 		<!-- dilogo eliminar -->
+   		<pe:blockUI  widgetVar="BlockUIWidgetE">        
+	        <h:graphicImage library="resources/img" value="/resources/img/ajax-loader1.gif"  style="margin-right: 12px; vertical-align: middle;" />  
+	        <h:outputText value="Eliminando, espere por favor..." style="white-space: nowrap; font-weight:bold; color: #036fab"/> 
+	    </pe:blockUI>
+		<p:confirmDialog id="confirmDialog" message="Seguro de eliminar perfil asignado?"  appendTo="@(body)"
+            		header="Iniciando proceso de eliminacion" severity="alert" widgetVar="confirmation">  
+             <h:form>
+       			<p:commandButton id="confirm" value="Si" update=":frmListaPerfil" 
+       				onstart="PF('confirmation').hide(); PF('BlockUIWidgetE').block()"
+       				oncomplete="PF('BlockUIWidgetE').unblock()" actionListener="#{addPerfilUsuarioMB.eliminarPerfil()}" /> 
+                   				 
+       			<p:commandButton id="decline" value="No" onclick="PF('confirmation').hide()" hideEffect="explode"  type="button" />   
+              </h:form>
+   		</p:confirmDialog> 
+				
+		<!-- dialogo nuevo perfil -->
+		<pe:blockUI  widgetVar="BlockUIWidget">        
+	        <h:graphicImage library="resources/img" value="/resources/img/ajax-loader1.gif"  style="margin-right: 12px; vertical-align: middle;" />  
+	        <h:outputText value="Guardando, espere por favor..." style="white-space: nowrap; font-weight:bold; color: #036fab"/> 
+	    </pe:blockUI>
+		<p:dialog header="Seleccione Perfil" closeOnEscape="true"
+			  		widgetVar="perfilDialog" resizable="false"
+			  		id="detPerfilDialog" showEffect="fade" hideEffect="explode"
+			 		appendTo="@(body)" modal="true" >
+			<h:form>
+				<p:messages showDetail="false" showSummary="true" id="mgsNuevo" />
+				<h:panelGrid columns="2">
+				
+					#{"Selecione Perfil:"}		
+					<p:selectOneMenu style="text-align:center;width:200px"  required="true" requiredMessage="Seleccione un perfil" 
+								value="#{addPerfilUsuarioMB.perfil.cod_perfil}" effect="fade" >
+						<f:selectItem itemLabel="Seleccionar" itemValue="#{null}" noSelectionOption="true"  />
+						<f:selectItems value="#{addPerfilUsuarioMB.listaPerfil}" var="bean"
+									itemLabel="#{bean.nombre}" itemValue="#{bean.cod_perfil}" />			
+					</p:selectOneMenu>
+							
+					<p:commandButton value="Grabar" actionListener="#{addPerfilUsuarioMB.insertarPerfil()}"
+						onstart="PF('perfilDialog').hide(); PF(BlockUIWidget).block();"
+								 oncomplete="validarCampos(xhr, status, args); PF(BlockUIWidget).unblock();" update="mgsNuevo :frmListaPerfil" />
+							
+					<p:commandButton value="Cerrar" onclick="PF('perfilDialog').hide();" type="button" />
+							
+				</h:panelGrid>
+			</h:form>
+			
+		</p:dialog>
+		
+		<!-- js  -->		
+		<script>
+
+			function validarCampos(xhr, status, args) {  
+    			if(args.validationFailed) {  
+    				jQuery('#detPerfilDialog').effect("shake", { times:3 }, 100);  
+    			} else {  
+    				
+      				  
+    			}  
+    			setTimeout ( '$(\'#frmListaPerfil\\\\:msgGeneral\').hide()', 3000);
+			}  
+
+		</script>
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+
+
+	<ui:define name="contenido">
+	
+		<h:form>
+				<p:breadCrumb  style="font-size: 11px; height: 13px; margin-top: 0px">  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Seguridad" url="#" />
+    				<p:menuitem value="Gestion de perfiles de usuario" url="perfiles" /> 
+    				<p:menuitem value="Asignar permisos a perfil" url="#" />   
+				</p:breadCrumb>	
+		</h:form>
+		<!-- toolbar -->
+		<br/>
+		<h:form>
+			<p:commandButton value="Regresar" icon="icon-exit" action="pretty:perfiles" />	
+		</h:form>
+		<br/>
+		<p:messages showSummary="true" showDetail="true" id="smsGeneral" />
+		
+		<h:panelGrid columns="2">
+			#{"Perfil seleccionado:"}
+			<h:outputText value="#{permisosPerfilMB.perfil.nombre}" style="font-weight:bold;"/>
+		</h:panelGrid>
+
+		
+		
+		
+		<br/>
+		
+		<!-- lista de permisos  -->
+		<h:form>
+			<p:dataTable var="modu" value="#{permisosPerfilMB.listaModulos}" style="width:700px;margin:auto;" >
+				<f:facet name="header">
+					Permisos Disponibles 
+					<h:graphicImage id="imgProceso" value="/resources/img/icon-help.png" />
+					<p:tooltip for="imgProceso" value="asigne permisos al perfil seleccionado haciendo clik en el icono de estado" showEffect="slide" hideEffect="slide" /> 
+				</f:facet>
+				
+				<p:columnGroup type="header">    
+            		<p:row>  
+                		<p:column headerText="Cod. menu" />  
+                		<p:column headerText="Nombre menu" />
+                		<p:column headerText="Estado" />    
+            		</p:row>  
+        		</p:columnGroup> 
+				
+
+				<p:subTable var="men" value="#{modu.listaMenu}">
+					<f:facet name="header">
+						#{modu.nombre_sistema}
+					</f:facet>
+				
+					<p:column style="width:20px;" >
+						#{men.cod_menu}
+					</p:column>
+					
+					<p:column style="width:550px;">
+						#{men.nombre}
+					</p:column>
+					
+					<p:column style="width:20px;">
+					
+						<p:commandLink update="@form" actionListener="#{permisosPerfilMB.cambiarEstado(men)}" > 
+							<h:graphicImage value="#{men.banderin ?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{men.banderin?'Activo':'Bloqueado'}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:subTable>
+			</p:dataTable>
+		</h:form>
+				
+	</ui:define>
+</ui:composition>
+</html>
+
+	

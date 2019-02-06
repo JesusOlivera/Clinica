@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptRotulo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="de6b5813-d13a-45dc-8628-ce0fceddc0c2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<field name="nombreTipoDoucmental" class="java.lang.String"/>
+	<field name="codUnidadRecepcion" class="java.lang.Integer"/>
+	<field name="nombreUnidadRecepcion" class="java.lang.String"/>
+	<field name="fechaRecepcion" class="java.util.Date"/>
+	<field name="totalfolios" class="java.lang.Integer"/>
+	<field name="codLote" class="java.lang.Integer"/>
+	<field name="nrofolios" class="java.lang.Integer"/>
+	<field name="razonSocial" class="java.lang.String"/>
+	
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="108" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="a5534b2d-5eda-4253-ad00-be6a9ed9105c" x="4" y="5" width="543" height="97"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="80480c4c-e1a7-43c0-bd54-07e8aee6163a" x="84" y="13" width="160" height="20"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Documental:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5a68e69b-1926-46e1-a6f7-2044bd35f4d4" x="30" y="40" width="109" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Unidad Recepcion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="efff60c4-e20d-4d8a-9043-608babeea07d" x="30" y="58" width="109" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Fecha Recepcion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c219eeba-a7f8-4122-a65c-536aebb0a650" x="250" y="40" width="69" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Codigo UR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2cced08e-2573-4b62-82f1-63176aac5f3b" x="63" y="82" width="71" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Cod. Lote:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2241e22b-f232-44e3-8be4-09f26beb1eff" x="244" y="82" width="75" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Cant. Folios:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f0d97d5a-d84f-4b75-b759-ebbf5bd8d0fe" x="30" y="77" width="359" height="2"/>
+			</line>
+			<textField>
+				<reportElement uuid="71db9c99-7acf-47d8-8b99-14ceeca78e83" x="234" y="13" width="285" height="20"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreTipoDoucmental}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8cc63aa3-16be-4612-b5f5-a675e1a110ed" x="318" y="40" width="140" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codUnidadRecepcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e947d5ba-02f7-4435-94d0-48f74c285293" x="139" y="40" width="100" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreUnidadRecepcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6b359cfd-d047-44bc-964d-cceef9bf9d7d" x="139" y="58" width="100" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaRecepcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a2ebb85a-a546-4a41-8411-6a027fc768dc" x="125" y="82" width="63" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codLote}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="43ea42ee-2d30-44ed-a2b4-dcf6fb5a17fd" x="318" y="82" width="72" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nrofolios}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="f11b1aaf-7c00-4c6c-8168-1e8434632415" x="13" y="10" width="31" height="30"/>
+				<imageExpression><![CDATA[$P{P_LOGO}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="e0687f5a-a929-402b-928f-fc9439a1b938" x="31" y="34" width="359" height="2"/>
+			</line>
+			<staticText>
+				<reportElement uuid="0d7bc14f-b452-49c7-8979-855f7755245c" x="250" y="60" width="41" height="14"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="66af1452-6037-48f1-82e6-19d773d379ec" x="319" y="60" width="223" height="17"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razonSocial}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

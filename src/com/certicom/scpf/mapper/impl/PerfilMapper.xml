@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.certicom.scpf.mapper.PerfilMapper">
+
+	<resultMap id="perfilResult" type="com.certicom.scpf.domain.Perfil">
+		<id column="cod_perfil" property="cod_perfil" />
+		<result column="nombre" property="nombre" />
+		<result column="descripcion" property="descripcion" />
+		<result column="ind_activo" property="ind_activo" />
+		<result column="fecha_registro" property="fecha_registro" />
+		<result column="fecha_modif" property="fecha_modif" />
+		<result column="usuario_registro" property="usuario_registro" />
+		<result column="usuario_modif" property="usuario_modif" />
+		<result column="usuario_modif" property="proceso" />
+		
+	</resultMap>
+
+	<select id="listPerfil" resultType="com.certicom.scpf.domain.Perfil" >
+		Select * from t_perfil
+	</select>
+
+	<delete id="deletePerfil" parameterType="int">
+		DELETE FROM t_perfil
+		WHERE cod_perfil = #{cod_perfil}
+	</delete>
+
+
+	<insert id="insertPerfil" parameterType="com.certicom.scpf.domain.Perfil">
+		INSERT INTO
+		t_perfil(nombre,descripcion,proceso)
+		values
+		(#{nombre},#{descripcion},#{proceso})
+	</insert>
+
+	<select id="findPerfil" resultType="com.certicom.scpf.domain.Perfil"
+		parameterType="com.certicom.scpf.domain.Perfil">
+	</select>
+
+	<update id="updatePerfil" parameterType="com.certicom.scpf.domain.Perfil">
+		update t_perfil
+		SET
+		nombre = #{nombre},
+		descripcion = #{descripcion},
+		proceso = #{proceso},
+		ind_activo = #{ind_activo}
+		WHERE cod_perfil = #{cod_perfil}
+	</update>
+
+	<select id="findPerfilPorCodigo" resultMap="perfilResult"
+		parameterType="int">
+		SELECT cod_perfil,nombre,descripcion,ind_activo,
+		fecha_registro,fecha_modif, usuario_registro,usuario_modif
+		from t_perfil
+		where cod_perfil =#{cod_perfil}
+	</select>
+
+	<insert id="insertUsuarioPerfil" parameterType="com.certicom.scpf.domain.Perfil">
+		Insert into
+		t_usuarioxperfil(idusuario,cod_perfil,ind_activo,fecha_iniciovig,fecha_finvig,fecha_registro,fecha_modif,usuario_registro,usuario_modif)
+		values
+		(#{idusuario},#{cod_perfil},true,now(),now(),now(),now(),#{usuario_registro},#{usuario_modif})
+	</insert>
+	
+	<select id="listarPerfilesxUsuario" resultMap="perfilResult"
+		parameterType="com.certicom.scpf.domain.Usuario">			
+		select p.cod_perfil,p.nombre,p.descripcion, p.proceso
+		from t_perfil p inner join t_usuarioxperfil up
+		on up.cod_perfil=p.cod_perfil
+		where up.idusuario=#{idusuario}		
+	</select>
+	
+</mapper>	

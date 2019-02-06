@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptRelacionPromotor" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="19cb4634-57c6-4fc6-a700-eabd89226a55">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="P_TOTAL" class="java.lang.String"/>
+	<parameter name="P_NEGOCIO" class="java.lang.String"/>
+	<parameter name="P_LOGO" class="java.lang.String"/>
+	<parameter name="P_FSISTEMA" class="java.lang.String"/>
+	<field name="dni_promotor" class="java.lang.String"/>
+	<field name="app_promotor" class="java.lang.String"/>
+	<field name="apm_promotor" class="java.lang.String"/>
+	<field name="nom_promotor" class="java.lang.String"/>
+	<field name="fecha_ingreso" class="java.util.Date"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="outsourcing" class="java.lang.String"/>
+	<field name="dni_supervisor" class="java.lang.String"/>
+	<field name="supervisor" class="java.lang.String"/>
+	<field name="des_negocio" class="java.lang.String"/>
+	<field name="producto" class="java.lang.String"/>
+	<field name="oficina" class="java.lang.String"/>
+	<field name="territorio" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d297d812-40f6-4afb-acbe-342d0d6da90e" x="0" y="0" width="247" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELACION DE PROMOTORES]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5f492cf4-f08e-441e-8db6-4f19e40c0f47" x="96" y="20" width="151" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_NEGOCIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="72405e5b-63fb-4a5a-a61d-e5ab5b93885d" x="0" y="20" width="96" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NEGOCIO(S):]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d635e933-8912-4e7b-a2af-de7da680c9b8" x="247" y="0" width="118" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FSISTEMA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="40">
+			<staticText>
+				<reportElement uuid="dc02f9c6-614f-412e-957e-f19ce1a78355" mode="Opaque" x="52" y="20" width="44" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="15c10638-bdc5-4e6d-9237-fd785696cf8e" mode="Opaque" x="0" y="20" width="52" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9665f52f-55a2-4776-9bb0-44aa3ba5bc54" mode="Opaque" x="96" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Apellido Paterno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da9a6d7e-ab9c-4406-af5d-0522a6f4716a" mode="Opaque" x="196" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Apellido Materno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fd03cc72-e971-4f1f-8540-9d8f7bcf0691" mode="Opaque" x="296" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7dbbdc2e-4f11-42ab-a9e7-606dd8e455bd" mode="Opaque" x="396" y="20" width="71" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Fecha Ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="173f01ae-9910-45c4-941b-eb2fba0c2117" mode="Opaque" x="467" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7593c440-c225-4d4a-af22-27192e3fd714" mode="Opaque" x="567" y="20" width="62" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Outsourcing]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="416675b0-1304-4760-8440-97c6474a1701" mode="Opaque" x="629" y="20" width="79" height="20" forecolor="#FFFFFF" backcolor="#FF0033"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Dni Supervisor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e1b30270-8560-4245-9202-1bc32bdb6623" mode="Opaque" x="708" y="20" width="142" height="20" forecolor="#FFFFFF" backcolor="#FF0033"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombres y Apellidos Supervisor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c9028fc9-35ba-42e5-bf23-eb9a464b3d6f" mode="Opaque" x="850" y="20" width="64" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Negocio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="457181c1-d88c-40ba-a697-8a82de58d792" mode="Opaque" x="914" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b331f294-4a01-41bb-a073-13ff24677988" mode="Opaque" x="1014" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Oficina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="14d27459-ac8d-4dd1-acc6-f02c302f73ce" mode="Opaque" x="1114" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#0066CC"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Territorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1d3f4fdf-2c05-4b7b-be28-f1d35dd61693" mode="Opaque" x="1214" y="20" width="115" height="20" forecolor="#FFFFFF" backcolor="#009966"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Estado: Activo/Cesado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c00617bf-f37d-4e15-9353-16f8bfa6afc6" mode="Opaque" x="1329" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#009966"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Fecha de Cese]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4b9ca44-d56f-4c07-a4f2-ea4294c4bb24" mode="Opaque" x="1429" y="20" width="100" height="20" forecolor="#FFFFFF" backcolor="#009966"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Motivo Cese]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="81a2bce4-5974-4ade-9280-8d98c5760cfc" mode="Opaque" x="0" y="0" width="629" height="20" forecolor="#000000" backcolor="#FFCC99"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL PROMOTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f50a697-5603-4e93-9578-a07104f6bd99" mode="Opaque" x="629" y="0" width="221" height="20" forecolor="#000000" backcolor="#FFCC99"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL SUPERVISOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c1d07674-8573-4b07-a050-b9129121ca8a" mode="Opaque" x="850" y="0" width="364" height="20" forecolor="#000000" backcolor="#FFCC99"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[DATOS BBVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="281c2daa-f363-4905-a5f5-b9bea6e1b7ca" mode="Opaque" x="1214" y="0" width="315" height="20" forecolor="#000000" backcolor="#FFCC99"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[ESTADO DEL PROMOTOR]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8271c1e5-467d-45a8-a4ef-0299bcf3292a" x="52" y="0" width="44" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dni_promotor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="0d905266-e040-49b2-9d21-c68d429d9424" x="0" y="0" width="52" height="20"/>
+				<textElement>
+					<font size="7" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6361be3d-73be-4348-9549-7a21fb15b394" x="96" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{app_promotor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="b7461c02-b1df-4f12-81fa-602dcb20eba0" x="196" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apm_promotor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="9f2cad3a-8651-4a73-baef-cc2e861890f5" x="296" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom_promotor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="155cc3a6-854e-469a-bf4d-d934ec826695" x="396" y="0" width="71" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="2e683a39-a538-4fd5-abed-c2f29c13587d" x="467" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="5f6d8d02-e1d6-49a7-959e-c06619daa0be" x="567" y="0" width="62" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{outsourcing}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="a9514d57-f15f-4839-ba43-209866033f4d" x="629" y="0" width="79" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dni_supervisor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d63ae8e7-bf4a-4181-8a03-7c64884bf4ad" x="708" y="0" width="142" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{supervisor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="fc745782-5490-49ca-a728-84cfe0f54d2f" x="850" y="0" width="64" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{des_negocio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="08e2a136-2c10-4fb3-883d-cd76c1169e84" x="914" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="0097b00e-b2b5-4e56-926c-10cd045f8d12" x="1014" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oficina}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="aed45067-1e57-4c65-af61-2c41fb9fa20a" x="1114" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{territorio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="612bbd01-a420-4b1e-bae1-3ab5902b3cf2" x="1214" y="0" width="115" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="50"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGestionLLamadas2" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="19cb4634-57c6-4fc6-a700-eabd89226a55">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="1829"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="P_TOTAL" class="java.lang.Integer"/>
+	<parameter name="P_NEGOCIO" class="java.lang.String"/>
+	<parameter name="P_PRODUCTO" class="java.lang.String"/>
+	<parameter name="P_PERIODO" class="java.lang.String"/>
+	<parameter name="P_LOGO" class="java.lang.String"/>
+	<parameter name="P_FSISTEMA" class="java.lang.String"/>
+	<parameter name="P_DEPARTAMENTO" class="java.lang.String"/>
+	<parameter name="P_ESTADO" class="java.lang.String"/>
+	<parameter name="P_TERRITORIO" class="java.lang.String"/>
+	<parameter name="P_SUPERVISOR" class="java.lang.String"/>
+	<parameter name="P_EJECUTIVO" class="java.lang.String"/>
+	<field name="num_doc" class="java.lang.String"/>
+	<field name="nomcompletocliente" class="java.lang.String"/>
+	<field name="territorio_ofc" class="java.lang.String"/>
+	<field name="prestamo_soles" class="java.math.BigDecimal"/>
+	<field name="des_estado" class="java.lang.String"/>
+	<field name="tipo_base" class="java.lang.String"/>
+	<field name="cod_oficina" class="java.lang.String"/>
+	<field name="ejecutivoasig" class="java.lang.String"/>
+	<field name="nom_supervisor" class="java.lang.String"/>
+	<field name="numero_telefono1" class="java.lang.String"/>
+	<field name="estado_t1" class="java.lang.String"/>
+	<field name="com_t1" class="java.lang.String"/>
+	<field name="numero_telefono2" class="java.lang.String"/>
+	<field name="estado_t2" class="java.lang.String"/>
+	<field name="com_t2" class="java.lang.String"/>
+	<field name="numero_telefono3" class="java.lang.String"/>
+	<field name="estado_t3" class="java.lang.String"/>
+	<field name="com_t3" class="java.lang.String"/>
+	<field name="celular1" class="java.lang.String"/>
+	<field name="estado_c1" class="java.lang.String"/>
+	<field name="com_c1" class="java.lang.String"/>
+	<field name="estado_c2" class="java.lang.String"/>
+	<field name="com_c2" class="java.lang.String"/>
+	<field name="celular3" class="java.lang.String"/>
+	<field name="estado_c3" class="java.lang.String"/>
+	<field name="com_c3" class="java.lang.String"/>
+	<field name="des_resultado" class="java.lang.String"/>
+	<field name="celular2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d297d812-40f6-4afb-acbe-342d0d6da90e" x="0" y="0" width="234" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GESTION DE LLAMADAS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5f492cf4-f08e-441e-8db6-4f19e40c0f47" x="91" y="20" width="143" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_PRODUCTO}+"-"+$P{P_NEGOCIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="72405e5b-63fb-4a5a-a61d-e5ab5b93885d" x="0" y="20" width="91" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83560b87-35fe-4f9e-b802-cc51ae422585" x="0" y="40" width="91" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0b4896eb-9faa-4734-b25c-cb04ab8742eb" x="91" y="40" width="143" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_PERIODO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d635e933-8912-4e7b-a2af-de7da680c9b8" x="648" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FSISTEMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4f1ccbd7-1fa3-42f8-8186-cd6115eae5af" x="0" y="60" width="91" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="aef1ca5e-2841-45f1-975c-d3425007a928" x="91" y="60" width="143" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_DEPARTAMENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0547cc24-8e7d-43e6-bf33-1d22cac4e427" x="0" y="80" width="91" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERRITORIO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2f746343-db9b-4eaf-b16d-f4881360d2cc" x="91" y="80" width="143" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TERRITORIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b2af7740-21e4-402b-8f37-4748891c72a6" x="234" y="20" width="74" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ef97f573-cbc8-4706-b979-ce52409fff70" x="234" y="40" width="74" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EJECUTIVO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cfa8dac7-9d4d-4e30-83a0-d16f8a2e7398" x="234" y="60" width="74" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUPERVISOR:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="85521261-8671-410d-a650-6c050f6a1601" x="308" y="20" width="175" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_ESTADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="118f8fa2-e85b-4b6f-9a85-595f270d3b3e" x="308" y="60" width="175" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_SUPERVISOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fa257244-13a2-4d7a-a156-35ee6f783f4e" x="308" y="40" width="175" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_EJECUTIVO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8ab30bb1-c742-450d-a2e3-1784241cc660" x="648" y="20" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ab8796eb-7faa-46a1-a8ab-1c6c69144e7d" x="581" y="20" width="67" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="cdfd0afb-be44-44be-9d60-1b4573091e4b" mode="Opaque" x="0" y="0" width="45" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="317d2000-f097-46c1-b0d4-b75e5e663ca4" mode="Opaque" x="45" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ce846f57-12a7-4e0d-8d96-54e85d387ae9" mode="Opaque" x="145" y="0" width="55" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Base]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="934bab11-2aa9-4d08-9544-0741f5897257" mode="Opaque" x="200" y="0" width="48" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="303c836a-6b73-4c97-8cc7-0979918a48c4" mode="Opaque" x="248" y="0" width="60" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Territorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="892a664a-cbee-4ac5-9b8e-39b11c9e5b6e" mode="Opaque" x="308" y="0" width="53" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c23a99bc-32e5-4f55-b48b-42fa2c99094a" mode="Opaque" x="361" y="0" width="67" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a911ae15-9a09-4f6f-9c3f-d0ba66f2a56c" mode="Opaque" x="428" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a4dabf35-d8e5-40a7-8f79-2ca92c7a335e" mode="Opaque" x="528" y="0" width="53" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d468d6c9-ef41-44a7-8d01-79497e24da99" mode="Opaque" x="581" y="0" width="67" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1737a50f-76b2-4ac7-8922-fc4bc6c41fc1" mode="Opaque" x="748" y="0" width="54" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07fb5c75-9b1f-46e5-8ac5-0681c554ecea" mode="Opaque" x="802" y="0" width="73" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Celular 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="21276bfd-b5d4-4567-9cd0-283d8cab5c5f" mode="Opaque" x="875" y="0" width="67" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2f92c801-7572-4544-97c2-6fd6a3719a5c" mode="Opaque" x="1042" y="0" width="73" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Celular 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ce55348-40bf-44f5-9475-287c6b3583e7" mode="Opaque" x="1115" y="0" width="67" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="32b5cb52-8818-4d06-b99b-1b97456d2262" mode="Opaque" x="1182" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f2186b17-e46f-4f5a-8279-bec3b27c8973" mode="Opaque" x="1282" y="0" width="73" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Celular 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f3601e28-0a4d-4fb0-b9f6-a144fcb8d122" mode="Opaque" x="648" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0ddc9c10-428f-485b-9ecb-c7cc65ff00ae" mode="Opaque" x="1355" y="0" width="67" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="748820ed-148a-432f-ad1f-cc6709a906c9" mode="Opaque" x="1422" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="934c1fbd-0b18-440b-938f-7f932417fc7f" mode="Opaque" x="1522" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ejecutivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ee7def09-2b60-46b2-884f-393321fe56c7" mode="Opaque" x="1622" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supervisor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="16f9e0cd-720e-48e5-b845-efa4ba187e77" mode="Opaque" x="1722" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fb3b51e-9475-4373-9ba6-4f288a13d023" mode="Opaque" x="942" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="96dc9a2e-2967-4dbe-8792-df39bfcfe20a" mode="Opaque" x="1822" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f55754ec-a572-49a7-aa90-dfd95c202628" x="0" y="0" width="45" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{num_doc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0c98dee2-d855-4368-8e39-81f2bec32858" x="45" y="0" width="100" height="20">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomcompletocliente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="32aa5260-86be-431b-b537-1e71d26e924c" x="145" y="0" width="55" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_base}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9880348a-0025-44fd-b019-319d63ae7fde" x="200" y="0" width="48" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestamo_soles}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5931a2d0-0b04-4c44-8ee1-59fe4eae6c22" x="248" y="0" width="60" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{territorio_ofc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1bc1e660-f246-4c73-ba79-f0d4f7a6ab8c" x="308" y="0" width="53" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_telefono1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="df86f88b-0b38-4f4b-973f-32bebc3b48fd" x="361" y="0" width="67" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_t1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3d3966f8-4675-4b5a-b21f-431e4240d45b" x="428" y="0" width="100" height="20" isPrintWhenDetailOverflows="true">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{com_t1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eeaf2d74-3d58-40c9-b4c6-005f6f7878c2" x="528" y="0" width="53" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_telefono2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="880e265a-62c1-44f7-a0a2-38a24f5bb6d5" x="581" y="0" width="67" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_t2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3e71d3b9-89bd-48a8-9933-3a70cc313628" x="648" y="0" width="100" height="20" isPrintWhenDetailOverflows="true">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{com_t2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="41dcfe4e-550d-4340-bff9-605f00936fb3" x="748" y="0" width="54" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_telefono3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="389e57d5-1365-4fa4-b355-e83dcf05488f" x="942" y="0" width="100" height="20" isPrintWhenDetailOverflows="true">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{com_c1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f65d8e40-afa1-4126-a99f-f5ba47a11ed6" x="802" y="0" width="73" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{celular1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e6291269-e7cd-48e2-ac12-d168580006d1" x="875" y="0" width="67" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_c1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="57f4f7e4-12db-4f48-8b1c-9fa38fcf332d" x="1115" y="0" width="67" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_c2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e4b8a0ff-7fef-45f3-a227-7b416f92873d" x="1182" y="0" width="100" height="20" isPrintWhenDetailOverflows="true">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{com_c2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="93702a98-85fc-4411-9265-28ad9cab4547" x="1282" y="0" width="73" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{celular3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c4058db8-dbf3-43d2-ae83-d9e39e793e07" x="1355" y="0" width="67" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_c3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="27790201-8785-4b66-9d33-2b41c4fd9399" x="1422" y="0" width="100" height="20" isPrintWhenDetailOverflows="true">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{com_c3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4490d270-5971-4c9e-8cdf-b9ce154c1fb5" x="1522" y="0" width="100" height="20">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ejecutivoasig}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="bef87e8b-9304-4e2f-89cc-9e75ebe5692b" x="1622" y="0" width="100" height="20">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom_supervisor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="664f2c50-6196-4590-b28c-cff7edb04c79" x="1722" y="0" width="100" height="20">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{des_resultado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="28027941-68e3-4e45-a3b3-a59cf8a74a79" x="1042" y="0" width="73" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{celular2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9d69244b-a457-4e1f-8877-782179c07995" x="1822" y="0" width="100" height="20">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{des_estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

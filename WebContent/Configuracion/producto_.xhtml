@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Configuracion" url="#" />
+    				<p:menuitem value="Gestion de Producto" url="producto" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px">
+				<h:panelGrid columns="4">						
+					<p:commandButton value="Nuevo Producto" icon="icon-add" update=":dlgDetNuevoProducto" oncomplete="PF('dlgNuevoProducto').show();"
+						actionListener="#{productoMB.nuevoProducto()}"/>
+				</h:panelGrid>
+			</h:form>
+			
+				<!-- listado de Planes -->
+			<h:form id="formLista">
+				<p:dataTable id="dataProducto" var="p" value="#{productoMB.listaProductos}" widgetVar="dtProducto" 
+					emptyMessage="No hay Productos Disponibles." rowIndexVar="nro" 
+					 style="FONT-SIZE: 10px; ">
+					<f:facet name="header">Lista Producto</f:facet>
+										
+					<p:column headerText="Orden" width="25" style="width:3%" >
+						#{nro+1}
+					</p:column>					
+			        
+			        <p:column style="width:70px" headerText="codigo Producto">
+						<h:outputText value="#{p.cod_prod_det}"/>
+					</p:column>
+					
+					<p:column style="width:70px" headerText="codigo producto sunat">
+						<h:outputText value="#{p.desProductoSunat}"/>
+					</p:column>
+					
+					<p:column style="width:70px" headerText="Descripcion">
+						<h:outputText value="#{p.descripcion_prod_det}"/>
+					</p:column>
+					
+					<p:column style="width:70px" headerText="Valor Unitario">
+						<h:outputText value="#{p.valor_unitario_prod_det}"/>
+					</p:column>
+					
+					<p:column style="width:70px" headerText="Unidad de Medida">
+						<h:outputText value="#{p.desUnidadMedida}"/>
+					</p:column>
+					
+					<p:column style="width:70px" headerText="Stock">
+						<h:outputText value="#{p.stock}"/>
+					</p:column>
+					
+					<p:column headerText="Tributos Afectos" style="width:15%;text-align: center">
+						<p:commandButton title="Asignar Tributos Afecto"  update=":dlgDetNuevoTributoProducto" actionListener="#{productoMB.asignarTributoProducto(p)}"
+										 oncomplete="PF('dlgNuevoTributoProducto').show();" icon="icon-edit">
+						</p:commandButton> 
+					</p:column>
+								        
+			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevoProducto" actionListener="#{productoMB.editarProducto(p)}"
+										 oncomplete="PF('dlgNuevoProducto').show();" icon="icon-edit">
+						</p:commandButton> 
+
+						<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminarProducto).show();" actionListener="#{productoMB.eliminarProducto(p)}" update=":dlgDetEliminarProducto" icon="icon-delete">
+	
+						</p:commandButton>
+								
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Registrar Producto" widgetVar="dlgNuevoProducto" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoProducto" modal="true">
+					
+					<h:form id="formProducto" >
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					<h:panelGrid columns="2">
+							
+							#{"CODIGO PRODUCTO:"} 
+							<p:inputText value="#{productoMB.productoSelec.cod_prod_det}" id="codigo_producto"
+								required="true" label="ruc" requiredMessage="Se necesita un codigo de producto"
+								style="width:200px;" />
+							
+							#{"Tipo de Producto Sunat:"}						        
+							<p:selectOneMenu style="width:200px" value="#{productoMB.productoSelec.tipo_prod_sunat_det}" >
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{productoMB.listTablaTablasDetallesTipoProductoSunat}" var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.id_codigo}" />
+							</p:selectOneMenu>
+							
+							#{"Descripcion de Producto:"} 
+							<p:inputText value="#{productoMB.productoSelec.descripcion_prod_det}" id="descripcion"
+								required="true" label="descripcion" requiredMessage="Se necesita una descripción del producto"
+								style="width:200px;" />
+							
+							#{"Unidad de Medida:"}						        
+							<p:selectOneMenu style="width:200px" value="#{productoMB.productoSelec.unidad_medida_det}" >
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{productoMB.listTablaTablasDetallesUnidadMedida}" var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.id_codigo}" />
+							</p:selectOneMenu>
+								
+							#{"Valor Unitario:"} 
+							<p:inputText value="#{productoMB.productoSelec.valor_unitario_prod_det}" id="valor_unitario"
+								required="true" label="valor_unitario" requiredMessage="Se necesita un valor unitario"
+								style="width:200px;" />
+								
+							#{"Stock:"} 
+							<p:inputText value="#{productoMB.productoSelec.stock}" id="stock"
+								required="true" label="stock" requiredMessage="Se necesita un stock"
+								style="width:200px;" />
+								
+							
+					</h:panelGrid>
+					<br/> 
+					<p:commandButton value="Guardar" actionListener="#{productoMB.guardarProducto()}"
+						update=":formLista msgNuevo" oncomplete="validarProducto(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoProducto').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+			<p:dialog header="Tributos Afectos" widgetVar="dlgNuevoTributoProducto" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoTributoProducto" modal="true">
+					
+					<h:form id="formTributoProducto">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevoTributoProducto" closable="true"/>
+					<h:panelGrid>							
+							
+							<p:panel menuTitle="IGV">
+							
+								<p:selectBooleanCheckbox value="#{productoMB.bIGV}" itemLabel="IGV">
+						            <p:ajax update="igv"/>
+						        </p:selectBooleanCheckbox>
+						        
+						        <h:panelGrid columns="2" id="igv">
+						        
+						        	#{'Tributo: Códigos de tipos de tributos IGV'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoIGV.tipo_tributo_codigo_det}"/>
+						        	
+						        	#{'Tributo: Nombre de tributo por Item'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoIGV.tipo_tributo_nombre_det}"/>
+						        	
+						        	#{'Tributo: Códigos de tipo de tributo por item'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoIGV.tipo_tributo_inter_det}"/>
+						        	
+						        	#{'Tributo: Afectación al IGV por item'}
+						        	<p:selectOneMenu style="width:200px" value="#{productoMB.tributoProductoIGV.tipo_afectacion_igv_det}"  required="true" requiredMessage="Se necesita un tipo de afectación al IGV" disabled="#{!productoMB.bIGV}">
+										<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+										<f:selectItems value="#{productoMB.listTablaTablasDetallesAfectacionIGV}" var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.id_codigo}" />
+									</p:selectOneMenu>
+						        	
+						        	#{'Tributo: Porcentaje de IGV'}
+						        	<p:inputText value="#{productoMB.tributoProductoIGV.porcentaje_det}" id="porcentajeIGV" disabled="#{!productoMB.bIGV}"
+										required="true" label="porcentajeIGV" requiredMessage="Se necesita un porcentaje de IGV"
+										style="width:200px;" />
+						        
+						        </h:panelGrid>
+							
+							</p:panel>
+								
+							<p:panel menuTitle="ISC">
+							
+								<p:selectBooleanCheckbox value="#{productoMB.bISC}" itemLabel="ISC">
+						            <p:ajax update="isc"/>
+						        </p:selectBooleanCheckbox>
+						        
+						        <h:panelGrid columns="2" id="isc">
+						        
+						        	#{'Tributo: Códigos de tipos de tributos ISC'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoISC.tipo_tributo_codigo_det}"/>
+						        	
+						        	#{'Tributo: Nombre de tributo por Item'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoISC.tipo_tributo_nombre_det}"/>
+						        	
+						        	#{'Tributo: Códigos de tipo de tributo por item'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoISC.tipo_tributo_inter_det}"/>
+						        	
+						        	#{'Tributo: Tipo de Sistema ISC'}
+						        	<p:selectOneMenu style="width:200px" value="#{productoMB.tributoProductoISC.tipo_sistema_isc_det}"  required="true" requiredMessage="Se necesita un tipo de sistema ISC" disabled="#{!productoMB.bISC}">
+										<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+										<f:selectItems value="#{productoMB.listTablaTablasDetallesSistemaCalculoISC}" var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.id_codigo}" />
+									</p:selectOneMenu>
+						        	
+						        	#{'Tributo: Porcentaje de ISC'}
+						        	<p:inputText value="#{productoMB.tributoProductoISC.porcentaje_det}" id="porcentajeISC" disabled="#{!productoMB.bISC}"
+										required="true" label="porcentajeISC" requiredMessage="Se necesita un porcentaje de ISC"
+										style="width:200px;" />
+						        
+						        </h:panelGrid>
+							
+							</p:panel>
+							
+							<p:panel menuTitle="OTROS">
+							
+								<p:selectBooleanCheckbox value="#{productoMB.bOTROS}" itemLabel="OTROS">
+						            <p:ajax update="otros"/>
+						        </p:selectBooleanCheckbox>
+						        
+						        <h:panelGrid columns="2" id="otros">
+						        	
+						        	#{'Tributo: Tipos de Tributo'}
+						        	<p:selectOneMenu style="width:200px" value="#{productoMB.tributoProductoOtros.tipo_tributo_det}"  required="true" requiredMessage="Se necesita un tipo de tributo" disabled="#{!productoMB.bOTROS}">
+										<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+										<f:selectItems value="#{productoMB.listTablaTablasDetallesTipoTributo}" var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.id_codigo}" />
+										<p:ajax listener="#{productoMB.cargarDatosOtros()}" update="otros"></p:ajax>
+									</p:selectOneMenu>
+						        	
+						        	#{'Tributo: Códigos de tipos de tributos OTRO'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoOtros.tipo_tributo_codigo_det}"/>
+						        	
+						        	#{'Tributo: Nombre de tributo OTRO por Item'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoOtros.tipo_tributo_nombre_det}"/>
+						        	
+						        	#{'Tributo: Códigos de tipo de tributo OTRO por item'}
+						        	<h:outputLabel value="#{productoMB.tributoProductoOtros.tipo_tributo_inter_det}"/>
+						        	
+						        	#{'Tributo: Porcentaje de OTRO'}
+						        	<p:inputText value="#{productoMB.tributoProductoOtros.porcentaje_det}" id="porcentajeOTROS" disabled="#{!productoMB.bOTROS}"
+										required="true" label="porcentajeOTROS" requiredMessage="Se necesita un porcentaje de Otros"
+										style="width:200px;" />
+						        
+						        </h:panelGrid>
+							
+							</p:panel>
+					</h:panelGrid>
+					<br/> 
+					<p:commandButton value="Aceptar" actionListener="#{productoMB.guardarProducto()}"
+						update=":formLista msgNuevo" oncomplete="validarProducto(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoProducto').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminarProducto" appendTo="@(body)"
+					message="¿Desea eliminar este Producto " header="Eliminar Producto"
+					severity="alert" widgetVar="dlgEliminarProducto">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral" 
+						actionListener="#{productoMB.confirmaEliminarProducto}"
+						oncomplete="PF('dlgEliminarProducto').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminarProducto').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+		</p:panel>
+		
+		<script>
+			
+		function validarProducto(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoProducto').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevoProducto').hide();
+				console.log("cerro")
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

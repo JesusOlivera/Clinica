@@ -1,0 +1,172 @@
+.highlightTableSeleccion{
+   background: #FBEC88 !important;
+   font-weight: bold;  
+   border-color: #DCDF0E
+}
+
+.ui-layout-unit-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.highlightTablePer{
+   background: #FCB9B9 !important;
+   font-weight: bold;  
+   color: red !important;
+}
+
+.highlightTableRow2 {
+     background: none repeat scroll 0 0 #FACC2E;
+     font-weight: bold;
+}
+
+.highlightTablePer2{
+   background: #C8F1E6 !important;
+   font-weight: bold;  
+   color: #045491   !important;
+}
+
+.styleTableRowTurnoC{
+    background: #F3CACA !important;
+      font-weight: bold;
+    color: red !important;           
+}
+
+
+.companyHeaderGrid tr, .companyHeaderGrid td {
+    border: none;
+    border-color: transparent; 
+}
+.companyHeaderGridDialog tr, .companyHeaderGridDialog td {
+    border: none;
+    background-color: lightsteelblue; 
+}
+.companyHeaderGridRowExp tr, .companyHeaderGridRowExp td {
+    border: none; 
+    margin-left: 100px;
+}
+
+.overlayDiv {/*Class of the fix*/
+             left: 0;
+             position: fixed;
+             top: 0;
+ }
+ 
+ .wideList  .ui-orderlist-list{
+    width: 100%;
+    height: 100%; 
+    border: 0px;
+     background-color: #ffcccc; 
+}
+
+ .wideList2  .ui-orderlist-list{
+    width: 100%;
+    height: 100%; 
+    border: 0px;
+     background-color: #F5EACC; 
+}
+ 
+.mystyle.ui-datatable .ui-datatable-even.ui-state-hover{
+background: #CEF3A6 ;
+}
+.mystyle.ui-datatable .ui-datatable-odd.ui-state-hover{
+background: #CEF3A6 ;
+
+}
+.mystyle.ui-datatable .ui-datatable-even.ui-state-highlight{
+background: darkseagreen ;
+}
+.mystyle.ui-datatable .ui-datatable-odd.ui-state-highlight{
+background: darkseagreen ;
+}
+.mystyle.ui-datatable .ui-datatable-header{
+background: paleturquoise !important;
+
+}
+.mystyle.ui-datatable .ui-datatable-even{
+background: white ;
+}
+.mystyle.ui-datatable .ui-datatable-odd{
+background: white ;
+}
+
+.ui-datagrid-no-border .ui-datagrid-content {
+   border: none;
+}
+
+/*tabla control asistencia*/
+.mystyle2.ui-datatable .ui-datatable-even.ui-state-hover{
+background: #CEF3A6 ;
+}
+.mystyle2.ui-datatable .ui-datatable-odd.ui-state-hover{
+background: #CEF3A6 ;
+
+}
+.mystyle2.ui-datatable .ui-datatable-even.ui-state-highlight{
+background: darkseagreen ;
+}
+.mystyle2.ui-datatable .ui-datatable-odd.ui-state-highlight{
+background: darkseagreen ;
+}
+.mystyle2.ui-datatable .ui-datatable-header{
+background: paleturquoise !important;
+
+}
+.highlightTableRow3{
+    background: #C8F1E6;
+      font-weight: bold;
+    color: blue;
+    font-size:30px;       
+}
+.highlightTableRow4{
+    background: white;   
+     color: #3C3C3C;
+     font-weight: normal;
+}
+
+.ui-autocompV .ui-inputfield {
+
+width: 440px;
+}
+
+.contentFormPie{
+    font-family: "Palatino", sans-serif; 
+    position:relative;
+    margin:auto;
+    background: #333333; 
+    height: 28px;  
+    color: #ffffff; 
+    border-style: groove;
+    border: 0px solid;
+    padding: 8px 20px 8px 20px;;
+    margin: 10px;
+    font-size: 11px;
+    border-radius:15px 15px 15px 15px;
+    -moz-border-radius:30px 30px 0px 0px;
+    -webkit-border-radius:30px 30px 0px 0px; 
+    
+}
+
+
+
+
+.companyHeaderGrid5 tr, .companyHeaderGrid5 td {
+    border: none;
+    border-color: transparent; 
+    padding: : 0px;
+    margin: 0px;
+     vertical-align: top;
+}
+.companyHeaderGridDialog5 tr, .companyHeaderGridDialog5 td {
+    border: none;
+    background-color: lightsteelblue; 
+}
+.companyHeaderGridRowExp5 tr, .companyHeaderGridRowExp5 td {
+    border: none; 
+    margin-left: 0px;
+}
+
+.ui-autocomp .ui-inputfield {
+	width: 300px;
+}

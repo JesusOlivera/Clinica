@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptIndSeguimiento" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="19cb4634-57c6-4fc6-a700-eabd89226a55">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="P_TOTAL" class="java.lang.String"/>
+	<parameter name="P_NEGOCIO" class="java.lang.String"/>
+	<parameter name="P_PRODUCTO" class="java.lang.String"/>
+	<parameter name="P_PERIODO" class="java.lang.String"/>
+	<parameter name="P_LOGO" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\IttsaWS\\SCPF\\WebContent\\resources\\reports\\jxrml\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_FSISTEMA" class="java.lang.String"/>
+	<parameter name="P_DEPARTAMENTO" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="totalIndicador" class="java.lang.Integer"/>
+	<field name="indicadoresDS" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d297d812-40f6-4afb-acbe-342d0d6da90e" x="0" y="0" width="247" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INDICADORES DE SEGUIMIENTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5f492cf4-f08e-441e-8db6-4f19e40c0f47" x="70" y="20" width="177" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_PRODUCTO}+"-"+$P{P_NEGOCIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="72405e5b-63fb-4a5a-a61d-e5ab5b93885d" x="0" y="20" width="70" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83560b87-35fe-4f9e-b802-cc51ae422585" x="0" y="40" width="70" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0b4896eb-9faa-4734-b25c-cb04ab8742eb" x="70" y="40" width="177" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_PERIODO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d635e933-8912-4e7b-a2af-de7da680c9b8" x="247" y="0" width="118" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FSISTEMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4f1ccbd7-1fa3-42f8-8186-cd6115eae5af" x="247" y="20" width="118" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="aef1ca5e-2841-45f1-975c-d3425007a928" x="365" y="20" width="118" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_DEPARTAMENTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="67">
+			<subreport>
+				<reportElement uuid="694a3b3b-9476-4832-8557-824e77c5cf7d" x="1" y="20" width="555" height="47" isPrintWhenDetailOverflows="true"/>
+				<dataSourceExpression><![CDATA[$F{indicadoresDS}]]></dataSourceExpression>
+				<subreportExpression><![CDATA["srptIndicadoresxCategoria.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="c0b9da1e-7d38-4f7b-aa34-3ea4431b4e4b" mode="Opaque" x="0" y="0" width="456" height="20" forecolor="#FFFFFF" backcolor="#3300FF"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4bd8c159-28bf-4e68-a0d1-90c00fa0f9ce" x="456" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptFeedBack" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="19cb4634-57c6-4fc6-a700-eabd89226a55">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="P_TOTAL" class="java.lang.String"/>
+	<parameter name="P_NEGOCIO" class="java.lang.String"/>
+	<parameter name="P_PRODUCTO" class="java.lang.String"/>
+	<parameter name="P_PERIODO" class="java.lang.String"/>
+	<parameter name="P_LOGO" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\IttsaWS\\SCPF\\WebContent\\resources\\reports\\jxrml\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_FSISTEMA" class="java.lang.String"/>
+	<parameter name="P_TERRITORIO" class="java.lang.String"/>
+	<field name="baseEntregadaDS" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="baseNetaDS" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="indicadoresDS" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d297d812-40f6-4afb-acbe-342d0d6da90e" x="0" y="0" width="240" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FEED BACK]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5f492cf4-f08e-441e-8db6-4f19e40c0f47" x="67" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="72405e5b-63fb-4a5a-a61d-e5ab5b93885d" x="0" y="20" width="67" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83560b87-35fe-4f9e-b802-cc51ae422585" x="0" y="40" width="67" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0b4896eb-9faa-4734-b25c-cb04ab8742eb" x="67" y="40" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_PERIODO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d635e933-8912-4e7b-a2af-de7da680c9b8" x="240" y="0" width="117" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FSISTEMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7e995cc1-6890-4010-99cd-0025184a8954" x="167" y="20" width="73" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[TERRITORIO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1eabd62d-d459-46e5-bd62-6aba78b58930" x="240" y="20" width="117" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_TERRITORIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="48">
+			<subreport runToBottom="true">
+				<reportElement uuid="80a92d26-9cea-49d1-99ae-99bec3cc7c9c" x="0" y="0" width="555" height="48"/>
+				<dataSourceExpression><![CDATA[$F{baseNetaDS}]]></dataSourceExpression>
+				<subreportExpression><![CDATA["srptBaseNeta.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement uuid="cb470ad7-5f53-4e67-97b3-2f851c3e07ae" x="0" y="0" width="555" height="50"/>
+				<dataSourceExpression><![CDATA[$F{indicadoresDS}]]></dataSourceExpression>
+				<subreportExpression><![CDATA["srptIndicadoresFeedBack.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="50"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.ComprobanteMapper">
+
+<resultMap id="comprobanteResult" type="com.certicom.scpf.domain.Comprobante">
+	<id column="id_comprobante" property="id_comprobante"/>
+	<result column="tipo_comprobante" property="tipo_comprobante"/>
+	<result column="id_cliente" property="id_cliente"/>
+	<result column="id_emisor" property="id_emisor"/>
+	<result column="id_domicilio_fiscal_cab" property="id_domicilio_fiscal_cab"/>
+	<result column="tipo_operacion_cab" property="tipo_operacion_cab"/>
+	<result column="fecha_emision_cab" property="fecha_emision_cab"/>
+	<result column="hora_emision_cab" property="hora_emision_cab"/>
+	<result column="fecha_vencimiento_cab" property="fecha_vencimiento_cab"/>
+	<result column="tipo_moneda_cab" property="tipo_moneda_cab"/>
+	<result column="suma_tributos_cab" property="suma_tributos_cab"/>
+	<result column="total_valor_venta_cab" property="total_valor_venta_cab"/>
+	<result column="total_precio_venta_cab" property="total_precio_venta_cab"/>
+	<result column="total_descuentos_cab" property="total_descuentos_cab"/>
+	<result column="suma_otros_cargos_cab" property="suma_otros_cargos_cab"/>
+	<result column="total_anticipos_cab" property="total_anticipos_cab"/>
+	<result column="importe_total_venta_cab" property="importe_total_venta_cab"/>
+	<result column="tipo_comprobante_afecta_not" property="tipo_comprobante_afecta_not"/>
+	<result column="archivo_plano_nombre" property="archivo_plano_nombre"/>
+	<result column="archivo_plano_contenido" property="archivo_plano_contenido"/>
+	<result column="estado_sunat" property="estado_sunat"/>
+	<result column="numero_serie_documento_cab" property="numero_serie_documento_cab"/>
+	<result column="tipo_tipo_nota_not" property="tipo_tipo_nota_not"/>
+	<result column="descripcion_motivo_not" property="descripcion_motivo_not"/>
+	<result column="id_modo_pago" property="id_modo_pago"/>
+	<result column="tipo_docu_iden_cab" property="tipo_docu_iden_cab"/>
+	<result column="estado_comunicacion_baja" property="estado_comunicacion_baja"/>
+	<result column="correlativo" property="correlativo"/>
+	
+<!-- 	MODIFICACION JCTV -->
+	<result column="estado_comunicacion_baja" property="estado_comunicacion_baja"/>
+	<association property="cliente" column="id_cliente" select="selectCliente"/>
+	<association property="domicilioFiscal" column="id_domicilio_fiscal_cab" select="selectDomicilioFiscal"/>
+	<association property="emisor" column="id_emisor" select="selectEmisor"/>
+	<association property="vendedor" column="id_vendedor" select="selectVendedor"/> <!-- Vega.com -->
+	<association property="modoPago" column="id_modo_pago" select="selectModoPago"/> <!-- Modo de Pago -->
+	
+</resultMap>
+
+	<select id="selectCliente" parameterType="int" resultType="com.certicom.scpf.domain.Cliente">
+		SELECT * FROM t_cliente WHERE id_cliente=#{id_cliente}
+	</select>
+	
+	<select id="selectDomicilioFiscal" parameterType="int" resultType="com.certicom.scpf.domain.DomicilioFiscal">
+		SELECT * FROM t_domicilio_fiscal WHERE id_domicilio_fiscal_cab=#{id_domicilio_fiscal_cab}
+	</select>
+	
+	<select id="selectEmisor" parameterType="int" resultType="com.certicom.scpf.domain.Emisor">
+		SELECT * FROM t_emisor WHERE id_emisor=#{id_emisor}
+	</select>
+	
+		<!-- Vega.com -->
+	<select id="selectVendedor" parameterType="int" resultType="com.certicom.scpf.domain.Vendedor">
+		SELECT * FROM t_vendedor WHERE id_vendedor=#{id_vendedor}
+	</select>
+	
+	<!-- Modo de Pago -->
+	<select id="selectModoPago" parameterType="int" resultType="com.certicom.scpf.domain.ModoPago">
+		SELECT * FROM t_modo_pago WHERE id_modo_pago=#{id_modo_pago}
+	</select>
+	
+	<select id="listaComprobantes" resultMap="comprobanteResult">
+		select e.*,tp.descripcion_largo as descripcion_tipo_comprobante,
+		top.descripcion_largo as descripcion_tipo_operacion, cl.*, dom.*, em.*
+		 from t_comprobante e 
+		inner join t_tabla_tablas_detalle tdi on  cast (e.tipo_docu_iden_cab as varchar) = tdi.codigo_catalogo  and tdi.id_maestra=6
+		inner join t_cliente cl on cl.id_cliente=e.id_cliente
+		inner join t_tabla_tablas_detalle tp on e.tipo_comprobante = tp.codigo_catalogo and tp.id_maestra=1
+		inner join t_tabla_tablas_detalle top on cast ( e.tipo_operacion_cab as int)=  cast (top.codigo_catalogo as int )and top.id_maestra=51
+		inner join t_domicilio_fiscal dom on dom.id_domicilio_fiscal_cab=e.id_domicilio_fiscal_cab
+		inner join t_emisor em on em.id_emisor=e.id_emisor
+		order by e.id_cliente asc
+	</select>
+	
+	<select id="listaComprobantesLecturaRespuesta" resultMap="comprobanteResult">
+		select e.*,tp.descripcion_largo as descripcion_tipo_comprobante,
+		top.descripcion_largo as descripcion_tipo_operacion, cl.*, dom.*,em.*
+		 from t_comprobante e 
+		inner join t_tabla_tablas_detalle tdi on  cast (e.tipo_docu_iden_cab as varchar) = tdi.codigo_catalogo  and tdi.id_maestra=6
+		inner join t_cliente cl on cl.id_cliente=e.id_cliente
+		inner join t_tabla_tablas_detalle tp on e.tipo_comprobante = tp.codigo_catalogo and tp.id_maestra=1
+		inner join t_tabla_tablas_detalle top on cast ( e.tipo_operacion_cab as int)=  cast (top.codigo_catalogo as int )and top.id_maestra=51
+		inner join t_domicilio_fiscal dom on dom.id_domicilio_fiscal_cab=e.id_domicilio_fiscal_cab
+		inner join t_emisor em on em.id_emisor=e.id_emisor
+		where e.estado_sunat='ENVIADO' 
+		and (e.estado_respuesta_sunat IS NULL or e.estado_respuesta_sunat ='CON ERRORES')
+		order by e.id_cliente asc
+	</select>
+	
+	
+	<select id="countCompByAnioMesTipoPAGINATOR"  resultType="java.lang.Integer">
+		select count(*)  
+		from t_comprobante e 
+		inner join t_tabla_tablas_detalle tdi on  cast (e.tipo_docu_iden_cab as varchar) = tdi.codigo_catalogo  and tdi.id_maestra=6
+		inner join t_cliente cl on cl.id_cliente=e.id_cliente
+		inner join t_tabla_tablas_detalle tp on e.tipo_comprobante = tp.codigo_catalogo and tp.id_maestra=1
+		inner join t_tabla_tablas_detalle top on cast ( e.tipo_operacion_cab as int)=  cast (top.codigo_catalogo as int )and top.id_maestra=51
+		inner join t_domicilio_fiscal dom on dom.id_domicilio_fiscal_cab=e.id_domicilio_fiscal_cab
+		inner join t_emisor em on em.id_emisor=e.id_emisor
+		where e.tipo_comprobante=#{tipo_comprobante} and extract(month from e.fecha_emision_cab)= #{mes} and  extract(year from e.fecha_emision_cab)=#{anio}
+	</select>
+	
+	<select id="getByNumeroSerieComprobante" resultMap="comprobanteResult">
+		select e.*,tp.descripcion_largo as descripcion_tipo_comprobante,
+		top.descripcion_largo as descripcion_tipo_operacion, cl.*, dom.*, em.*
+		 from t_comprobante e 
+		inner join t_tabla_tablas_detalle tdi on  cast (e.tipo_docu_iden_cab as varchar) = tdi.codigo_catalogo  and tdi.id_maestra=6
+		inner join t_cliente cl on cl.id_cliente=e.id_cliente
+		inner join t_tabla_tablas_detalle tp on e.tipo_comprobante = tp.codigo_catalogo and tp.id_maestra=1
+		inner join t_tabla_tablas_detalle top on cast ( e.tipo_operacion_cab as int)=  cast (top.codigo_catalogo as int )and top.id_maestra=51
+		inner join t_domicilio_fiscal dom on dom.id_domicilio_fiscal_cab=e.id_domicilio_fiscal_cab
+		inner join t_emisor em on em.id_emisor=e.id_emisor
+		where numero_serie_documento_cab= #{numero_serie_documento_cab} and e.tipo_comprobante != '07' 
+		order by e.id_cliente asc
+	</select>
+	
+	
+	<select id="listComprobantesByAnioMesTipoPAGINATOR" resultMap="comprobanteResult">
+		select e.*,tp.descripcion_largo as descripcion_tipo_comprobante,
+		top.descripcion_largo as descripcion_tipo_operacion, cl.*, dom.*, em.* 
+		from t_comprobante e 
+		inner join t_tabla_tablas_detalle tdi on  cast (e.tipo_docu_iden_cab as varchar) = tdi.codigo_catalogo  and tdi.id_maestra=6
+		inner join t_cliente cl on cl.id_cliente=e.id_cliente
+		inner join t_tabla_tablas_detalle tp on e.tipo_comprobante = tp.codigo_catalogo and tp.id_maestra=1
+		inner join t_tabla_tablas_detalle top on cast ( e.tipo_operacion_cab as int)=  cast (top.codigo_catalogo as int )and top.id_maestra=51
+		inner join t_domicilio_fiscal dom on dom.id_domicilio_fiscal_cab=e.id_domicilio_fiscal_cab
+		inner join t_emisor em on em.id_emisor=e.id_emisor
+		where e.tipo_comprobante=#{tipo_comprobante} and extract(month from e.fecha_emision_cab)= #{mes} and  extract(year from e.fecha_emision_cab)=#{anio}
+     	
+     		<if test="filters.entrySet() != null">
+		       <foreach item="item" collection="filters.entrySet()" >
+	         	  	<choose>
+					<when test="item.key == 'id_cliente'">
+						and ( e.id_cliente like ('%' || replace( #{item.value}, ' ', '%')  || '%') 		         	
+		         		) 
+					</when>
+					
+					<otherwise>
+					and  ${item.key} like ('%' || replace( #{item.value}, ' ', '%')  || '%') 
+					</otherwise>
+			  		</choose>
+	           </foreach> 
+            </if>
+            
+            <if test="sortField != null">
+				order by ${sortField} ${sortOrder}    
+		    </if>
+		    
+		    
+		    
+			 OFFSET #{first} LIMIT #{pageSize} 
+	</select>	
+
+
+</mapper>	

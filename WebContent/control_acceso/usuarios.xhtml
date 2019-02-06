@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+		<h:form>
+			<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+   				<p:menuitem value="Home" url="#" />  
+   				<p:menuitem value="Seguridad" url="#" />
+   				<p:menuitem value="Gestión de Usuarios" url="usuarios" />    
+			</p:breadCrumb>	
+		</h:form>	
+		<p:messages showDetail="false"  showSummary="true" id="msgGeneral" closable="true" />
+		
+			<!-- toolbar -->
+			<h:form style="margin-top: 4px">
+
+					<p:commandButton value="Nuevo Usuario" icon="icon-add"
+						update=":dlgDetNuevo" oncomplete="PF('dlgNuevo').show();"
+						actionListener="#{usuarioMB.newInsert}" >
+						<p:resetInput target=":dlgDetNuevo" />
+					</p:commandButton>
+			</h:form>
+			
+			<!-- listado de usuarios -->	
+			<h:form id="formLista">
+			
+				<p:dataTable  value="#{usuarioMB.usuarios}" var="u" filteredValue="#{usuarioMB.usuariosFilter}"  
+					emptyMessage="No hay Perfiles Disponibles." rowIndexVar="nro" 
+					paginator="true"  widgetVar="dtUsuarios" 
+					rows="10" paginatorPosition="bottom" 
+					style="FONT-SIZE: 10px; margin-top:4px; ">
+
+					<f:facet name="header">Lista de Usuarios</f:facet>
+					
+				 	<p:column headerText="Ord." style="width:20px;" >
+						#{nro+1}
+					</p:column>
+					
+					<p:column  headerText="Apellido Pat" filterBy="#{u.apellido_paterno}"  sortBy="#{u.apellido_paterno}" filterStyle="width:95%;"  filterMatchMode="contains">
+						<h:outputText value="#{u.apellido_paterno}"/>
+					</p:column>
+					<p:column  headerText="Apellido Mat" filterBy="#{u.apellido_materno}" sortBy="#{u.apellido_materno}" filterStyle="width:95%;"  filterMatchMode="contains">
+						<h:outputText value="#{u.apellido_materno}"/>
+					</p:column>
+					<p:column  headerText="Nombre" filterBy="#{u.nombre}" sortBy="#{u.nombre}" filterStyle="width:95%;"  filterMatchMode="contains">
+						<h:outputText value="#{u.nombre}" />
+					</p:column>
+					
+					<p:column  headerText="DNI" filterBy="#{u.dni}" sortBy="#{u.dni}" filterStyle="width:95%;"  filterMatchMode="contains">
+						<h:outputText value="#{u.dni}" />
+					</p:column>
+
+
+					<p:column headerText="Usuario" filterBy="#{u.login}" 
+						filterStyle="width:95%;"  filterMatchMode="contains">
+						<h:outputText value="#{u.login}" />
+					</p:column>
+
+					<p:column style="width:5%; text-align: center;" headerText="Estado Sistema">
+							<p:commandLink update="@form :msgGeneral" actionListener="#{usuarioMB.cambiarEstado(u)}" > 
+							<h:graphicImage value="#{u.estado?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{u.estado?'Activo':'Bloqueado'}" />
+							</p:commandLink>
+					</p:column>
+					
+			
+
+					<p:column headerText="Opciones" style="width:15%;text-align: center">
+						<p:commandButton title="Editar"   update=":dlgDetNuevo"
+						 oncomplete="PF('dlgNuevo').show();" icon="icon-edit" 
+						 actionListener="#{usuarioMB.newUpdate(u)}">
+						 
+						 </p:commandButton>
+
+						<p:commandButton title="Eliminar" actionListener="#{usuarioMB.newDelete(u)}"
+							oncomplete="PF('dlgEliminar').show();" icon="icon-delete" />
+
+						<p:commandButton title="Perfil" action="#{usuarioMB.agregarPerfil(u)}" icon="icon-rol" />
+						
+						<p:commandButton title="Resetear Pass" actionListener="#{usuarioMB.newUserResetPass(u)}"
+							oncomplete="PF('dlgResetPass').show();" icon="icon-reiniciaclave" update=":ddlgDetResetPass"/>
+
+					
+					</p:column>
+				</p:dataTable>
+			</h:form>
+	
+			
+			<!-- dialogo nuevo/ editar usuario -->
+			
+			<p:dialog header="Usuario" widgetVar="dlgNuevo"  appendTo="@(body)" closeOnEscape="true"
+					resizable="false" id="dlgDetNuevo" modal="true">
+					<p:messages id="smsNuevoEdit" showDetail="false" showSummary="true" closable="true" />
+					
+					<h:form id="formNuevo">
+						<h:panelGrid columns="2">
+
+							#{"DNI:"}
+							<p:inputText value="#{usuarioMB.usuario.dni}" maxlength="8"
+								required="true" requiredMessage="Debe ingresar el DNI" style="width:200px" />
+							
+							#{"Nombre:"}
+							<p:inputText value="#{usuarioMB.usuario.nombre}" 
+								
+								maxlength="20" style="width:200px">
+							</p:inputText>
+
+							#{"Apellido Paterno:"}
+							<p:inputText value="#{usuarioMB.usuario.apellido_paterno}"
+								required="true" requiredMessage="Debe ingresar el apellido paterno"
+								maxlength="20" style="width:200px">
+							</p:inputText>
+							
+							#{"Apellido Materno"}
+							<p:inputText value="#{usuarioMB.usuario.apellido_materno}"
+							 maxlength="20" style="width:200px" />
+ 
+							#{"Login:"}
+							<p:inputText value="#{usuarioMB.usuario.login}" 
+								required="true" requiredMessage="Debe ingresar el login"
+								maxlength="20" style="width:200px">
+							</p:inputText>
+							
+							#{"Password:"}
+							<p:inputText value="#{usuarioMB.usuario.password}" disabled="true" rendered="#{not usuarioMB.editar}"
+								required="true" requiredMessage="Debe ingresar el password"
+								maxlength="20" style="width:200px">
+							</p:inputText>
+							
+							<p:inputText value="#{usuarioMB.usuario.password}" disabled="false" rendered="#{usuarioMB.editar}"
+								required="true" requiredMessage="Debe ingresar el password"
+								maxlength="20" style="width:200px">
+							</p:inputText>
+							
+							
+							#{"Email:"}
+							<p:inputText value="#{usuarioMB.usuario.email}" 
+								validatorMessage="Email invalido"
+								maxlength="50"
+								style="width:200px"/>
+							
+							#{"Direccion: "}
+							<p:inputText value="#{usuarioMB.usuario.direccion}" id="direccion" maxlength="30" style="width:200px">
+							</p:inputText>
+								
+							
+						</h:panelGrid>
+						
+						<br/>
+						<p:commandButton value="Guardar"
+							actionListener="#{usuarioMB.registrarUsuario()}"
+							update=":formLista :smsNuevoEdit" onstart="PF('dlgNuevo').hide(); PF('BlockUIWidget').block()"
+							oncomplete="validarCampos(xhr, status, args); PF('BlockUIWidget').unblock()" icon="icon-disk" />
+						
+						<p:commandButton value="Cancelar" update=":formLista"
+							onclick="PF('dlgNuevo').hide()" icon="icon-cancel" />						
+					</h:form>		
+			</p:dialog>
+
+
+
+			<!-- confirm dialog eliminar -->
+			<pe:blockUI  widgetVar="BlockUIWidget">        
+		        <h:graphicImage library="resources/img" value="/resources/img/ajax-loader1.gif"  style="margin-right: 12px; vertical-align: middle;" />  
+		        <h:outputText value="Actualizando, espere por favor..." style="white-space: nowrap; font-weight:bold; color: #036fab"/> 
+		    </pe:blockUI>
+					    
+			<p:confirmDialog id="dlgDetEliminar" appendTo="@(body)" closeOnEscape="true"
+					message="¿Desea eliminar este usuario?" header="Eliminar Usuario"
+					severity="alert" widgetVar="dlgEliminar">
+				<h:form id="formEliminar">
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral @form"
+						actionListener="#{usuarioMB.eliminarUsuario()}" onstart="PF('dlgEliminar').hide(); PF('BlockUIWidget').block()"
+						oncomplete="PF('BlockUIWidget').unblock();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" onclick="dlgEliminar.hide()" icon="icon-cancel" />
+				</h:form>
+			</p:confirmDialog>
+			
+			<p:confirmDialog id="ddlgDetResetPass" appendTo="@(body)"
+					message="¿Desea resetear el password del usuario?" header="Resetear Password"
+					severity="alert" widgetVar="dlgResetPass">
+					
+				<h:form id="formReset">
+				
+				Desea Resetear el password para : <h:outputText value="#{usuarioMB.usuario.login}" />
+				<br></br>
+				<br></br>
+					<p:commandButton value="Resetear"
+						actionListener="#{usuarioMB.resetearPassword()}" onstart="PF('BlockUIWidget').block()"
+						oncomplete="PF('dlgResetPass').hide(); PF('BlockUIWidget').unblock();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" onclick="PF('dlgResetPass').hide()" icon="icon-cancel" />
+				</h:form>
+			</p:confirmDialog>
+			
+		<script>
+			function validarCampos(xhr, status, args) {  
+				if(args.validationFailed) {
+					PF('dlgNuevo').show();
+					jQuery('#dlgDetNuevo').effect("shake", { times:1 }, 100);  
+				} else {  
+					//dtUsuarios.clearFilters();
+					PF('dlgNuevo').hide();
+				}  
+			}  
+		</script>
+		
+		
+		
+	</ui:define>
+
+</ui:composition>
+</html>

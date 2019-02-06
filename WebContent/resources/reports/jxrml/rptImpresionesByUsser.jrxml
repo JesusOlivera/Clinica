@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptImpresionesByUsser" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="62c40109-c191-49e4-bad4-429e1fc7f22a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_LOGO" class="java.lang.String"/>
+	<parameter name="P_SUMATOTAL" class="java.lang.String"/>
+	<parameter name="P_FECHA_INICIO" class="java.lang.String"/>
+	<parameter name="P_FECHA_FIN" class="java.lang.String"/>
+	<field name="nombre_completo" class="java.lang.String"/>
+	<field name="nro_impresiones" class="java.lang.String"/>
+	<field name="nombre_centro_atencion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<image>
+				<reportElement uuid="4d137074-6eb1-4c70-a18e-3f612cd68969" x="34" y="25" width="87" height="55"/>
+				<imageExpression><![CDATA[$P{P_LOGO}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="3bc6a878-1663-42fa-b3da-cf7c6af6b1fe" x="142" y="25" width="345" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Impresiones por Usuario del Sistema]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f6ea26b7-822d-40c0-befc-ba02b9e44dda" x="202" y="44" width="98" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FECHA_INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e6f3d76e-20a9-45eb-88a2-a95ec560a19e" x="318" y="45" width="100" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FECHA_FIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b2e32f8-f8cd-4940-bb91-4d1425137f3f" x="300" y="44" width="18" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ -]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="d8c38bfb-9682-4d8c-a25b-d0a1a1bd574a" x="22" y="11" width="506" height="15" backcolor="#999999"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="eb11dd4e-633a-40f7-8641-9062d4fe3877" x="75" y="12" width="57" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2f5891b9-416f-4f9a-88cc-3dd1c71dee3e" x="290" y="11" width="97" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro. Impresiones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d0191d3-c653-43f7-8515-25d6b100d64f" x="418" y="11" width="97" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Centro Atencion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement uuid="140f6d61-4648-4cb6-896a-0b6c9985ebde" x="34" y="0" width="238" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_completo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f7501a29-3cf8-4901-8943-29d4ba573cb1" x="22" y="14" width="506" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="a320bbe3-8d19-49c3-bae7-58eb1536fdf6" x="318" y="0" width="43" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nro_impresiones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6903f9fb-9da1-48a7-821c-ede7fa188d48" x="429" y="0" width="91" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_centro_atencion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7571114a-5987-4608-ae86-b6e0642dc338" x="202" y="16" width="116" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL IMPRESIONES:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="41a2a714-286a-4a2d-a811-5185b64f050a" x="318" y="16" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_SUMATOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Principal1_subreport2" language="groovy" pageWidth="900" pageHeight="555" orientation="Landscape" columnWidth="900" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ff56fbaa-774b-461e-b725-dbea0527cbb9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_comprobante" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ROW_NUMBER () OVER (ORDER BY det.id_comprobante) as numero, prod.cod_prod_det as codigo, prod.descripcion_prod_det as descripcion, det.cant_unidades_item_det as cantidad,
+ (det.valor_venta_item_det/ det.cant_unidades_item_det) as Precio, det.valor_venta_item_det as subtotal,
+det.suma_tributos_det as igv, det.precio_venta_unitario_det as total,
+(select sum(tt.precio_venta_unitario_det) from t_detalle_comprobante as tt
+where tt.id_comprobante=$P{id_comprobante} group by tt.id_comprobante) as total_comprobante
+from  t_detalle_comprobante det
+inner join t_producto prod on prod.id_producto=det.id_producto
+where det.id_comprobante=$P{id_comprobante}]]>
+	</queryString>
+	<field name="numero" class="java.lang.Long"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Double"/>
+	<field name="precio" class="java.lang.Double"/>
+	<field name="subtotal" class="java.lang.Double"/>
+	<field name="igv" class="java.lang.Double"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="total_comprobante" class="java.lang.Double"/>
+	<variable name="total_igv" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{igv}]]></variableExpression>
+	</variable>
+	<variable name="base_imponible" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{subtotal}]]></variableExpression>
+	</variable>
+	<group name="id_comprobante">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="2" width="55" height="20" uuid="7cf06e64-c474-41c0-b25e-3f4b58f2d6ea"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="2" width="100" height="20" uuid="7067ac10-37b3-4d5b-a181-e3e406ba5342"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="2" width="181" height="20" uuid="9368afb0-3f8d-46bb-8843-c0a21160fc0c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="338" y="2" width="63" height="20" uuid="b94ad4f5-baf9-4c91-a18b-e8e49e108519"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="2" width="68" height="20" uuid="0e5811e5-f3c1-41ec-a956-fcae495bc626"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="469" y="2" width="69" height="20" uuid="fb20e2f4-442e-4bf7-b3d9-00430fc40043"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="2" width="69" height="20" uuid="7f09dbcb-365d-43f1-991a-31f8914dda70"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IGV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="607" y="2" width="76" height="20" uuid="342a7a38-7eb1-45da-b86e-07e61088948a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="1" width="55" height="20" uuid="d19a62e4-c146-4f2e-b550-715128960b95"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="1" width="100" height="20" uuid="693fec71-f829-40ac-9cb4-ee2ae35f3fb0"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="157" y="1" width="181" height="20" uuid="7b88a77e-5e83-4782-ac30-40092a58bdf6"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="338" y="1" width="63" height="20" uuid="8e94aec3-4a1d-4726-ad1f-1f653732cc72"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="401" y="1" width="68" height="20" uuid="86a3c715-fa1b-4367-a8e5-bd4ff6975b6e"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="469" y="1" width="69" height="20" uuid="b923e71a-6826-4a3f-b82f-6774a1816f1c"/>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="538" y="1" width="69" height="20" uuid="1688cc83-2e4b-409f-8932-9b8349b1bfa7"/>
+				<textFieldExpression><![CDATA[$F{igv}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="607" y="1" width="76" height="20" uuid="8f908b6f-caa6-498f-a8c3-dfb39b66f6c6"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="607" y="40" width="77" height="20" uuid="b2c19ba8-5b31-4469-8239-3cd07fcab207"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_comprobante}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="538" y="40" width="69" height="20" uuid="82f371a6-00ca-4bf9-9147-194f47c685ac"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="20" width="69" height="20" uuid="07dd4401-7b0b-4851-abc3-00ef2f6f6976"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total IGV:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="0" width="69" height="20" uuid="e670dd46-ec6d-44c6-a272-85a9c798a812"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Base Impo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="607" y="20" width="76" height="20" uuid="7bbd0007-ba4f-4b49-ad7e-084a6337ce20"/>
+				<textFieldExpression><![CDATA[$V{total_igv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="607" y="0" width="76" height="20" uuid="1f6a1aea-d4e5-4456-98bf-495902f055fb"/>
+				<textFieldExpression><![CDATA[$V{base_imponible}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

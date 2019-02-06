@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1//DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+		<p:panel>
+			
+			<p:breadCrumb>  
+    			<p:menuitem value="Home" url="#" />  
+    			<p:menuitem value="Configuracion" url="#" />
+    			<p:menuitem value="Gestion de Parametros" url="#" />   
+			</p:breadCrumb>	
+			
+			<br/>
+			
+			<!-- toolbar -->
+			<h:form style="margin-bottom: 8px">
+				<p:commandButton actionListener="#{parametroMB.newInsert}"
+					update=":dlgDetNuevo" oncomplete="PF('dlgNuevo').show();"
+					value="Registrar Parametro" icon="icon-add">
+					<p:resetInput target=":dlgDetNuevo"/>
+				</p:commandButton>
+			</h:form>
+			
+			<br/>
+			<!-- listado parametros -->
+			<h:form id="formLista">
+				<p:dataTable id="dataTable" var="u"
+					value="#{parametroMB.listaParametro}" rowIndexVar="nro"
+					emptyMessage="No hay informaci&oacute;n disponible."
+					style="FONT-SIZE: 10px; ">
+
+					<p:column headerText="Ord." style="width:20px;" >
+						#{nro+1}
+					</p:column>
+
+					<p:column style="width:200px;" headerText="Nombre_parametro">
+						<h:outputText value="#{u.nombre_parametro}" />
+					</p:column>
+
+					<p:column style="width:200px;" headerText="Descripcion">
+						<h:outputText value="#{u.descripcion}" />
+					</p:column>
+
+					<p:column style="width:20px;" headerText="Valor">
+						<h:outputText value="#{u.valor}" />
+					</p:column>
+					
+					<p:column style="width:5%; text-align: center;" headerText="Estado Sistema">
+							<p:commandLink update="@form" actionListener="#{parametroMB.cambiarEstado(u)}" > 
+							<h:graphicImage value="#{u.ind_activo?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{u.ind_activo?'Activo':'Bloqueado'}" />
+							</p:commandLink>
+					</p:column>
+
+					<p:column style="width:10%;text-align: center">
+						<p:commandButton update=":dlgDetNuevo"
+							actionListener="#{parametroMB.newUpdate(u.cod_parametro)}"
+							oncomplete="PF('dlgNuevo').show();" title="Editar" icon="icon-edit" />
+
+						<p:commandButton
+							actionListener="#{parametroMB.newDelete(u.cod_parametro)}"
+							oncomplete="PF('dlgEliminar').show();" title="Eliminar"
+							icon="icon-delete" />
+
+					</p:column>
+
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- dialogo nuevo parametro -->
+			<p:dialog header="Registrar Parametro" widgetVar="dlgNuevo"
+					resizable="false" id="dlgDetNuevo" modal="true"  appendTo="@(body)">
+				<h:form>
+					<p:messages showDetail="false" showSummary="true" id="growlNuevo" />
+					<h:panelGrid id="pgNuevo" columns="2" cellspacing="8">
+
+						<h:outputLabel style="width:50%;" for="nombre" value="Nombre:" />
+						<p:inputText value="#{parametroMB.parametro.nombre_parametro}"
+							id="nombre" maxlength="50" required="true"
+							validatorMessage="Debe ingresar el nombre del parámetro"
+							label="nombre" style="width:200px;">
+						</p:inputText>
+
+
+						<h:outputLabel for="descripcion" value="Descripcion:" />
+						<p:inputTextarea value="#{parametroMB.parametro.descripcion}"
+							id="descripcion" maxlength="100" required="true"
+							validatorMessage="Debe ingresar la descripcion"
+							label="descripcion" style="width:200px;">
+						</p:inputTextarea>
+						
+						<h:outputLabel for="valor" value="Valor:" />
+						<p:inputText value="#{parametroMB.parametro.valor}"  id="valor"
+							required="true" validatorMessage="Debe ingresar el valor"
+							maxlength="10" label="valor" style="width:200px;" onkeypress="return justNumbers(event)">
+							<f:validateLongRange minimum="0" maximum="9999999999" for="valor"></f:validateLongRange>
+						</p:inputText>
+					</h:panelGrid>
+					<p:separator />
+					<p:commandButton value="Guardar"
+						actionListener="#{parametroMB.insertParametro}"
+						update=":formLista growlNuevo"
+						oncomplete="validar(xhr, status, args);PF('dlgNuevo').hide()" icon="icon-disk" />
+						
+					<p:commandButton value="Cancelar" update=":formLista:dataTable"
+						oncomplete="PF('dlgNuevo').hide()" icon="icon-cancel" />
+				
+				</h:form>
+			</p:dialog>
+			
+			<p:confirmDialog id="dlgDetEliminar"  appendTo="@(body)"
+					message="¿Desea eliminar este parámetro"
+					header="Eliminar Parámetro" severity="alert"
+					widgetVar="dlgEliminar">
+				<h:form>
+				<p:growl id="growlEliminar" sticky="false" life="2000" />
+					<p:commandButton value="Eliminar"
+						update=":formLista:dataTable, growlEliminar"
+						actionListener="#{parametroMB.deleteParametro}"
+						oncomplete="PF('dlgEliminar').hide()" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" update=":formLista:dataTable"
+						oncomplete="PF('dlgEliminar').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+
+			
+		</p:panel>
+		<script type="text/javascript">  
+			function validar(xhr, status, args) {
+				if (!args.esValido) {
+					jQuery('#dlgDetNuevo').effect("shake", {
+						times : 1
+					}, 100);
+				} else {
+					//limpiando
+	
+					PF('dlgNuevo').hide();
+				}
+			}   
+			
+            function justNumbers(e) {
+
+				var keynum = window.event ? window.event.keyCode : e.which;
+				if (keynum == 8 || keynum == 9)
+					return true;
+				return /\d/.test(String.fromCharCode(keynum));
+			}
+
+			function justNumbersDecimal(e, field) {
+				key = e.keyCode ? e.keyCode : e.which
+				// backspace
+				if (key == 8)
+					return true
+
+				if (key > 47) {
+					if (!(key > 58)) {
+						if (field.value == "")
+							return true
+						regexp = /.[0-9]{10}$/
+						return !(regexp.test(field.value))
+					}
+				}
+				// 
+				if (key == 46) {
+					if (field.value == "")
+						return false
+					regexp = /^[0-9]+$/
+					return regexp.test(field.value)
+				}
+				// other key
+				return false
+
+			}
+</script>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.TablaTablasMapper">
+
+<resultMap id="tablaTablaResult" type="com.certicom.scpf.domain.TablaTablas">
+	<id column="id_maestra" property="id_maestra"/>
+	<result column="descripcion_maestra" property="descripcion_maestra"/>
+	<result column="nro_catalogo" property="nro_catalogo"/>
+
+</resultMap>
+
+
+</mapper>	

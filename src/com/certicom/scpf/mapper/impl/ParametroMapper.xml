@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.certicom.scpf.mapper.ParametroMapper">
+
+<resultMap id="parametroResult" type="com.certicom.scpf.domain.Parametro">
+	<result column="cod_parametro" property="cod_parametro"/>
+	<result column="nombre_parametro" property="nombre_parametro"/>
+	<result column="descripcion" property="descripcion"/>
+	<result column="valor" property="valor"/>
+	<result column="ind_activo" property="ind_activo"/>
+	<result column="fecha_registro" property="fecha_registro"/>
+	<result column="fecha_modif" property="fecha_modif"/>
+</resultMap>
+
+	<select id="listParametro" resultType="com.certicom.scpf.domain.Parametro">
+	select * from public.t_parametro
+	</select>
+
+	<delete id="deleteParametro" parameterType="int">
+	    DELETE FROM t_parametro
+ 		WHERE cod_parametro =#{cod_parametro}
+	</delete>
+
+	<insert id="insertParametro" parameterType="com.certicom.scpf.domain.Parametro">
+		INSERT INTO t_parametro(
+             nombre_parametro, descripcion, valor,  ind_activo)
+    	VALUES (#{nombre_parametro}, #{descripcion}, #{valor}, #{ind_activo})
+	</insert>
+
+	<select id="findParametro" resultType="com.certicom.scpf.domain.Parametro" parameterType="com.certicom.scpf.domain.Parametro">
+	</select>
+
+	<select id="findParametros" resultType="com.certicom.scpf.domain.Parametro">
+	Select * from public.t_parametro
+	</select>
+
+	<update id="updateParametro" parameterType="com.certicom.scpf.domain.Parametro">
+		UPDATE t_parametro
+   		SET nombre_parametro=#{nombre_parametro}, descripcion=#{descripcion}, valor=#{valor}, 
+       	ind_activo = #{ind_activo}
+ 		WHERE cod_parametro = #{cod_parametro}
+	</update>
+
+ 	<select id="findParametroPorCodigo" resultMap="parametroResult" parameterType="int">
+        SELECT cod_parametro, nombre_parametro, descripcion, valor, fecha_registro, 
+       			fecha_modif, ind_activo
+  		FROM t_parametro
+        where cod_parametro =#{cod_parametro}
+    </select>
+
+</mapper>	

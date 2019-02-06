@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Clinica" url="#" />
+    				<p:menuitem value="Gestion de Especialidades" url="especialidades" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px">
+				<h:panelGrid columns="4">						
+					<p:commandButton value="Nueva Especialidad" icon="icon-add" update=":dlgDetNuevoEspecialidad" oncomplete="PF('dlgNuevoEspecialidad').show();"
+						actionListener="#{especialidadMB.nuevoEspecialidad()}"/>
+				</h:panelGrid>
+			</h:form>
+			
+				<!-- listado de Planes -->
+			<h:form id="formLista">
+				<p:dataTable id="dataEspecialidad" var="p" value="#{especialidadMB.listaEspecialidades}" widgetVar="dtEspecialidad" 
+					emptyMessage="No hay Especialidads Disponibles." rowIndexVar="nro" 
+					 style="FONT-SIZE: 10px; ">
+					<f:facet name="header">Lista Especialidades</f:facet>
+										
+					<p:column headerText="Orden" width="25" style="width:3%" >
+						#{nro+1}
+					</p:column>					
+			        				
+					<p:column style="width:200px" headerText="Descripcion ">
+						<h:outputText value="#{p.descripcion_especialidad}"/>
+					</p:column>
+					
+					 <p:column style="width:5%; text-align: center" headerText="Estado">
+								<p:commandLink update="@form :msgGeneral" actionListener="#{especialidadMB.cambiarEstado(p)}" > 
+									<h:graphicImage value="#{p.estado_especialidad?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+									title="#{p.estado_especialidad?'Activo':'Bloqueado'}" />
+								</p:commandLink>
+					</p:column>		
+					
+			        
+			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevoEspecialidad" actionListener="#{especialidadMB.editarEspecialidad(p)}"
+										 oncomplete="PF('dlgNuevoEspecialidad').show();" icon="icon-edit">
+						</p:commandButton> 
+
+						<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminarEspecialidad').show();" 
+								actionListener="#{especialidadMB.eliminarEspecialidad(p)}" update=":dlgDetEliminarEspecialidad" icon="icon-delete">
+	
+						</p:commandButton>
+								
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Registrar Especialidad" widgetVar="dlgNuevoEspecialidad" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoEspecialidad" modal="true">
+					
+					<h:form id="formEspecialidad">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">
+
+					#{"Descripcion:"} 
+					<p:inputText value="#{especialidadMB.especialidadSelec.descripcion_especialidad}" id="descripcion_especialidad"
+						required="true" label="nombre" requiredMessage="Se necesita una descripcion de la Especialidad"
+						style="width:200px;" />
+						
+					#{"Estado:"}
+						<p:selectOneMenu  value="#{especialidadMB.especialidadSelec.estado_especialidad}" style="width:200px;" effect="fade" 
+							required="true" requiredMessage="¿Activo?">
+							<f:selectItem itemLabel="SI" itemValue="true" />
+							<f:selectItem itemLabel="NO" itemValue="false" />
+						</p:selectOneMenu>		
+							
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{especialidadMB.guardarEspecialidad()}"
+						update=":formLista msgNuevo" oncomplete="validarVendedor(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoEspecialidad').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminarEspecialidad" appendTo="@(body)"
+					message="¿Desea eliminar este Especialidad?" header="Eliminar Especialidad"
+					severity="alert" widgetVar="dlgEliminarEspecialidad">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral" 
+						actionListener="#{especialidadMB.confirmaEliminarEspecialidad}"
+						oncomplete="PF('dlgEliminarEspecialidad').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminarEspecialidad').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+		</p:panel>
+		
+		<script>
+			
+		function validarVendedor(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoEspecialidad').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevoEspecialidad').hide();
+				console.log("cerro")
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

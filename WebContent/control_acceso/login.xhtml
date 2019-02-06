@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:head>
+          <title>..:: SIEMCO - SISTEMA DE EMISION DE COMPROBANTES ::..</title>   
+          <link href="./resources/css/login2.css" rel="stylesheet" type="text/css"/>
+          <link rel="icon" type="image/png" href="./resources/img/icon.png" />
+    </h:head>
+    <h:body>
+    	<h:panelGrid style="width: 100%; text-align: center;">
+    		<p:graphicImage url="/resources/img/scpf_top_big.png" />
+	    	<p:graphicImage url="/resources/img/scpf_back_big.png" />
+			<p:graphicImage url="/resources/img/scpf_botton_big.png" />
+			<h:form id="formLogin">
+				<p:focus for="idUsuario" />
+				<p:panel id="panelLogin"  style="position: absolute;  top: 23%; left: 58%; font-size: 12px; background: transparent">
+					<f:facet name="header">
+						<h:outputLabel value="ACCESO AL SISTEMA" style="text-align: center; margin-left: 45px;"/>
+					</f:facet>
+						<h:panelGrid columns="2" style="background: transparent; color: #000000; font-weight:bold;">
+							<h:outputLabel value="Usuario: " />
+							<p:inputText id="idUsuario" value="#{loginMB.login}"
+								style="width: 155px;"  title="Ingrese el Usuario de Acceso"/>
+								  
+							<h:outputLabel value="Contraseña: " />
+							<p:password id="idPassword" value="#{loginMB.password}"
+								style="width: 155px;" title="Ingrese su Password" />
+								
+						</h:panelGrid>
+	
+						<p:commandButton id="btnIngresar" value="Ingresar"
+							process="@this :formLogin:panelLogin" ajax="false"
+							update=":formLogin:panelLogin, :formLogin:mensajes"
+							icon="ui-icon-unlocked" action="#{loginMB.efectuarLogin(request.getRemoteAddr())}"
+							style="margin-left: 150px; margin-top: 10px" />
+						<p:defaultCommand target="btnIngresar" />
+	
+					<p:messages id="mensajes" />
+				</p:panel>
+				<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
+			</h:form>
+    		
+    	</h:panelGrid>
+    		</h:body>
+</html>

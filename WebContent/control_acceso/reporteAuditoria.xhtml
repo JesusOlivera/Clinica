@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="login.css" />
+</h:head>
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+			<p:breadCrumb  style="font-size: 11px; height: 13px; margin-top: 0px">
+				<p:menuitem value="Home" url="#" />
+				<p:menuitem value="Seguridad" url="#" />
+				<p:menuitem value="Auditoria" url="" />
+			</p:breadCrumb>
+		
+		<table>
+			<tr>	
+			<td>
+			
+			<!-- formulario de busqueda -->
+			<h:form id="Busqueda">
+			
+			        	<div style="display: inline-block; width: 30px;">
+			        	<h:outputLabel value="Mes:  " />
+			        </div>
+			       
+					<div style="display: inline-block; width: 182px;">
+				        <p:selectOneMenu id="cmbMes" value="#{auditoriaMB.mes}" style=" width:170px;">
+								<f:selectItem itemLabel="Seleccionar" itemValue="0" noSelectionOption="true" />
+								<f:selectItem itemLabel="Enero" itemValue="1" />
+								<f:selectItem itemLabel="Febrero" itemValue="2" />
+								<f:selectItem itemLabel="Marzo" itemValue="3" />
+								<f:selectItem itemLabel="Abril" itemValue="4" />
+								<f:selectItem itemLabel="Mayo" itemValue="5" />
+								<f:selectItem itemLabel="Junio" itemValue="6" />
+								<f:selectItem itemLabel="Julio" itemValue="7" />
+								<f:selectItem itemLabel="Agosto" itemValue="8" />
+								<f:selectItem itemLabel="Setiembre" itemValue="9" />
+								<f:selectItem itemLabel="Octubre" itemValue="10" />
+								<f:selectItem itemLabel="Noviembre" itemValue="11" />
+								<f:selectItem itemLabel="Diciembre" itemValue="12" />
+								<p:ajax listener="#{auditoriaMB.setearMes}"  event="change" update="cmbParametro valor btnBusqueda :formLista"/>
+						</p:selectOneMenu>
+					</div>
+					
+					<p:separator></p:separator>
+					
+					<h:outputLabel id="parametro" value="Parámetro: " /> 
+					<p:selectOneMenu id="cmbParametro" value="#{auditoriaMB.parametro}" style=" width:150px;" for="parametro" disabled="#{auditoriaMB.mes == 0}"> 
+				        		<p:ajax event="change" />
+								<f:selectItem itemLabel="Seleccionar" itemValue="0" noSelectionOption="true" />
+								<f:selectItem itemLabel="Usuario" itemValue="1" />
+								<f:selectItem itemLabel="Acción" itemValue="2" />
+								<f:selectItem itemLabel="Opción de Menú" itemValue="3" /> 
+					</p:selectOneMenu>
+					<h:outputLabel value="Valor: " /> 
+					<p:inputText id="valor" value="#{auditoriaMB.valorParametro}" disabled="#{auditoriaMB.mes == 0}" style=" width:150px;">
+						<p:ajax event="change"/>
+					</p:inputText> 
+					<p:commandButton id="btnBusqueda" value="Buscar" actionListener="#{auditoriaMB.buscarLogPeriodo}"
+					 		update=":formLista"	style=" width:160px;"/>
+		</h:form>			
+			</td>
+
+			</tr>
+			</table>
+		
+		<h:form id="formLista">
+				<p:dataTable id="dataTable" var="l" value="#{auditoriaMB.listLog}" 
+					paginator="true" 
+					rows="20" paginatorPosition="bottom" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30" style="FONT-SIZE: 10px; ">
+					
+					<h:inputHidden value="#{l.pk_log_id}" />
+					
+					<p:column style="width:10%;" headerText="Usuario" filterBy="#{l.login}" filterMatchMode="contains" filterStyle="width:95%;">
+						<h:outputText value="#{l.login}" />
+					</p:column>
+					
+					<p:column style="width:10%" headerText="Módulo" filterBy="#{l.modulo}" filterStyle="width:95%;" filterMatchMode="contains" >
+						<h:outputText value="#{l.modulo}" />
+					</p:column>
+					
+					<p:column style="width:10%" headerText="Menú" filterBy="#{l.nombre_opMenu}" filterStyle="width:95%;" filterMatchMode="contains">
+						<h:outputText value="#{l.nombre_opMenu}" />
+					</p:column>
+					
+					<p:column style="width:10%" headerText="Acción" filterBy="#{l.accion}" filterMatchMode="contains" filterStyle="width:95%;">
+						<h:outputText value="#{l.accion}" />
+					</p:column>
+
+					<p:column style="width:20%" headerText="Descripción" >
+						<h:outputText value="#{l.descripcion}"/>
+					</p:column>
+	
+					<p:column style="width:10%" headerText="IP Cliente">
+						<h:outputText value="#{l.ip_client}"/>
+					</p:column>
+					
+					<p:column style="width:10%" headerText="Fecha">
+						<h:outputText value="#{l.fecha}" >
+							<f:convertDateTime dateStyle="medium" locale="es_PE" type="both"  pattern="dd/MM/yyyy"  />
+						</h:outputText>
+					</p:column>
+					
+					<p:column style="width:7%" headerText="Hora" pattern="HH:mm" timeOnly="true">
+						<h:outputText value="#{l.hora}" >
+							
+						</h:outputText>
+					</p:column>
+
+					<p:column style="width:10%" headerText="Año">
+						<h:outputText value="#{l.anio}"/>
+					</p:column>
+					
+					<p:column style="width:15%" headerText="IP Server">
+						<h:outputText value="#{l.ip_server_img}"/>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+					 
+			
+	</ui:define>
+
+</ui:composition>
+</html>

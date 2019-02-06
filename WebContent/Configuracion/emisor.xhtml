@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Configuracion" url="#" />
+    				<p:menuitem value="Gestion de Emisor" url="emisor" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px" id="formTotal" >		
+											 
+				<p:tabView id="tabEmisor">
+						<p:tab title="Datos del Emisor" enctype="multipart/form-data">  <!-- Jesús -->
+								<h:panelGrid columns="2" >
+									<h:panelGrid columns="2"  enctype="multipart/form-data" >
+																							
+												
+												<p:outputLabel value="RUC:" ></p:outputLabel>
+												<p:outputLabel value="#{emisorMB.emisorSelec.ruc}" id="ruc"
+													required="true" label="ruc" requiredMessage="Se necesita un ruc"
+													style="width:200px; font-size:20px;" />
+											
+												<p:outputLabel value="Razón Social:" ></p:outputLabel> 
+												<p:outputLabel value="#{emisorMB.emisorSelec.razon_social}" id="razon_social"
+													required="true" label="razon_social" requiredMessage="Se necesita una razón social"
+													style="width:200px; font-size:20px;" />
+													
+												
+												<p:outputLabel value="Nombre Comercial:"></p:outputLabel>
+												<p:outputLabel value="#{emisorMB.emisorSelec.nombre_comercial}" id="nombre_comercial"
+													required="true" label="nombre_comercial" requiredMessage="Se necesita una nombre comercial"
+													style="width:200px; font-size:20px;" />
+												
+												<p:outputLabel value="Dirección:"></p:outputLabel>
+												<p:outputLabel value="#{emisorMB.emisorSelec.direccion}" id="direccion"
+													required="true" label="direccion" requiredMessage="Se necesita una dirección"
+													style="width:200px; font-size:20px;" />
+			
+												<p:outputLabel value="Teléfono:"></p:outputLabel>
+												<p:outputLabel value="#{emisorMB.emisorSelec.telefono}" id="telefono"
+													required="true" label="telefono" requiredMessage="Se necesita un teléfono"
+													style="width:200px; font-size:20px;" />
+											
+												<p:outputLabel value="Slogan:"></p:outputLabel>
+												<p:outputLabel value="#{emisorMB.emisorSelec.slogan}" id="slogan"
+													required="true" label="slogan" requiredMessage="Se necesita un slogan"
+													style="width:200px; font-size:20px;" />
+																
+							                    <p:outputLabel value="Ruta Logo:"></p:outputLabel>      
+							                    <p:outputLabel value="#{emisorMB.emisorSelec.ruta_logo}" id="ruta_logo"
+													required="true" label="ruta_logo" requiredMessage="Se necesita ruta "
+							                    style="width:200px; font-size:20px;" />   
+							                    
+							                    <p:outputLabel value="Ruta Facturador:"></p:outputLabel>      
+							                    <p:outputLabel value="#{emisorMB.emisorSelec.ruta_descarga_archivos_planos}" style="width:200px; font-size:20px;" />  
+							                    
+			
+												<p:outputLabel value="Sucursal:"></p:outputLabel>
+												<p:outputLabel value="#{emisorMB.emisorSelec.descripcion_domicilio_fiscal}" style="width:200px; font-size:20px;" />  
+													 			        
+															                        	
+										</h:panelGrid>
+										<!-- Jesús 
+										<h:panelGrid columns="2" >	
+												#{"Logo: "} 
+												<object data="#{emisorMB.archibytes}" type="image/jpeg" width="200" height="150"></object>
+										</h:panelGrid> -->
+								</h:panelGrid>
+								<br>
+								</br>
+								<h:panelGrid columns="4">						
+										<p:commandButton value="Nuevo" icon="icon-add" update=":dlgDetNuevoEmisor" oncomplete="PF('dlgNuevoEmisor').show();"
+											actionListener="#{emisorMB.nuevoEmisor()}" disabled="#{emisorMB.nuevoEmisor}"/>
+											
+										<p:commandButton value="Editar"  update=":dlgDetNuevoEmisor" actionListener="#{emisorMB.editarEmisor()}"
+													 oncomplete="PF('dlgNuevoEmisor').show();" icon="icon-edit" disabled="#{emisorMB.editarEliminarEmisor}">
+										</p:commandButton> 
+										
+										<p:commandButton value="Eliminar" oncomplete="PF('dlgEliminarEmisor').show();" actionListener="#{emisorMB.eliminarEmisor()}" update=":dlgDetEliminarEmisor" icon="icon-delete" disabled="#{emisorMB.editarEliminarEmisor}">
+				
+										</p:commandButton>
+									
+								</h:panelGrid>					
+						</p:tab>
+	
+						<p:tab title="Logo">
+						</p:tab>
+				</p:tabView>
+				
+			</h:form>
+			
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Registrar Emisor" widgetVar="dlgNuevoEmisor" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoEmisor" modal="true">
+					
+					<h:form id="formEmisor" enctype="multipart/form-data">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					<h:panelGrid columns="2">
+							<h:panelGrid>
+								<h:panelGrid columns="2">
+					
+									#{"RUC:"} 
+									<p:inputText value="#{emisorMB.emisorSelec.ruc}" id="ruc"
+										required="true" label="ruc" requiredMessage="Se necesita un ruc"
+										style="width:200px;" />
+										
+									#{"Razón Social:"} 
+									<p:inputText value="#{emisorMB.emisorSelec.razon_social}" id="razon_social"
+										required="true" label="razon_social" requiredMessage="Se necesita una razón social"
+										style="width:200px;" />
+										
+									#{"Nombre Comercial:"} 
+									<p:inputText value="#{emisorMB.emisorSelec.nombre_comercial}" id="nombre_comercial"
+										required="true" label="nombre_comercial" requiredMessage="Se necesita una nombre comercial"
+										style="width:200px;" />
+									
+									#{"Dirección:"} 
+									<p:inputText value="#{emisorMB.emisorSelec.direccion}" id="direccion"
+										required="true" label="direccion" requiredMessage="Se necesita una dirección"
+										style="width:200px;" />
+										
+									#{"Teléfono:"} 
+									<p:inputText value="#{emisorMB.emisorSelec.telefono}" id="telefono"
+										required="true" label="telefono" requiredMessage="Se necesita un teléfono"
+										style="width:200px;" />
+										
+									#{"Slogan:"} 
+									<p:inputText value="#{emisorMB.emisorSelec.slogan}" id="slogan"
+										required="true" label="slogan" requiredMessage="Se necesita un slogan"
+										style="width:200px;" />
+										
+									#{"Ruta Facturador:"} 
+									<p:inputText value="#{emisorMB.emisorSelec.ruta_descarga_archivos_planos}" id="ruta_descarga_archivos_planos"
+										required="true" label="ruta_descarga_archivos_planos" requiredMessage="Se necesita Ruta Facturador"
+										style="width:200px;" />		
+										
+									#{"Sucursal:"}						        
+									<p:selectOneMenu style="width:200px" value="#{emisorMB.emisorSelec.id_domicilio_fiscal_cab}"  required="true" requiredMessage="Se necesita un domicilio fiscal" >
+										<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+										<f:selectItems value="#{emisorMB.listaDomicilioFiscales}" var="p" itemLabel="#{p.descripcion_domicilio}" itemValue="#{p.id_domicilio_fiscal_cab}" />
+									</p:selectOneMenu>
+									
+									#{"Ruta Logo: "}      
+				                        <p:inputText value="#{emisorMB.emisorSelec.ruta_logo}" id="ruta_logo"
+										required="false" label="ruta_logo" requiredMessage="Se necesita Ruta Logo"
+									 style="width:200px;" />	
+										
+								</h:panelGrid>
+												                        	
+							</h:panelGrid>
+							<h:panelGrid>
+								#{"Logo: "} 
+								<object data="#{emisorMB.archibytes}" type="image/jpeg" width="200" height="150"></object>
+							
+							</h:panelGrid>
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{emisorMB.guardarEmisor()}"
+						update=":formTotal:tabEmisor msgNuevo" oncomplete="validarEmisor(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoEmisor').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminarEmisor" appendTo="@(body)"
+					message="¿Desea eliminar este Emisor " header="Eliminar Emisor"
+					severity="alert" widgetVar="dlgEliminarEmisor">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formTotal:tabEmisor :msgGeneral" 
+						actionListener="#{emisorMB.confirmaEliminarEmisor}"
+						oncomplete="PF('dlgEliminarEmisor').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminarEmisor').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+		</p:panel>
+		
+		<script>
+			
+		function validarEmisor(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoEmisor').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevoEmisor').hide();
+				console.log("cerro")
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

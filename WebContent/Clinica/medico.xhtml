@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Clinica" url="#" />
+    				<p:menuitem value="Gestion de Medicos" url="medicos" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px">
+				<h:panelGrid columns="4">						
+					<p:commandButton value="Nuevo Medico" icon="icon-add" update=":dlgDetNuevoMedico" oncomplete="PF('dlgNuevoMedico').show();"
+						actionListener="#{medicoMB.nuevomedico()}"/>
+				</h:panelGrid>
+			</h:form>
+			
+				<!-- listado de Planes -->
+			<h:form id="formLista">
+				<p:dataTable id="dataMedico" var="p" value="#{medicoMB.listamedicos}" widgetVar="dtMedico" 
+					emptyMessage="No hay Medicos Disponibles." rowIndexVar="nro" 
+					 style="FONT-SIZE: 10px; ">
+					<f:facet name="header">Lista Medicos</f:facet>
+										
+					<p:column headerText="Orden" width="25" style="width:3%" >
+						#{nro+1}
+					</p:column>					
+			        
+					<p:column style="width:70px" headerText="Tipo de Documento">
+						<h:outputText value="#{p.tipo_documento}"/>
+					</p:column>
+					
+					<p:column style="width:50px" headerText="Número de Documento">
+						<h:outputText value="#{p.numero_documento}"/>
+					</p:column>
+					
+					<p:column width="70" headerText="Especialidad" >
+							<h:outputText value="#{p.especialidad.descripcion_especialidad}" />
+					</p:column>
+				
+					<p:column style="width:200px" headerText="Médico">
+						<h:outputText value="#{p.nombre_medico}"/>
+					</p:column>
+					
+					<p:column width="70" headerText="Fecha Nacimiento" >
+						<h:outputText value="#{p.fecha_nacimiento}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+					</p:column>
+					
+					<p:column style="width:70px" headerText="Dirección">
+						<h:outputText value="#{p.direccion}"/>
+					</p:column>
+					
+					<p:column style="width:50px" headerText="Teléfono">
+						<h:outputText value="#{p.telefono}"/>
+					</p:column>
+					
+					<p:column style="width:70px" headerText="Email">
+						<h:outputText value="#{p.email}"/>
+					</p:column>
+					
+			        
+			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevoMedico" actionListener="#{medicoMB.editarmedico(p)}"
+										 oncomplete="PF('dlgNuevoMedico').show();" icon="icon-edit">
+						</p:commandButton> 
+
+						<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminarMedico').show();" 
+								actionListener="#{medicoMB.eliminarmedico(p)}" update=":dlgDetEliminarMedico" icon="icon-delete">
+	
+						</p:commandButton>
+								
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Registrar Medico" widgetVar="dlgNuevoMedico" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoMedico" modal="true">
+					
+					<h:form id="formMedico">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">
+
+							#{"Tipo de Documento:"}						        
+							<p:selectOneMenu style="width:200px" value="#{medicoMB.medicoSelec.tipo_documento}"  
+								required="true" requiredMessage="Se necesita un tipo de documento" >
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{medicoMB.listTablaTablasDetalles}" var="p" 
+								itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
+							</p:selectOneMenu>
+							
+							#{"Número de Documento:"} 
+							<p:inputText value="#{medicoMB.medicoSelec.numero_documento}" id="numerodoc"
+								required="true" label="ruc" requiredMessage="Se necesita un número de documento"
+								style="width:200px;" />
+								
+							#{"Especialidad:"}						        
+							<p:selectOneMenu style="width:200px" value="#{medicoMB.medicoSelec.id_especialidad}"  
+								required="true" requiredMessage="Se necesita una Especialidad" >
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{medicoMB.listaEspecialidades}" var="q" 
+								itemLabel="#{q.descripcion_especialidad}" itemValue="#{q.id_especialidad}" />
+							</p:selectOneMenu>
+								
+							#{"Nombre:"} 
+							<p:inputText value="#{medicoMB.medicoSelec.nombre_medico}" id="Nombres"
+								required="true" label="nombres" requiredMessage="Se necesita una nombre"
+								style="width:200px;" />
+								
+<!-- 							#{"Fecha de Nacimiento:"}						 -->
+<!-- 							<p:calendar value="#{medicoMB.medicoSelec.fecha_nacimiento}" -->
+<!-- 							pattern="dd/MM/yyyy" locale="es" >	 -->
+<!-- 							</p:calendar> -->
+																				
+															
+							#{"Dirección:"} 
+							<p:inputText value="#{medicoMB.medicoSelec.direccion}" id="direccion"
+								 label="direccion" 
+								style="width:200px;" />
+								
+							#{"Teléfono:"} 
+							<p:inputText value="#{medicoMB.medicoSelec.telefono}" id="telefono"
+								 label="telefono" 
+								style="width:200px;" />
+								
+							#{"Email:"} 
+							<p:inputText value="#{medicoMB.medicoSelec.email}" id="email"
+								 label="email" 
+								style="width:200px;" />
+							
+							#{"Estado:"}
+							<p:selectOneMenu  value="#{medicoMB.medicoSelec.estado}" style="width:200px;" effect="fade" 
+								required="true" requiredMessage="¿Activo?">
+								<f:selectItem itemLabel="SI" itemValue="true" />
+								<f:selectItem itemLabel="NO" itemValue="false" />
+							</p:selectOneMenu>	
+							
+						
+
+								
+							
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{medicoMB.guardarmedico()}"
+						update=":formLista msgNuevo" oncomplete="validarVendedor(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoMedico').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminarMedico" appendTo="@(body)"
+					message="¿Desea eliminar este Medico?" header="Eliminar Medico"
+					severity="alert" widgetVar="dlgEliminarMedico">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral" 
+						actionListener="#{medicoMB.confirmaEliminarmedico}"
+						oncomplete="PF('dlgEliminarMedico').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminarMedico').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+		</p:panel>
+		
+		<script>
+			
+		function validarVendedor(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoMedico').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevoMedico').hide();
+				console.log("cerro")
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

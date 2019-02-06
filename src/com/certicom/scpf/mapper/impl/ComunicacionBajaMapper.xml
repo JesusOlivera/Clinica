@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.ComunicacionBajaMapper">
+
+<resultMap id="comunicacionBajaResult" type="com.certicom.scpf.domain.ComunicacionBaja">
+	<id column="id_comprobante" property="id_comprobante"/>
+	<result column="tipo_comprobante" property="tipo_comprobante"/>
+	<result column="id_cliente" property="id_cliente"/>
+	<result column="id_emisor" property="id_emisor"/>
+	<result column="id_domicilio_fiscal_cab" property="id_domicilio_fiscal_cab"/>
+	<result column="id_modo_pago" property="id_modo_pago"/>
+	<result column="fecha_comunicacion_cba" property="fecha_comunicacion_cba"/>
+	<result column="descripcion_motivo_cba" property="descripcion_motivo_cba"/>
+	<result column="estado_sunat" property="estado_sunat"/>
+</resultMap>
+
+
+</mapper>	

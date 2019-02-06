@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptTelefonosExcluidosXLS" language="groovy" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b39488bd-e64e-4662-abb6-3c07198019af">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="259"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_TOTAL" class="java.lang.String"/>
+	<parameter name="P_NEGOCIO" class="java.lang.String"/>
+	<parameter name="P_PRODUCTO" class="java.lang.String"/>
+	<parameter name="P_PERIODO" class="java.lang.String"/>
+	<field name="expediente.expediente_id" class="java.lang.Integer"/>
+	<field name="expediente.nombre_completo" class="java.lang.String"/>
+	<field name="expediente.apellido_paterno" class="java.lang.String"/>
+	<field name="expediente.apellido_materno" class="java.lang.String"/>
+	<field name="numero_telefono1" class="java.lang.String"/>
+	<field name="numero_telefono2" class="java.lang.String"/>
+	<field name="numero_telefono3" class="java.lang.String"/>
+	<field name="celular1" class="java.lang.String"/>
+	<field name="celular2" class="java.lang.String"/>
+	<field name="celular3" class="java.lang.String"/>
+	<field name="expediente.num_doc" class="java.lang.String"/>
+	<field name="motivo" class="java.lang.String"/>
+	<field name="fechaRegistro" class="java.util.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d41fce65-fdab-4277-bd94-776cb7020ad1" x="0" y="7" width="410" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEFONOS EXCLUIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2746c359-5043-4b41-a06e-813fb8d5445d" x="410" y="63" width="63" height="18"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e8577b3e-d8a9-48d3-9af4-614c21ef94a9" x="473" y="63" width="55" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="14562c20-a3a5-4e9d-b22f-f862c592b51b" x="0" y="27" width="69" height="18"/>
+				<textElement/>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="475a0d1b-389c-420e-a613-a20da3174989" x="69" y="27" width="97" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b80f3c72-05d4-4f70-bcc5-cce6bfe7dec1" x="0" y="45" width="69" height="18"/>
+				<textElement/>
+				<text><![CDATA[NEGOCIO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="402de087-740b-4366-a741-e024973185a6" x="69" y="45" width="97" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_NEGOCIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="56667134-7d4d-4a85-a8e0-aba708dac371" x="0" y="63" width="69" height="18"/>
+				<textElement/>
+				<text><![CDATA[PRODUCTO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="91b228b3-ecd6-48a9-bd4a-e1144fe2dee2" x="69" y="63" width="97" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_PRODUCTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8a806d8e-e9fd-4c1b-99af-12acdac74678" mode="Opaque" x="0" y="0" width="69" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Id Expediente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b46091d0-515b-4930-af3e-35e2664d499e" mode="Opaque" x="528" y="0" width="60" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Telefono 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a773837b-028d-47ba-b1f1-83f895e946fb" mode="Opaque" x="296" y="0" width="114" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[A. Materno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eae0f672-0a9c-4822-bf06-3047ac750686" mode="Opaque" x="166" y="0" width="130" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[A. Paterno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="602faf0c-e252-4192-9da2-f2d2dfb52722" mode="Opaque" x="588" y="0" width="55" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Telefono 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="384f9c20-0756-4ffa-bb9e-550880518562" mode="Opaque" x="699" y="0" width="49" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Celular 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d987fb35-baea-43fc-9148-820742b392e6" mode="Opaque" x="643" y="0" width="56" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Celular 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="14857a6d-7789-48c9-b6b5-d92a17f34d3e" mode="Opaque" x="473" y="0" width="55" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Telefono 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a7328e82-776e-4553-a4e6-580b39650500" mode="Opaque" x="748" y="0" width="54" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Celular 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a06d6fe4-3c22-495b-8c60-b9a88a4b7602" mode="Opaque" x="69" y="0" width="97" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="280d1ec1-a0e3-4573-8ed3-884e2a25cb4c" mode="Opaque" x="410" y="0" width="63" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Nro Doc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="619804ca-4e6e-44fd-ac89-5ba94accc692" mode="Opaque" x="802" y="0" width="54" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Motivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6889c729-33a8-4261-b056-c81876dd8178" mode="Opaque" x="856" y="0" width="54" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Fec. Eliminacion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0f2e055a-d1ae-448c-8451-7a42972e00d5" x="0" y="0" width="69" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expediente.expediente_id}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="540ad23c-3e5a-47c9-80a9-b06b40213656" x="166" y="0" width="130" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expediente.apellido_paterno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="59b5ef8f-dbaa-46e6-b750-30300ffe128b" x="588" y="0" width="55" height="19"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_telefono3}.equals("null")?" ":$F{numero_telefono3}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="80129da8-a8ec-44d2-a087-30a878ef7dac" x="296" y="0" width="114" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expediente.apellido_materno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="22015417-71ab-4979-a7e5-36056ab261fa" x="699" y="0" width="49" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{celular2}.equals("null")?" ":$F{celular2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="b83a9c5e-32ae-43b2-9e24-15d6cd0d007e" x="643" y="0" width="56" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{celular1}.equals("null")?" ":$F{celular1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="e47e0e4c-f66d-4986-9f8a-f3c3eff7d5a2" x="748" y="0" width="54" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{celular3}.equals("null")?" ":$F{celular3}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d9ca38bb-e822-45d7-9ee7-33b5266bcc05" x="528" y="0" width="60" height="19"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_telefono2}.equals("null")?" ":$F{numero_telefono2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f0b03730-24c8-4dc4-82de-c1d3bcb98da3" x="473" y="0" width="55" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_telefono1}.equals("null")?" ":$F{numero_telefono1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f6bccef6-7a42-470f-b5b2-b1d580e391a8" x="69" y="0" width="97" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expediente.nombre_completo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="3564d9f9-8701-49d1-9f02-89bfc58d168d" x="410" y="0" width="63" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expediente.num_doc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="73fa2f91-cb6a-4a3c-90e1-0f36487e815e" x="802" y="0" width="54" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="9ec8333f-4f57-4a6c-9946-4c74d15bafc2" x="856" y="0" width="54" height="19"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaRegistro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="13" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptTelefonosExcluidosXLS2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b39488bd-e64e-4662-abb6-3c07198019af">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_TOTAL" class="java.lang.String"/>
+	<parameter name="P_NEGOCIO" class="java.lang.String"/>
+	<parameter name="P_PROYECTO" class="java.lang.String"/>
+	<parameter name="P_FSISTEMA" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\fchuquilin\\Desktop\\IttsaWS\\SCPF\\WebContent\\resources\\reports\\jxrml\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="ejecutivosDS" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="responsable" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d41fce65-fdab-4277-bd94-776cb7020ad1" x="0" y="7" width="270" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EJECUTIVOS POR NEGOCIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2746c359-5043-4b41-a06e-813fb8d5445d" x="1146" y="37" width="75" height="18"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e8577b3e-d8a9-48d3-9af4-614c21ef94a9" x="1221" y="37" width="100" height="18"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b80f3c72-05d4-4f70-bcc5-cce6bfe7dec1" x="0" y="37" width="69" height="18"/>
+				<textElement/>
+				<text><![CDATA[PROYECTO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="402de087-740b-4366-a741-e024973185a6" x="69" y="55" width="114" height="18"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_NEGOCIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="56667134-7d4d-4a85-a8e0-aba708dac371" x="0" y="55" width="69" height="18"/>
+				<textElement/>
+				<text><![CDATA[NEGOCIO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1f07e7d8-6ebe-46d9-a73d-52198ca9959f" x="270" y="7" width="237" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FSISTEMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4ac0678a-7939-45a8-924c-2fdc156ced20" x="69" y="37" width="114" height="18"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BBVA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="eae0f672-0a9c-4822-bf06-3047ac750686" mode="Opaque" x="377" y="0" width="130" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[A. Materno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a773837b-028d-47ba-b1f1-83f895e946fb" mode="Opaque" x="507" y="0" width="114" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18f4ec57-8f58-4633-b178-4a1949fc3bb8" mode="Opaque" x="69" y="0" width="114" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d3124744-2ffd-4ee6-b6ed-c4f62e797e02" mode="Opaque" x="621" y="0" width="114" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Fecha Ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a06d6fe4-3c22-495b-8c60-b9a88a4b7602" mode="Opaque" x="280" y="0" width="97" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[A. Paterno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="57f096d0-e6ef-4aab-bdaf-7a0ce503f7e7" mode="Opaque" x="735" y="0" width="86" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Login]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2dd6d903-7365-494a-921e-11436ed2b797" mode="Opaque" x="821" y="0" width="100" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Password]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="68796ba4-7c7f-4431-b022-355d4d363705" mode="Opaque" x="921" y="0" width="100" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Funcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3d0e531d-c58b-42f5-82c5-43f52ef93df5" mode="Opaque" x="1021" y="0" width="100" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Departamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="170b4b55-6c78-43cf-af63-36c2da86681a" mode="Opaque" x="1121" y="0" width="100" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Provincia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8a806d8e-e9fd-4c1b-99af-12acdac74678" mode="Opaque" x="183" y="0" width="97" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b415521b-c0fc-4a7e-8bd7-58e12d8a945c" mode="Opaque" x="1221" y="0" width="100" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Distrito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7abb898e-b642-46ac-99a5-da9064b2979a" mode="Opaque" x="1321" y="0" width="100" height="15" backcolor="#999999"/>
+				<textElement/>
+				<text><![CDATA[Tipo Planilla]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="75" splitType="Stretch">
+			<subreport runToBottom="true">
+				<reportElement uuid="c43a3e6f-96be-4711-82ae-8b8224d5efdd" x="69" y="20" width="1352" height="55" isRemoveLineWhenBlank="true"/>
+				<dataSourceExpression><![CDATA[$F{ejecutivosDS}]]></dataSourceExpression>
+				<subreportExpression><![CDATA["srptEjecutBackOfficexNegocio.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="7f832ac0-8470-4b5c-81d9-b859c9ef1ee4" x="69" y="0" width="308" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{responsable}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a9d34e20-9b81-4708-b5a7-f917fd09fe97" x="0" y="0" width="69" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supervisor:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

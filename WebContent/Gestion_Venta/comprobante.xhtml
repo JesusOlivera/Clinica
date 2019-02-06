@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Comprobantes" url="#" />
+    				<p:menuitem value="Generar Comprobante" url="comprobante" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px" id="formPN"> 
+				<h:panelGrid columns="4">						
+					#{"Tipo de Documento:"}						        
+					<p:selectOneMenu style="width:200px" value="#{comprobanteMB.comprobanteSelec.tipo_comprobante}"  required="true" requiredMessage="Se necesita un domicilio fiscal" >
+						<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+						<f:selectItems value="#{comprobanteMB.listTablaTablasDetallesComprobante}" var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
+						<p:ajax event="itemSelect" listener="#{comprobanteMB.obtenerAbreviatura()}" update="idValoresCabecera formAccion"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+				
+				<p:panel>
+					<h:panelGrid id="idValoresCabecera">
+						<h:panelGrid columns="3">
+						
+							#{"Cliente:"}
+							<p:autoComplete id="clientePojo" value="#{comprobanteMB.clienteEncontrado.nombre_cab}" completeMethod="#{comprobanteMB.consultarCliente}"
+	                        var="cliente" itemLabel="#{cliente.nombre_cab}" itemValue="#{cliente.nombre_cab}" forceSelection="true" disabled="#{comprobanteMB.ingresarCliente}">
+	                         
+	                        	<p:ajax event="itemSelect" listener="#{comprobanteMB.onItemCliente}" update="id_nombre formAccion"/>
+	                        
+	                        </p:autoComplete>
+	                        
+	                        <p:outputLabel value=" #{comprobanteMB.clienteEncontrado.desTipoDocumento}  #{comprobanteMB.clienteEncontrado.numero_docu_iden_cab}" id="id_nombre"
+								style="width:200px ;font-size:15px; color:blue" />	
+							
+						</h:panelGrid>
+						<h:panelGrid columns="6" id="pnFields">
+						
+							#{"Numero del Documento:"} 
+							<p:outputLabel value="#{comprobanteMB.comprobanteSelec.numero_serie_documento_cab}" id="numero_documento"
+								required="true" label="numero_documento" requiredMessage="Se necesita un numero de documento"
+								style="width:200px ;font-size:25px; " disabled="#{comprobanteMB.ingresarCliente}"/>
+							
+							#{"Fecha de Emisión:"} 
+							<p:calendar style="width:200px" readonlyInput="true" value="#{comprobanteMB.comprobanteSelec.fecha_emision_cab}" pattern="dd/MM/yyyy" locale="es" maxdate="#{cicloMB.fechaActual}"
+								  navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio" disabled="#{comprobanteMB.ingresarCliente}">
+								  <p:ajax event="dateSelect" />
+							</p:calendar>
+							
+							#{"Modo Pago:"}						        
+							<p:selectOneMenu style="width:200px" value="#{comprobanteMB.comprobanteSelec.id_modo_pago}"  required="true" requiredMessage="Se necesita un domicilio fiscal" disabled="#{comprobanteMB.ingresarCliente}">
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{comprobanteMB.listModoPagos}" var="p" itemLabel="#{p.descripcion_modo_pago}" itemValue="#{p.id_modo_pago}" />
+								<p:ajax event="change" />
+							</p:selectOneMenu>
+							
+							#{"Tipo Operación:"}						        
+							<p:selectOneMenu style="width:200px" value="#{comprobanteMB.comprobanteSelec.tipo_operacion_cab}"  required="true" requiredMessage="Se necesita un domicilio fiscal"  disabled="#{comprobanteMB.ingresarCliente}">
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{comprobanteMB.listTablaTablasDetallesOperacion}" var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
+								<p:ajax event="change"/>
+							</p:selectOneMenu>
+							
+							#{"Hora de Emisión:"} 
+							<p:calendar style="width:200px" readonlyInput="true"  value="#{comprobanteMB.comprobanteSelec.hora_emision_cab}" pattern="hh:mm:ss" timeOnly="true" locale="es" maxdate="#{cicloMB.fechaActual}" disabled="#{comprobanteMB.ingresarCliente}"
+								  navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio">
+								  <p:ajax event="dateSelect"/>
+							</p:calendar>
+							
+							#{"Vendedor:"}						        
+							<p:selectOneMenu style="width:200px" value="#{comprobanteMB.comprobanteSelec.id_vendedor}"  required="true" requiredMessage="Se necesita un Canal"  disabled="#{comprobanteMB.ingresarCliente}">
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{comprobanteMB.listaVendedores}" var="p" itemLabel="#{p.descripcion_vendedor}" itemValue="#{p.id_vendedor}" />
+								<p:ajax event="change"/>
+							</p:selectOneMenu>
+							
+							
+							#{"Tipo de Moneda:"}						        
+							<p:selectOneMenu style="width:200px" value="#{comprobanteMB.comprobanteSelec.tipo_moneda_cab}"  required="true" requiredMessage="Se necesita un domicilio fiscal" disabled="#{comprobanteMB.ingresarCliente}">
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{comprobanteMB.listTablaTablasDetallesMoneda}" var="p" itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
+								<p:ajax event="change"/>
+							</p:selectOneMenu>
+							
+							#{"Fecha de Vencimiento:"} 
+							<p:calendar style="width:200px" readonlyInput="true" value="#{comprobanteMB.comprobanteSelec.fecha_vencimiento_cab}" pattern="dd/MM/yyyy" locale="es" maxdate="#{cicloMB.fechaActual}"
+								  navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio" disabled="#{comprobanteMB.ingresarCliente}">
+								  <p:ajax event="dateSelect"/>
+							</p:calendar>
+						
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+				
+			</h:form>
+			<h:form id="formAccion">
+				<p:panel id="id_adicionar">
+					<p:commandButton  title="Adicionar Producto" value="Adicionar"  update=":dlgDetNuevoProducto :formProducto" actionListener="#{comprobanteMB.adicionarProducto()}" 
+										 oncomplete="PF('dlgNuevoProducto').show();" icon="icon-edit"  disabled="#{comprobanteMB.adicionar}">
+							
+					</p:commandButton>
+				</p:panel>
+				<p:panel>
+					<p:dataTable id="dataComprobante" var="p" value="#{comprobanteMB.listaComprobanteDetalle}" widgetVar="dtComprobante" 
+						emptyMessage="No hay Compras Disponibles." rowIndexVar="nro" 
+						 style="FONT-SIZE: 10px; ">
+						<f:facet name="header">Detalle de Comprobante</f:facet>
+						<p:column headerText="Orden" width="25" style="width:3%" >
+							#{nro+1}
+						</p:column>
+						<p:column style="width:70px" headerText="Código de Producto">
+							<h:outputText value="#{p.producto.cod_prod_det}"/>
+						</p:column>
+						<p:column style="width:70px" headerText="Nombre Producto">
+							<h:outputText value="#{p.producto.descripcion_prod_det}"/>
+						</p:column>
+						<p:column style="width:70px" headerText="Cantidad">
+							<h:outputText value="#{p.cant_unidades_item_det}" converter="montoDefaultConverter" />
+						</p:column>						
+						<p:column style="width:70px" headerText="Valor Unitario">
+							<h:outputText value="#{p.producto.precio_final_editado_cliente}" converter="montoDefaultConverter" />
+						</p:column>
+						<p:column style="width:70px" headerText="Sub Total">
+							<h:outputText value="#{p.valor_venta_item_det}" converter="montoDefaultConverter" />
+						</p:column>
+						<p:column style="width:70px" headerText="Tributo">
+							<h:outputText value="#{p.suma_tributos_det}" converter="montoDefaultConverter"/>
+						</p:column>
+						<p:column style="width:70px" headerText="Total">
+							<h:outputText value="#{p.precio_venta_unitario_det}" converter="montoDefaultConverter"/>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				
+				<p:panel>
+				
+					<h:panelGrid columns="2" border="1" >
+					
+						#{"Sumatoria Tributos:"}
+						<h:outputLabel value="#{comprobanteMB.comprobanteSelec.suma_tributos_cab}" id="sumatoria_tributos"
+								style="width:200px;" converter="montoDefaultConverter" />
+						#{"Sub Total venta:"}
+						<h:outputLabel value="#{comprobanteMB.comprobanteSelec.total_valor_venta_cab}" id="valor_venta"
+								style="width:200px;" converter="montoDefaultConverter" />
+						#{"Total venta:"}
+						<h:outputLabel value="#{comprobanteMB.comprobanteSelec.total_precio_venta_cab}" id="precio_venta"
+								style="width:200px;" converter="montoDefaultConverter" />
+						#{"Total descuentos:"}
+						<h:outputLabel value="0" id="total_descuentos"
+								style="width:200px;" converter="montoDefaultConverter"/>
+						#{"Sumatoria otros Cargos:"}
+						<h:outputLabel value="0" id="otros_cargos"
+								style="width:200px;" converter="montoDefaultConverter" />
+						#{"Total Anticipos:"}
+						<h:outputLabel value="0" id="total_anticipos"
+								style="width:200px;" converter="montoDefaultConverter"  />
+						#{"Importe total:"}
+						<h:outputLabel value="#{comprobanteMB.comprobanteSelec.importe_total_venta_cab}" id="importe_total"
+								style="width:200px;" converter="montoDefaultConverter" />
+					
+					</h:panelGrid>
+					        
+
+                         <h:panelGrid>
+						         <p:commandButton value="Generar Comprobante" actionListener="#{comprobanteMB.generarComprobante()}" update=":formAccion: :formPN" disabled="#{comprobanteMB.generarComprobante}">
+								 </p:commandButton>
+						 </h:panelGrid>
+						 
+
+                             
+
+
+				
+				</p:panel>
+			
+			</h:form>
+			
+			
+			
+			
+				<!-- listado de Planes -->
+			
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<p:dialog header="Adicionar Producto" widgetVar="dlgNuevoProducto" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoProducto" modal="true">
+					
+					<h:form id="formProducto">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					<h:panelGrid columns="2">
+						#{"Producto:"}						        
+						<p:autoComplete id="productoPojo" inputStyle="width:300px" value="#{comprobanteMB.productoEncontrado.descripcion_prod_det}" completeMethod="#{comprobanteMB.consultarProducto}" 
+						var="prd" itemLabel="#{prd.descripcion_prod_det}" itemValue="#{prd.descripcion_prod_det}" forceSelection="true">
+	                        <p:ajax event="itemSelect" listener="#{comprobanteMB.onItemSelect}" update=":formProducto:pnOtros"/>
+	                    </p:autoComplete>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="2" id="pnOtros">								
+							
+							#{"Tipo Producto:"}						        
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.producto.desProductoSunat}" id="tipo_producto"
+								style="width:200px;" />
+							
+						   	#{"Precio Editable:"}
+							<p:inputText value="#{comprobanteMB.comprobanteDetalleSelec.producto.precio_final_editado_cliente}" id="precio"
+								required="true" label="precio" requiredMessage="Se necesita una precio"
+								style="width:200px;" >
+								<f:convertNumber pattern="#0.00" />
+								<p:ajax  listener="#{comprobanteMB.calcularMontoPrecio()}" update=":formProducto:pnOtros" />
+							</p:inputText>		
+							
+							#{"Cantidad:"}
+							<p:inputText value="#{comprobanteMB.comprobanteDetalleSelec.cant_unidades_item_det}" id="cantidad"
+								required="true" label="cantidad" requiredMessage="Se necesita una cantidad"
+								style="width:200px;" >
+								<p:ajax  listener="#{comprobanteMB.calcularMonto()}" update=":formProducto:pnOtros" />
+							</p:inputText>
+								
+							#{"Unidad de Medida:"}
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.producto.desUnidadMedida}" id="unidad_medida"
+								style="width:200px;" />
+								
+							#{"Código:"}
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.producto.cod_prod_det}" id="codigo_producto"
+								style="width:200px;" />
+							
+							#{"Descripción:"}
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.producto.descripcion_prod_det}" id="descripcion_producto"
+								style="width:200px;" />
+							
+							#{"Valor Unitario:"}
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.producto.valor_unitario_prod_det}" 
+									id="valor_unitario" converter="montoDefaultConverter"
+								style="width:200px;" />
+							
+							#{"Descuento:"}
+							<h:outputLabel value="" id="descuento"
+								style="width:200px;" />
+								
+							#{"ISC:"}
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.tpISC.descTT}" id="desttisc"
+								style="width:200px;" />
+							<p:spacer></p:spacer>
+							<h:panelGrid columns="2">
+								<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.tpISC.porcentaje_det}%" id="porcentaje_det"
+								style="width:200px;" />
+								<h:outputLabel value="S/.#{comprobanteMB.comprobanteDetalleSelec.montoISC}" id="monto_isc"
+								style="width:200px;" />
+							</h:panelGrid>
+							
+							#{"Total IGV:"}
+							
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.tpIGV.descTT}" id="desttigv"
+								style="width:200px;" />
+								
+							<p:spacer></p:spacer>
+								
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.montoIGV}" id="monto_igv" converter="montoDefaultConverter"
+								style="width:200px;" />
+							
+							#{"Total Venta:"}
+							<h:outputLabel value="#{comprobanteMB.comprobanteDetalleSelec.precio_venta_unitario_det}" id="precio_venta_unitario" converter="montoDefaultConverter"
+								style="width:200px;" />
+								
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{comprobanteMB.adicionarCompra()}"
+						update=":formAccion msgNuevo" oncomplete="PF('dlgNuevoProducto').hide()"/>
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoProducto').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			
+		</p:panel>
+		
+		<script>
+		function validar(xhr, status, args) {
+			if (args.validationFailed) {
+				
+			} else {
+				PF('dlgNuevo').hide();
+			}
+		}
+
+		function validarGuardar(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevo').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				
+			}
+		}
+		
+		function start() {
+		    PF('statusDialog').show();
+		}
+		 
+		function stop() {
+		    PF('statusDialog').hide();
+		}
+		
+		
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

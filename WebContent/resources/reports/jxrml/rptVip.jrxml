@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptVip" language="groovy" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="19cb4634-57c6-4fc6-a700-eabd89226a55">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="P_NEGOCIO" class="java.lang.String"/>
+	<parameter name="P_PRODUCTO" class="java.lang.String"/>
+	<parameter name="P_PERIODO" class="java.lang.String"/>
+	<parameter name="P_LOGO" class="java.lang.String"/>
+	<parameter name="P_FSISTEMA" class="java.lang.String"/>
+	<parameter name="P_SUPERVISOR" class="java.lang.String"/>
+	<field name="rango_cantidad" class="java.lang.String"/>
+	<field name="cantidad_lima" class="java.lang.Integer"/>
+	<field name="total_lima" class="java.math.BigDecimal"/>
+	<field name="cantidad_provincia" class="java.lang.Integer"/>
+	<field name="total_provincia" class="java.math.BigDecimal"/>
+	<field name="cantidad_nacional" class="java.lang.Integer"/>
+	<field name="total_nacional" class="java.math.BigDecimal"/>
+	<variable name="V_CANT_LIMA" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad_lima}]]></variableExpression>
+	</variable>
+	<variable name="V_MONTO_LIMA" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_lima}]]></variableExpression>
+	</variable>
+	<variable name="V_CANT_PROV" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad_provincia}]]></variableExpression>
+	</variable>
+	<variable name="V_TOTAL_PROV" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_provincia}]]></variableExpression>
+	</variable>
+	<variable name="V_CANT_NAC" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad_nacional}]]></variableExpression>
+	</variable>
+	<variable name="V_MONTO_NAC" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_nacional}]]></variableExpression>
+	</variable>
+	<variable name="variable7" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d297d812-40f6-4afb-acbe-342d0d6da90e" x="0" y="0" width="292" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE A PRIORI]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5f492cf4-f08e-441e-8db6-4f19e40c0f47" x="120" y="20" width="172" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="72405e5b-63fb-4a5a-a61d-e5ab5b93885d" x="0" y="20" width="120" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83560b87-35fe-4f9e-b802-cc51ae422585" x="0" y="40" width="120" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0b4896eb-9faa-4734-b25c-cb04ab8742eb" x="120" y="40" width="172" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_PERIODO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d635e933-8912-4e7b-a2af-de7da680c9b8" x="292" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_FSISTEMA}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="d228d8a2-ec09-4156-b412-95163a8750db" x="496" y="0" width="100" height="40"/>
+				<imageExpression><![CDATA[$P{P_LOGO}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="d4bdcc77-453e-49c0-a7de-90accbb1919b" mode="Opaque" x="0" y="0" width="120" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Montos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3c1b6f3f-bcae-4657-bd0f-cc115a26c085" mode="Opaque" x="120" y="0" width="80" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Numero Lima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="80e0c611-395d-4f8d-89c4-9243a56948f1" mode="Opaque" x="200" y="0" width="92" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Monto Lima S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="64d8546e-7b97-4c7e-a259-7b6e69de1528" mode="Opaque" x="292" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Numero Provincia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="29b69df1-ce9f-4c3a-8db3-4bc322a8a0ea" mode="Opaque" x="392" y="0" width="104" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Monto Provincia S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3e982548-f61e-438a-a1aa-ef523d10a59f" mode="Opaque" x="496" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Numero Nacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d385accb-cc63-4d74-ac99-0e8464279bda" mode="Opaque" x="596" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Monto Nacional]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="af217393-9013-4b8a-a9f3-12e1d233b2d0" x="0" y="0" width="120" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rango_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="376a605f-e606-4641-9a68-719d08ea0094" x="120" y="0" width="80" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad_lima}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="c7ce878e-abe3-41b6-ab4e-c2af59ac32c3" x="200" y="0" width="92" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_lima}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="2a4a7edb-be46-45e2-a0b1-d6c05fec3748" x="292" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad_provincia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="f2e6cdc8-d692-4fa5-815c-079e9e294c58" x="392" y="0" width="104" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_provincia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="711247ec-f956-498a-807d-4cc67198160e" x="496" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad_nacional}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ba615fa9-b814-4a87-8efb-21be9e172df1" x="596" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_nacional}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="50">
+			<textField>
+				<reportElement uuid="816d7a91-03d9-42ef-8d2f-2b9e4a791987" x="120" y="0" width="80" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{V_CANT_LIMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="412b22f2-2c2e-475b-8d15-f933d4b59adf" x="200" y="0" width="92" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{V_MONTO_LIMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c40a6b21-af69-4071-87c0-03a1b369126f" x="293" y="0" width="99" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{V_CANT_PROV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f6b778d2-5f74-4ffa-8591-94e7446bf1ac" x="392" y="0" width="104" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{V_TOTAL_PROV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="86f678e9-fa2c-49b9-9060-4cd1b992583a" x="496" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{V_CANT_NAC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="38e2e705-b47d-43c2-92ff-4452a4710eb7" x="596" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{V_MONTO_NAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="acb96c25-50bb-4c94-9c5a-3cd26ba619f8" mode="Opaque" x="0" y="0" width="120" height="20" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

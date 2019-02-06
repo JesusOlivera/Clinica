@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobanteBol" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e93a8c18-4b6d-4ab8-bbd6-11cf17ea35ab">
+	<parameter name="p_ruc" class="java.lang.String"/>
+	<parameter name="p_emisor_razonsocial" class="java.lang.String"/>
+	<parameter name="p_direccion_emisor" class="java.lang.String"/>
+	<parameter name="p_fec_emision" class="java.lang.String"/>
+	<parameter name="p_importe_total" class="java.lang.String"/>
+	<parameter name="p_numero_documento" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="des_producto" class="java.lang.String"/>
+	<field name="cant_unidades_item_det" class="java.lang.String"/>
+	<field name="precio_venta_unitario_det" class="java.lang.String"/>
+	<field name="valor_item" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="230" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="20" width="200" height="30" uuid="420692e5-7f6f-457f-b5cd-ba07313e22f3"/>
+				<textFieldExpression><![CDATA[$P{p_numero_documento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="90" width="140" height="30" uuid="40bce88d-a53c-4be4-a331-e49fb3610d2f"/>
+				<textFieldExpression><![CDATA[$P{p_emisor_razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="130" width="140" height="30" uuid="389cb920-1d1a-4f8b-957d-777a91707064"/>
+				<textFieldExpression><![CDATA[$P{p_direccion_emisor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="170" width="110" height="30" uuid="8845391f-e053-4f65-a42e-cf256710b2d8"/>
+				<textFieldExpression><![CDATA[$P{p_ruc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="170" width="120" height="30" uuid="4ade28c3-c424-4fea-bce5-3e1b4224b444"/>
+				<textFieldExpression><![CDATA[$P{p_fec_emision}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="0" width="100" height="30" uuid="38c6ef0c-f54a-4726-9451-fb34130d0220">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c3646de-73a8-45d1-bf4b-b3b3ce2fe366"/>
+				</reportElement>
+				<text><![CDATA[des_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="0" width="100" height="30" uuid="fa9add7e-f975-4715-9d90-a215ffcec927">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98e56d84-0460-4eff-ae9b-27a828c20548"/>
+				</reportElement>
+				<text><![CDATA[cant_unidades_item_det]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="100" height="30" uuid="1974ce46-d716-414c-838a-2548f4ad4e88">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1ee84273-715a-4ec3-9221-84a1aea0f0c8"/>
+				</reportElement>
+				<text><![CDATA[valor_item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="0" width="100" height="30" uuid="3161ad99-6aa5-46da-92cb-86ceb3fe0b17">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83aa1811-f24e-41b7-8d23-0338529e1f5f"/>
+				</reportElement>
+				<text><![CDATA[precio_venta_unitario_det]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="20" width="100" height="30" uuid="89d42a34-b0ce-4db2-abc9-f14b7173962f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c3646de-73a8-45d1-bf4b-b3b3ce2fe366"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{des_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="20" width="100" height="30" uuid="49df485f-1d89-4c2e-99a3-e6c4f1ea1ab0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98e56d84-0460-4eff-ae9b-27a828c20548"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cant_unidades_item_det}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="20" width="100" height="30" uuid="35079a6b-e33d-45bf-b690-fae2f172c472">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1ee84273-715a-4ec3-9221-84a1aea0f0c8"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{valor_item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="20" width="100" height="30" uuid="6d39b310-1ca9-4b0f-812b-442e5b96e6d2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83aa1811-f24e-41b7-8d23-0338529e1f5f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{precio_venta_unitario_det}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="170" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="56" width="270" height="110" uuid="043ae399-11ec-4e40-86cf-46c523cd33e8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Autorizado mediannte resolucion
+  Anexo III - R.S. 155-2017
+Representacion impresa de la
+  Boleta Electronica
+Consulte Utilizando su clave SOL en
+     el portal SUNAT
+Cualquier duda o consulta escribanos a:
+facturacionelectronica@suempresa.com]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="300" y="10" width="100" height="30" uuid="60b86fab-d50e-410f-ba22-38e2ca7e0603"/>
+				<textFieldExpression><![CDATA[$P{p_importe_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="179" y="10" width="100" height="30" uuid="3f353489-3e59-47d2-83cc-3b006263851a"/>
+				<text><![CDATA[TOTAL VENTA : S/    ]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

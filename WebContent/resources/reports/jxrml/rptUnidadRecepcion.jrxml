@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptUnidadRecepcion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="62c40109-c191-49e4-bad4-429e1fc7f22a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_LOGO" class="java.lang.String"/>
+	<parameter name="P_TIPO" class="java.lang.String"/>
+	<field name="cod_ur" class="java.lang.Integer"/>
+	<field name="nombre_ur" class="java.lang.String"/>
+	<field name="loteDS" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="nombre_tipour" class="java.lang.String"/>
+	<field name="des_estur" class="java.lang.String"/>
+	<field name="fecha_recepcion" class="java.util.Date"/>
+	<field name="des_estado" class="java.lang.String"/>
+	<field name="razonSocial" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<image>
+				<reportElement uuid="4d137074-6eb1-4c70-a18e-3f612cd68969" x="7" y="5" width="100" height="55"/>
+				<imageExpression><![CDATA[$P{P_LOGO}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="93185cc8-67ac-4fa3-b324-07d243c47abf" x="129" y="21" width="371" height="23"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TIPO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="4" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="160" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="d8c38bfb-9682-4d8c-a25b-d0a1a1bd574a" x="16" y="14" width="506" height="15" backcolor="#999999"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="140f6d61-4648-4cb6-896a-0b6c9985ebde" x="26" y="29" width="47" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cod_ur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84766279-221a-4e31-aedc-40aa816e9877" x="76" y="29" width="74" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombre_ur}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="84852b07-8c7c-4c44-807e-b34887cace18" x="44" y="47" width="456" height="100"/>
+				<dataSourceExpression><![CDATA[$F{loteDS}]]></dataSourceExpression>
+				<subreportExpression><![CDATA["srptLote.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="9ea268d6-e560-4996-bb25-bb8a75dc3a75" x="159" y="30" width="64" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombre_tipour}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bab9c225-ef12-4fae-8e02-96ea9276d15b" x="230" y="30" width="107" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{des_estado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement uuid="f8c5bb6f-250e-4fdb-b672-2484b5cb9bcc" x="329" y="30" width="100" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha_recepcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="145c3196-68d8-4af1-98f2-e6660151dd4b" x="443" y="30" width="78" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{des_estur}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f7501a29-3cf8-4901-8943-29d4ba573cb1" x="19" y="44" width="498" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="0162701a-4d4a-4c54-b8ca-ebdaa6f774b9" x="15" y="0" width="147" height="14"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidad de Recepción:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d4e049d7-6dee-41fc-ab95-8ad343d0bdfb" x="455" y="15" width="65" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado UR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="beb54f17-d5f3-483b-9a9c-356e6add2590" x="346" y="15" width="80" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Recep.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1cb777-d7c6-4178-88bc-801af1714013" x="252" y="15" width="57" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="571f7f32-6e43-459f-8b4d-36b5fe736105" x="155" y="15" width="57" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo UR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d123571b-1a17-49a9-b177-a9799cb152e1" x="94" y="15" width="61" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre UR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eb11dd4e-633a-40f7-8641-9062d4fe3877" x="22" y="15" width="57" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo UR]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f1b9d602-c974-4db5-9c76-f3f55db2d7f1" x="508" y="43" width="39" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f44169b1-1ed7-4196-a411-8134ceb96618" x="481" y="43" width="36" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Página ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="69e5360e-2e6e-4f60-8ba3-c153b1e0d24e" x="110" y="28" width="53" height="16"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1faf6bef-97e1-4048-bb8b-4538f31a4a99" x="314" y="28" width="69" height="16"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CERTICOM]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="45efba92-5561-4acf-8d94-42e92f424199" x="88" y="25" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="0af91c6e-00ed-467f-b0a2-869dd860d423" x="300" y="25" width="100" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="ca106ea4-2f31-4e65-afe1-14ea13f18ec4" x="28" y="42" width="212" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razonSocial}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

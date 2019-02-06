@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="classpath:src/com/certicom/scpf/propiedades/database.properties"/>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				
+				<property name="driverClassName" value="org.postgresql.Driver" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+					
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/certicom/scpf/mapper/impl/UsuarioMapper.xml" />
+		<mapper resource="com/certicom/scpf/mapper/impl/SistemaMapper.xml" />
+        <mapper resource="com/certicom/scpf/mapper/impl/PerfilMapper.xml"/>
+        <mapper resource="com/certicom/scpf/mapper/impl/ParametroMapper.xml"/>
+        <mapper resource="com/certicom/scpf/mapper/impl/MenuMapper.xml"/>
+        <mapper resource="com/certicom/scpf/mapper/impl/LogMapper.xml"/>      
+       	<mapper resource="com/certicom/scpf/mapper/impl/TablaTablasMapper.xml"/>  
+       	<mapper resource="com/certicom/scpf/mapper/impl/TablaTablasDetalleMapper.xml"/>
+       	<mapper resource="com/certicom/scpf/mapper/impl/ClienteMapper.xml"/>
+       	<mapper resource="com/certicom/scpf/mapper/impl/EmisorMapper.xml"/>
+       	<mapper resource="com/certicom/scpf/mapper/impl/DomicilioFiscalMapper.xml"/>  
+       	<mapper resource="com/certicom/scpf/mapper/impl/ModoPagoMapper.xml"/>  
+       	<mapper resource="com/certicom/scpf/mapper/impl/ProductoMapper.xml"/>  
+       	<mapper resource="com/certicom/scpf/mapper/impl/TributoProductoMapper.xml"/>  
+       	<mapper resource="com/certicom/scpf/mapper/impl/ComprobanteMapper.xml"/>  
+       	<mapper resource="com/certicom/scpf/mapper/impl/ComprobanteDetalleMapper.xml"/>  
+        <mapper resource="com/certicom/scpf/mapper/impl/ComunicacionBajaMapper.xml"/> 
+        <mapper resource="com/certicom/scpf/mapper/impl/VendedorMapper.xml"/> 
+        
+        <mapper resource="com/certicom/scpf/mapper/impl/PacienteMapper.xml"/> 
+        <mapper resource="com/certicom/scpf/mapper/impl/EspecialidadMapper.xml"/> 
+        <mapper resource="com/certicom/scpf/mapper/impl/MedicoMapper.xml"/> 
+        <mapper resource="com/certicom/scpf/mapper/impl/TipoServicioMapper.xml"/> 
+        
+            
+	</mappers>
+</configuration>
