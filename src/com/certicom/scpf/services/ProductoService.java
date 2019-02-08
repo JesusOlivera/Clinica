@@ -40,6 +40,13 @@ public class ProductoService implements ProductoMapper{
 		productoMapper.eliminarProducto(id_producto);
 	}
 
+	@Override
+	public List<Producto> findByIdTipoServicio(Integer id_tipo_servicio)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return productoMapper.findByIdTipoServicio(id_tipo_servicio);
+	}
+
 	
 	
 }

@@ -32,4 +32,10 @@ public class PacienteService  implements PacienteMapper{
 		// TODO Auto-generated method stub
 		this.pacienteMapper.eliminarPaciente(id_paciente);
 	}
+
+	@Override
+	public Paciente obtenerPaciente(Paciente paciente) throws Exception {
+		// TODO Auto-generated method stub
+		return this.pacienteMapper.obtenerPaciente(paciente);
+	}
 }

@@ -154,5 +154,10 @@
 		<view-id value="/faces/Clinica/paciente.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="generaTicket"> 
+		<pattern value="/generaTicket" />
+		<view-id value="/faces/Clinica/genera_tickets.xhtml" />
+	</url-mapping>
+	
 
 </pretty-config>

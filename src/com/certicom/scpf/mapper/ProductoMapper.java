@@ -20,8 +20,11 @@ public interface ProductoMapper {
 	 * @return : retorna un objeto Cliente
 	 * @throws Exception
 	 */
-	@Select("select e.*, ttd1.descripcion_largo desProductoSunat, ttd2.descripcion_largo desUnidadMedida from (t_producto e left join t_tabla_tablas_detalle ttd1 on ttd1.id_codigo = e.tipo_prod_sunat_det) left join t_tabla_tablas_detalle ttd2 on ttd2.id_codigo = e.unidad_medida_det where e.id_producto = #{p_producto}")
+	@Select("select e.*, ttd1.descripcion_largo desProductoSunat, ttd2.descripcion_largo desUnidadMedida from (t_producto e left join t_tabla_tablas_detalle ttd1 on ttd1.id_codigo = e.tipo_prod_sunat_det) left join t_tabla_tablas_detalle ttd2 on ttd2.id_codigo  = ttd1.id_maestra  where e.id_producto = #{p_producto}")
 	public Producto findById(@Param("p_producto") Integer codigoProducto) throws Exception;
+	
+	@Select("select e.* from t_producto e where e.id_tipo_servicio = #{p_id_tipo_servicio}")
+	public List<Producto> findByIdTipoServicio(@Param("p_id_tipo_servicio") Integer id_tipo_servicio) throws Exception;
 	
 	@Select("select e.* , (select d.descripcion_largo from t_tabla_tablas_detalle d where d.codigo_catalogo = e.unidad_medida_det and d.id_maestra = 3) desUnidadMedida from t_producto e  order by e.id_producto asc")
 	public List<Producto> findAll() throws Exception;

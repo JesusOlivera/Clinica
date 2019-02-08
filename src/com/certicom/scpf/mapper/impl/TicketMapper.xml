@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.TicketMapper">
+
+
+<resultMap id="ticketResult" type="com.certicom.scpf.domain.Ticket">
+	<id column="id_ticket" property="id_ticket" />
+	<result column="id_producto" property="id_producto" />
+	<result column="id_tipo_servicio" property="id_tipo_servicio"/>
+	<result column="id_medico" property="id_medico"/>
+	<result column="id_especialidad" property="id_especialidad"/>
+	<result column="id_paciente" property="id_paciente"/>
+	<result column="id_cliente" property="id_cliente"/>
+	<result column="fecha_ticket" property="fecha_ticket"/>
+	<result column="hora_ticket" property="hora_ticket"/>
+	<result column="estado" property="estado"/>
+	<result column="encolado" property="encolado"/>
+	<result column="flag_externo" property="flag_externo"/>
+	<result column="nro_ticket" property="nro_ticket"/>
+	
+
+</resultMap>
+		
+</mapper>	

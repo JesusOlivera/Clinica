@@ -18,6 +18,8 @@ public interface PacienteMapper {
 	public List<Paciente> findAll() throws Exception;
 	
 	
+	public Paciente obtenerPaciente(Paciente paciente) throws Exception;
+	
 	@Update("update t_paciente set  id_cliente = #{id_cliente}, id_tipo_documento = #{id_tipo_documento}, numero_documento = #{numero_documento},"
 			+ " nombre = #{nombre}, fecha_nacimiento = #{fecha_nacimiento}, direccion = #{direccion}, telefono = #{telefono}, "
 			+ " email = #{email}, tipo_sangre = #{tipo_sangre}, es_cliente = #{es_cliente}   "

@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="com/certicom/scpf/mapper/impl/EspecialidadMapper.xml"/> 
         <mapper resource="com/certicom/scpf/mapper/impl/MedicoMapper.xml"/> 
         <mapper resource="com/certicom/scpf/mapper/impl/TipoServicioMapper.xml"/> 
-        
+        <mapper resource="com/certicom/scpf/mapper/impl/TicketMapper.xml"/>
             
 	</mappers>
 </configuration>

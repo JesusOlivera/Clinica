@@ -33,4 +33,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order by pas.id_paciente asc
 	</select>
 	
+	<select id="obtenerPaciente" parameterType="com.certicom.scpf.domain.Paciente" resultMap="pacienteResult">
+		select pas.*, cl.* 
+			from t_paciente pas 
+			inner join t_cliente cl on cl.id_cliente=pas.id_cliente
+			
+				where 
+				<if test="numero_documento != null">
+					pas.numero_documento = #{numero_documento}
+				</if>
+				<if test="nombre != null">
+					pas.nombre = #{nombre}
+				</if>
+			order by pas.id_paciente asc
+	</select>
+	
 </mapper>	

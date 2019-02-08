@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+		<ui:define name="contenido">
+		
+			<p:panel>
+				
+				<h:form>
+					<p:breadCrumb>  
+	    				<p:menuitem value="Home" url="#" />  
+	    				<p:menuitem value="Clinica" url="#" />
+	    				<p:menuitem value="Gestion de Ticket" url="generaTicket" />   
+					</p:breadCrumb>	
+				</h:form>
+				
+				<h:form>
+					<p:panel header="Generación de Tickets">
+						<h:panelGrid>
+							<h:panelGrid columns="2">
+								#{"Tipo Servicio: "}
+								<p:selectOneMenu  value="#{generaTicketMB.ticketSelected.id_tipo_servicio}" style="width:200px;" >
+									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItems value="#{generaTicketMB.listTipoServicios}" var="p" 
+									itemLabel="#{p.descripcion_tipo}" itemValue="#{p.id_tipo_servicio}" />
+									<p:ajax listener="#{generaTicketMB.cargarServicios()}" update="cmbServicio"></p:ajax>
+								</p:selectOneMenu>	
+								
+								#{"Servicio: "}
+								<p:selectOneMenu id="cmbServicio" value="#{generaTicketMB.ticketSelected.id_producto}" style="width:200px;">
+									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItems value="#{generaTicketMB.listProductos}" var="p" 
+									itemLabel="#{p.descripcion_prod_det}" itemValue="#{p.id_producto}" />
+									<p:ajax event="change" listener="#{generaTicketMB.cargaPrecio()}" update="precio"></p:ajax>
+								</p:selectOneMenu>
+								
+								#{"Número de Ticket: "}
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.nro_ticket}">
+								</h:outputLabel>
+								
+								#{"DNI"}
+								<p:inputText id="dni" value="#{generaTicketMB.pacienteParam.numero_documento}">
+						            <p:ajax event="blur" update="dni nombre" listener="#{generaTicketMB.obtenerPaciente()}"/>
+						        </p:inputText>
+						        
+						        #{"Nombres"}
+								<p:inputText id="nombre" value="#{generaTicketMB.pacienteParam.nombre}">
+						            <p:ajax event="blur" update="dni nombre" />
+						        </p:inputText>
+					        </h:panelGrid>
+					        <h:panelGrid columns="2">
+					        	<h:panelGrid columns="2" >
+					        		<p:selectBooleanCheckbox value="#{generaTicketMB.ticketSelected.flag_externo}" itemLabel="Es externo">
+						            	<p:ajax event="change"/>
+						        	</p:selectBooleanCheckbox>
+						        	<p:spacer></p:spacer>
+							        #{"Doctor: "}
+									<p:selectOneMenu id="cmbMedico" value="#{generaTicketMB.ticketSelected.id_medico}" style="width:200px;">
+										<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+										<f:selectItems value="#{generaTicketMB.listMedicos}" var="p" 
+										itemLabel="#{p.nombre_medico}" itemValue="#{p.id_medico}" />
+										<p:ajax event="change"></p:ajax>
+									</p:selectOneMenu>
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+								
+									#{"Fecha: "}
+									<p:calendar style="width:200px" readonlyInput="true" value="#{generaTicketMB.ticketSelected.fecha_ticket}" pattern="dd/MM/yyyy" locale="es" 
+											  navigator="true"  required="true" requiredMessage="Seleccione una fecha" disabled="true">
+									</p:calendar>					
+									
+									#{"Hora:"} 
+									<p:calendar style="width:200px" readonlyInput="true"  value="#{generaTicketMB.ticketSelected.hora_ticket}" pattern="hh:mm:ss" timeOnly="true" locale="es" disabled="true"
+										navigator="true"  required="true" requiredMessage="Seleccione una hora" >								  
+									</p:calendar>
+									
+									#{"Precio"}
+									<h:outputLabel value="#{generaTicketMB.producto.valor_unitario_prod_det}" id="precio"></h:outputLabel>
+								</h:panelGrid>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:panel>
+				
+					<h:panelGrid columns="3">
+						<p:commandButton value="Adicionar" actionListener="#{generaTicketMB.guardarTicket()}" update="dataTicket" style="float:right !important;margin:0px 0px 3px 0px;"></p:commandButton>
+						<p:commandButton value="Editar" style="float:right !important;margin:0px 0px 3px 0px;"></p:commandButton>
+						<p:commandButton value="Eliminar" style="float:right !important;margin:0px 0px 3px 0px;"></p:commandButton>
+					</h:panelGrid>
+					
+					<h:panelGrid>
+						<p:dataTable id="dataTicket" var="p" value="#{generaTicketMB.listTickets}" widgetVar="dtTicket" 
+						emptyMessage="No hay Tickets Disponibles." rowIndexVar="nro" 
+						 style="FONT-SIZE: 10px; ">
+							<f:facet name="header">Lista Tickes</f:facet>
+											
+							<p:column headerText="Orden" width="25" style="width:3%" >
+								#{nro+1}
+							</p:column>					
+					        
+							<p:column style="width:70px" headerText="Ticket">
+								<h:outputText value="#{p.nro_ticket}"/>
+							</p:column>
+							
+							<p:column style="width:200px" headerText="Servicio">
+								<h:outputText value="#{p.desServicio}"/>
+							</p:column>
+							
+							<p:column width="200px" headerText="Medico" >
+									<h:outputText value="#{p.desMedico}" />
+							</p:column>
+						
+							<p:column style="width:200px" headerText="Paciente">
+								<h:outputText value="#{p.desPaciente}"/>
+							</p:column>
+							
+							<p:column width="70" headerText="Fecha Emisión" >
+								<h:outputText value="#{p.fecha_ticket}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+							</p:column>
+							
+							<p:column style="width:70px" headerText="Hora Emisión">
+								<h:outputText value="#{p.hora_ticket}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+							</p:column>
+							
+							<p:column style="width:50px" headerText="Estado">
+								<h:outputText value="#{p.estado}"/>
+							</p:column>
+							
+							<p:column style="width:70px" headerText="Facturado Sunat">
+								<h:outputText value="#{p.integrado_sunat? 'Si':'No'}"/>
+							</p:column>
+							
+					        
+					        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+							
+								<p:commandButton title="Editar"  update=":dlgDetNuevoMedico" actionListener="#"
+												 oncomplete="" icon="icon-edit">
+								</p:commandButton> 
+		
+								<p:commandButton title="Eliminar" 
+										actionListener="#" update=":dlgDetEliminarMedico" icon="icon-delete">
+			
+								</p:commandButton>
+										
+							</p:column>
+
+				</p:dataTable>
+					</h:panelGrid>
+				
+				</h:form>
+				
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</html>
