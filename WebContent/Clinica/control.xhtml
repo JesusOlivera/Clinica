@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Configuracion" url="#" />
+    				<p:menuitem value="Gestion de Vendedores" url="vendedor" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px">
+				<h:panelGrid columns="4">						
+					<p:commandButton value="Nuevo Vendedor" icon="icon-add" update=":dlgDetNuevoVendedor" oncomplete="PF('dlgNuevoVendedor').show();"
+						actionListener="#{vendedorMB.nuevoVendedor()}"/>
+				</h:panelGrid>
+			</h:form>
+			
+				<!-- listado de Planes -->
+			<h:form id="formLista">
+				<p:dataTable id="dataVendedor" var="p" value="#{vendedorMB.listaVendedor}" widgetVar="dtVendedor" 
+					emptyMessage="No hay Vendedores Disponibles." rowIndexVar="nro" 
+					 style="FONT-SIZE: 10px; ">
+					<f:facet name="header">Lista Vendedores</f:facet>
+										
+					<p:column headerText="Orden" width="25" style="width:3%" >
+						#{nro+1}
+					</p:column>					
+			        
+					
+					<!-- Jesús -->
+					<p:column style="width:200px" headerText="Descripcion Vendedor">
+						<h:outputText value="#{p.descripcion_vendedor}"/>
+					</p:column>
+					
+			        
+			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevoVendedor" actionListener="#{vendedorMB.editarVendedor(p)}"
+										 oncomplete="PF('dlgNuevoVendedor').show();" icon="icon-edit">
+						</p:commandButton> 
+
+						<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminarVendedor').show();" actionListener="#{vendedorMB.eliminarVendedor(p)}" update=":dlgDetEliminarVendedor" icon="icon-delete">
+	
+						</p:commandButton>
+								
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Registrar Vendedor" widgetVar="dlgNuevoVendedor" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoVendedor" modal="true">
+					
+					<h:form id="formVendedor">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">
+
+						
+						<!-- Jesús -->
+						#{"Descripcion:"} 
+						<p:inputText value="#{vendedorMB.vendedorSelec.descripcion_vendedor}" id="descripcion_vendedor"
+							required="true" label="nombre" requiredMessage="Se necesita una descripcion del Vendedor"
+							style="width:200px;" />
+								
+							
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{vendedorMB.guardarVendedor()}"
+						update=":formLista msgNuevo" oncomplete="validarVendedor(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoVendedor').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminarVendedor" appendTo="@(body)"
+					message="¿Desea eliminar este Vendedor?" header="Eliminar Vendedor"
+					severity="alert" widgetVar="dlgEliminarVendedor">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral" 
+						actionListener="#{vendedorMB.confirmaEliminarVendedor}"
+						oncomplete="PF('dlgEliminarVendedor').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminarVendedor').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+		</p:panel>
+		
+		<script>
+			
+		function validarVendedor(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoVendedor').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevoVendedor').hide();
+				console.log("cerro")
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

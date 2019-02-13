@@ -159,5 +159,10 @@
 		<view-id value="/faces/Clinica/genera_tickets.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="control"> 
+		<pattern value="/control" />
+		<view-id value="/faces/Clinica/control.xhtml" />
+	</url-mapping>
+	
 
 </pretty-config>

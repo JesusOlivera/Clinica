@@ -239,7 +239,8 @@ public class UsuarioMB extends GenericBeans implements Serializable{
 					usuario.setPassword(this.usuario.getLogin());
 		   	 		usuario.setEs_nuevo(Boolean.TRUE);
 		   	 		usuario.setEstado_planilla(Boolean.TRUE);
-		   	 		int idca = usuario.getId_centro_atencion();
+//		   	 		int idca = usuario.getId_centro_atencion();
+		   	 		int idca = 2;//TEMPORAL
 		   	 		usuario.setId_centro_atencion(idca);  
 					usuarioServices.insertUsuario(usuario);
 					Integer lastId =  this.usuarioServices.getLastUser();
