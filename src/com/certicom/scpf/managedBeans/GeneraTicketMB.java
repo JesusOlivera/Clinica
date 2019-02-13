@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
@@ -30,7 +31,8 @@ import com.pe.certicom.scpf.commons.GenericBeans;
 @ViewScoped
 public class GeneraTicketMB extends GenericBeans implements Serializable {
 
-	
+	@ManagedProperty(value="#{loginMB.perfilUsuario.cod_perfil}")
+	private String cod_perfil;  
 	private List<TipoServicio> listTipoServicios;
 	private List<Producto> listProductos;
 	private List<Medico> listMedicos;
@@ -66,7 +68,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.listTickets = new ArrayList<Ticket>();
 		this.listProductos = new ArrayList<Producto>();
 		this.listMedicos = this.medicoService.findAll();
-		this.listTipoServicios = this.tipoServicioService.findAll();	
+		this.listTipoServicios = this.tipoServicioService.findAllForTicket();	
 		this.listTickets = this.ticketService.findAll();
 		
 		
@@ -126,10 +128,12 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 		Integer cifras=6;		
 		Integer max = this.ticketService.obtenerMax();
-		this.ticketSelected = new Ticket();
+		limpiarDatos();
 		this.ticketSelected.setNro_ticket(generarNroTicket(max, cifras));
 		this.ticketSelected.setFecha_ticket(new Date());
 		this.ticketSelected.setHora_ticket(new Date());
+		
+		
 	}
 	
 	public void cargarServicios(){
@@ -217,6 +221,17 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
    	    context.addCallbackParam("esValido", valido);
 		
 		try {
+			
+			if(!this.ticketSelected.getId_tipo_servicio().equals(Constante.COD_TIPO_SERVICIO_LABORATORIO)){
+				this.ticketSelected.setEncolado(Boolean.TRUE);
+			}
+			
+			if(!this.ticketSelected.getId_tipo_servicio().equals(Constante.COD_TIPO_SERVICIO_LABORATORIO)){
+				this.ticketSelected.setEstado("TERMINADO");
+			}else{
+				this.ticketSelected.setEstado("PENDIENTE");
+			}
+			
 			
 			if(this.editarTicket) {
 				this.ticketService.actualizarTicket(this.ticketSelected);
@@ -341,6 +356,14 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setListTickets(List<Ticket> listTickets) {
 		this.listTickets = listTickets;
+	}
+
+	public String getCod_perfil() {
+		return cod_perfil;
+	}
+
+	public void setCod_perfil(String cod_perfil) {
+		this.cod_perfil = cod_perfil;
 	}	
 
 }

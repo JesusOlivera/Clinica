@@ -14,6 +14,9 @@ public interface TipoServicioMapper {
 
 	@Select("select * from t_tipo_servicio order by id_tipo_servicio asc")
 	List<TipoServicio> findAll();
+	
+	@Select("select * from t_tipo_servicio where id_tipo_servicio not in (6,7) order by id_tipo_servicio asc")
+	List<TipoServicio> findAllForTicket();
 
 	@Update("update t_tipo_servicio set  descripcion_tipo = #{descripcion_tipo} "
 			+ "where id_tipo_servicio= #{id_tipo_servicio}")

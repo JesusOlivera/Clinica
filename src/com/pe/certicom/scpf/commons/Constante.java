@@ -59,6 +59,13 @@ public class Constante {
 	public static final Integer INFORMACION = 3;
 	public static final Integer ADVERTENCIA = 4;
 	
+	/*CODIGOS DE TIPO DE SERVICIO*/
+	public static final Integer  COD_TIPO_SERVICIO_CONSULTA_MEDICA = 1;
+	public static final Integer  COD_TIPO_SERVICIO_LABORATORIO = 2;
+	public static final Integer  COD_TIPO_SERVICIO_ECOGRAFIA = 3;
+	public static final Integer  COD_TIPO_SERVICIO_CONTROL = 6;
+	public static final Integer  COD_TIPO_SERVICIO_HOSPITALIZACION = 7;
+	
 	/*CODIGOS DE PERFIL*/
 	public static final Integer  PERFIL_COD_GERENTE_PROYECTO = 1;
 	public static final Integer  PERFIL_COD_SUPERVISOR = 44 ;

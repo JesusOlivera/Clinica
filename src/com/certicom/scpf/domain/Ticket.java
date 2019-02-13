@@ -14,7 +14,7 @@ public class Ticket {
 	private Date fecha_ticket;
 	private boolean integrado_sunat;
 	private Date hora_ticket;
-	private Boolean estado;
+	private String estado;
 	private Boolean encolado;
 	private Boolean flag_externo;
 	private String nro_ticket;
@@ -98,16 +98,16 @@ public class Ticket {
 	
 	public void setHora_ticket(Date hora_ticket) {
 		this.hora_ticket = hora_ticket;
-	}
+	}	
 	
-	public Boolean getEstado() {
+	public String getEstado() {
 		return estado;
 	}
-	
-	public void setEstado(Boolean estado) {
+
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	
+
 	public Boolean getEncolado() {
 		return encolado;
 	}
