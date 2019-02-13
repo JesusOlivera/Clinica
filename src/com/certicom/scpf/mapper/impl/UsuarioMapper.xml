@@ -100,9 +100,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getlistaUsuario" resultMap="usuarioResult">
 		SELECT a.idusuario,a.dni, a.nombre, a.apellido_paterno, a.apellido_materno, a.email, a.direccion, a.fecha_registro, a.login,a.login,a.password,
-		a.fecha_acceso, a.estado, a.es_nuevo, a.id_centro_atencion, b.nombre as nombre_centro_atencion, e.razon_social as desEmpresa
+		a.fecha_acceso, a.estado, a.es_nuevo, a.id_centro_atencion, b.nombre as nombre_centro_atencion
 		FROM
-		t_usuario a, t_centros_atencion b, t_empresa  e 
+		t_usuario a, t_centros_atencion b
 		WHERE a.id_centro_atencion = b.id_centro_atencion  
 		order by idusuario asc
 	</select>
