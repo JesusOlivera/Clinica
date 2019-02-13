@@ -21,10 +21,12 @@ import com.certicom.scpf.domain.Menu;
 import com.certicom.scpf.domain.Producto;
 import com.certicom.scpf.domain.Sistema;
 import com.certicom.scpf.domain.TablaTablasDetalle;
+import com.certicom.scpf.domain.TipoServicio;
 import com.certicom.scpf.domain.TributoProducto;
 import com.certicom.scpf.services.MenuServices;
 import com.certicom.scpf.services.ProductoService;
 import com.certicom.scpf.services.TablaTablasDetalleService;
+import com.certicom.scpf.services.TipoServicioService;
 import com.certicom.scpf.services.TributoProductoService;
 import com.pe.certicom.scpf.commons.Constante;
 import com.pe.certicom.scpf.commons.FacesUtils;
@@ -53,6 +55,11 @@ public class ProductoMB extends GenericBeans implements Serializable{
 	private boolean bISC;
 	private boolean bOTROS;
 	
+	private boolean categoriaArticulo;
+	
+	private TipoServicioService tipoServicioService;
+	private List<TipoServicio> listaTipoServicio;
+	
 	private TablaTablasDetalleService tablaTablasDetalleService;
 	private List<TablaTablasDetalle> listTablaTablasDetallesTipoTributo;
 	private List<TablaTablasDetalle> listTablaTablasDetallesTipoProductoSunat;
@@ -80,12 +87,16 @@ public class ProductoMB extends GenericBeans implements Serializable{
 		this.listaProductos = new ArrayList<Producto>();
 		
 		this.editarProducto = Boolean.FALSE;
+		this.categoriaArticulo=Boolean.FALSE;////SERVICIO
+		
+		this.tipoServicioService= new TipoServicioService();
 
 		log = (Log)getSpringBean(Constante.SESSION_LOG);
 		logmb = new LogMB();	
 		
 		try {
 			this.listaProductos = this.productoService.findAll();
+			this.listaTipoServicio=this.tipoServicioService.findAll();
 			this.listTablaTablasDetallesTipoProductoSunat = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPOS_PRODUCTO);
 			this.listTablaTablasDetallesUnidadMedida = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_UNIDADES_DE_MEDIDA);
 			this.listTablaTablasDetallesAfectacionIGV = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPOS_DE_AFECTACION_DEL_IGV);
@@ -116,7 +127,17 @@ public class ProductoMB extends GenericBeans implements Serializable{
 			e.printStackTrace();
 		}
 		
-	}		
+	}	
+	
+	public void cambiarEstadoArticulo(){
+		
+		if(this.productoSelec.getEs_servicio()){
+			this.categoriaArticulo=Boolean.FALSE;
+		}else{
+			this.categoriaArticulo=Boolean.TRUE;
+		}
+		
+	}
 	
 	/* para tabla maestra */
 	
@@ -259,11 +280,13 @@ public class ProductoMB extends GenericBeans implements Serializable{
 	public void nuevoProducto(){
 		this.productoSelec = new Producto();
 		this.editarProducto = Boolean.FALSE;
+		this.categoriaArticulo=Boolean.FALSE;
 	}
 
 	public void editarProducto(Producto producto){
 		this.productoSelec = producto;
 		this.editarProducto = Boolean.TRUE;
+		this.categoriaArticulo=!producto.getEs_servicio();
 	}
 	
 	public void asignarTributoProducto(Producto producto){			
@@ -677,6 +700,82 @@ public class ProductoMB extends GenericBeans implements Serializable{
 
 	public void setTipoTributoDet(Integer tipoTributoDet) {
 		this.tipoTributoDet = tipoTributoDet;
+	}
+
+	public MenuServices getMenuServices() {
+		return menuServices;
+	}
+
+	public void setMenuServices(MenuServices menuServices) {
+		this.menuServices = menuServices;
+	}
+
+	public ProductoService getProductoService() {
+		return productoService;
+	}
+
+	public void setProductoService(ProductoService productoService) {
+		this.productoService = productoService;
+	}
+
+	public TributoProductoService getTributoProductoService() {
+		return tributoProductoService;
+	}
+
+	public void setTributoProductoService(TributoProductoService tributoProductoService) {
+		this.tributoProductoService = tributoProductoService;
+	}
+
+	public TipoServicioService getTipoServicioService() {
+		return tipoServicioService;
+	}
+
+	public void setTipoServicioService(TipoServicioService tipoServicioService) {
+		this.tipoServicioService = tipoServicioService;
+	}
+
+	public List<TipoServicio> getListaTipoServicio() {
+		return listaTipoServicio;
+	}
+
+	public void setListaTipoServicio(List<TipoServicio> listaTipoServicio) {
+		this.listaTipoServicio = listaTipoServicio;
+	}
+
+	public TablaTablasDetalleService getTablaTablasDetalleService() {
+		return tablaTablasDetalleService;
+	}
+
+	public void setTablaTablasDetalleService(TablaTablasDetalleService tablaTablasDetalleService) {
+		this.tablaTablasDetalleService = tablaTablasDetalleService;
+	}
+
+	public Log getLog() {
+		return log;
+	}
+
+	public void setLog(Log log) {
+		this.log = log;
+	}
+
+	public LogMB getLogmb() {
+		return logmb;
+	}
+
+	public void setLogmb(LogMB logmb) {
+		this.logmb = logmb;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public boolean isCategoriaArticulo() {
+		return categoriaArticulo;
+	}
+
+	public void setCategoriaArticulo(boolean categoriaArticulo) {
+		this.categoriaArticulo = categoriaArticulo;
 	}
 	
 }

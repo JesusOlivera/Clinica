@@ -36,5 +36,7 @@ public interface PacienteMapper {
 	@Delete("delete from t_paciente  where id_paciente = #{id_paciente}")
 	@Options(flushCache=true)
 	public void eliminarPaciente(@Param("id_paciente") Integer id_paciente) throws Exception;
+	
+	public Paciente findById(@Param("id_paciente") Integer id_paciente);
 
 }

@@ -8,22 +8,104 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
-		<ui:define name="contenido">
-		
-			<p:panel>
-				
-				<h:form>
-					<p:breadCrumb>  
-	    				<p:menuitem value="Home" url="#" />  
-	    				<p:menuitem value="Clinica" url="#" />
-	    				<p:menuitem value="Gestion de Ticket" url="generaTicket" />   
-					</p:breadCrumb>	
-				</h:form>
-				
-				<h:form>
-					<p:panel header="Generación de Tickets">
-						<h:panelGrid>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Clinica" url="#" />
+    				<p:menuitem value="Gestion de Tickets" url="generaTicket" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+			<!-- tootlbar -->
+			<h:form style="margin-bottom: 8px">
+				<h:panelGrid columns="4">						
+					<p:commandButton value="Nuevo Ticket" icon="icon-add" update=":dlgDetNuevoTicket" oncomplete="PF('dlgNuevoTicket').show();"
+						actionListener="#{generaTicketMB.nuevoTicket}"/>
+				</h:panelGrid>
+			</h:form>
+			
+				<!-- listado de Planes -->
+			<h:form id="formLista">
+				<p:dataTable id="dataTicket" var="p" value="#{generaTicketMB.listTickets}" widgetVar="dtTicket" 
+					emptyMessage="No hay Tickets Disponibles." rowIndexVar="nro" 
+					 style="FONT-SIZE: 10px; ">
+					<f:facet name="header">Lista Tickets</f:facet>
+										
+							<p:column headerText="Orden" width="25" style="width:3%" >
+								#{nro+1}
+							</p:column>					
+					        
+							<p:column style="width:70px" headerText="Ticket">
+								<h:outputText value="#{p.nro_ticket}"/>
+							</p:column>
+							
+							<p:column style="width:100px" headerText="Servicio">
+								<h:outputText value="#{p.desServicio}"/>
+							</p:column>
+							
+							<p:column width="150px" headerText="Medico" >
+								<h:outputText value="#{p.desMedico}" />
+							</p:column>
+						
+							<p:column style="width:150px" headerText="Paciente">
+								<h:outputText value="#{p.desPaciente}"/>
+							</p:column>
+							
+							<p:column style="width:70px" headerText="Fecha Emisión" >
+								<h:outputText value="#{p.fecha_ticket}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+							</p:column>
+							
+							<p:column style="width:70px" headerText="Hora Emisión">
+								<h:outputText value="#{p.hora_ticket}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+							</p:column>
+							
+							<p:column style="width:50px" headerText="Estado">
+								<h:outputText value="#{p.estado}"/>
+							</p:column>
+							
+							<p:column style="width:70px" headerText="Facturado Sunat">
+								<h:outputText value="#{p.integrado_sunat? 'Si':'No'}"/>
+							</p:column>
+					
+			        
+			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevoTicket" actionListener="#{generaTicketMB.editarTicket(p)}"
+										 oncomplete="PF('dlgNuevoTicket').show();" icon="icon-edit">
+						</p:commandButton> 
+
+						<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminarTicket').show();" 
+								actionListener="#{generaTicketMB.eliminarTicket(p)}" update=":dlgDetEliminarTicket" icon="icon-delete">
+	
+						</p:commandButton>
+								
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Registrar Ticket" widgetVar="dlgNuevoTicket" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoTicket" modal="true">
+					
+					<h:form id="formTicket">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
 							<h:panelGrid columns="2">
 								#{"Tipo Servicio: "}
 								<p:selectOneMenu  value="#{generaTicketMB.ticketSelected.id_tipo_servicio}" style="width:200px;" >
@@ -55,6 +137,7 @@
 						            <p:ajax event="blur" update="dni nombre" />
 						        </p:inputText>
 					        </h:panelGrid>
+					        
 					        <h:panelGrid columns="2">
 					        	<h:panelGrid columns="2" >
 					        		<p:selectBooleanCheckbox value="#{generaTicketMB.ticketSelected.flag_externo}" itemLabel="Es externo">
@@ -66,7 +149,7 @@
 										<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
 										<f:selectItems value="#{generaTicketMB.listMedicos}" var="p" 
 										itemLabel="#{p.nombre_medico}" itemValue="#{p.id_medico}" />
-										<p:ajax event="change"></p:ajax>
+										<p:ajax event="change" listener="#{generaTicketMB.cargaEspecialidad}"></p:ajax>
 									</p:selectOneMenu>
 								</h:panelGrid>
 								<h:panelGrid columns="2">
@@ -85,77 +168,50 @@
 									<h:outputLabel value="#{generaTicketMB.producto.valor_unitario_prod_det}" id="precio"></h:outputLabel>
 								</h:panelGrid>
 							</h:panelGrid>
-						</h:panelGrid>
-					</p:panel>
-				
-					<h:panelGrid columns="3">
-						<p:commandButton value="Adicionar" actionListener="#{generaTicketMB.guardarTicket()}" update="dataTicket" style="float:right !important;margin:0px 0px 3px 0px;"></p:commandButton>
-						<p:commandButton value="Editar" style="float:right !important;margin:0px 0px 3px 0px;"></p:commandButton>
-						<p:commandButton value="Eliminar" style="float:right !important;margin:0px 0px 3px 0px;"></p:commandButton>
-					</h:panelGrid>
-					
-					<h:panelGrid>
-						<p:dataTable id="dataTicket" var="p" value="#{generaTicketMB.listTickets}" widgetVar="dtTicket" 
-						emptyMessage="No hay Tickets Disponibles." rowIndexVar="nro" 
-						 style="FONT-SIZE: 10px; ">
-							<f:facet name="header">Lista Tickes</f:facet>
-											
-							<p:column headerText="Orden" width="25" style="width:3%" >
-								#{nro+1}
-							</p:column>					
-					        
-							<p:column style="width:70px" headerText="Ticket">
-								<h:outputText value="#{p.nro_ticket}"/>
-							</p:column>
-							
-							<p:column style="width:200px" headerText="Servicio">
-								<h:outputText value="#{p.desServicio}"/>
-							</p:column>
-							
-							<p:column width="200px" headerText="Medico" >
-									<h:outputText value="#{p.desMedico}" />
-							</p:column>
 						
-							<p:column style="width:200px" headerText="Paciente">
-								<h:outputText value="#{p.desPaciente}"/>
-							</p:column>
-							
-							<p:column width="70" headerText="Fecha Emisión" >
-								<h:outputText value="#{p.fecha_ticket}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
-							</p:column>
-							
-							<p:column style="width:70px" headerText="Hora Emisión">
-								<h:outputText value="#{p.hora_ticket}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
-							</p:column>
-							
-							<p:column style="width:50px" headerText="Estado">
-								<h:outputText value="#{p.estado}"/>
-							</p:column>
-							
-							<p:column style="width:70px" headerText="Facturado Sunat">
-								<h:outputText value="#{p.integrado_sunat? 'Si':'No'}"/>
-							</p:column>
-							
-					        
-					        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
-							
-								<p:commandButton title="Editar"  update=":dlgDetNuevoMedico" actionListener="#"
-												 oncomplete="" icon="icon-edit">
-								</p:commandButton> 
-		
-								<p:commandButton title="Eliminar" 
-										actionListener="#" update=":dlgDetEliminarMedico" icon="icon-delete">
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{generaTicketMB.guardarTicket()}"
+						update=":formLista msgNuevo" oncomplete="validarTicket(xhr, status, args), PF('dlgNuevoTicket').hide()" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoTicket').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
 			
-								</p:commandButton>
-										
-							</p:column>
 
-				</p:dataTable>
-					</h:panelGrid>
-				
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminarTicket" appendTo="@(body)"
+					message="¿Desea eliminar este Ticket?" header="Eliminar Ticket"
+					severity="alert" widgetVar="dlgEliminarTicket">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral" 
+						actionListener="#{generaTicketMB.confirmaEliminarTicket()}"
+						oncomplete="PF('dlgEliminarTicket').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminarTicket').hide()" icon="icon-cancel" />
+
 				</h:form>
-				
-			</p:panel>
-		</ui:define>
-	</ui:composition>
+			</p:confirmDialog>
+		</p:panel>
+		
+		<script>
+			
+		function validarTicket(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoTicket').effect("shake", {
+					times : 1
+				}, 100);
+				console.log("No cerro")
+			} else {
+				//limpiando
+				PF('dlgNuevoTicket').hide();
+				console.log("cerro")
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
 </html>

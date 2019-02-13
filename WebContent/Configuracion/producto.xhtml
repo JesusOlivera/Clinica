@@ -41,7 +41,16 @@
 										
 					<p:column headerText="Orden" width="25" style="width:3%" >
 						#{nro+1}
-					</p:column>					
+					</p:column>
+					
+					 <p:column style="width:50px" headerText="¿Producto o Servicio?" >
+						<h:outputText value="#{p.es_servicio?'SERVICIO':'PRODUCTO'}" />
+					</p:column>	
+					
+					<p:column style="width:60px" headerText="Tipo" filterBy="#{p.tipoServicio.descripcion_tipo}"  
+							filterStyle="width:95%;" filterMatchMode="contains">
+						<h:outputText value="#{p.tipoServicio.descripcion_tipo}"/>
+					</p:column>			
 			        
 			        <p:column style="width:50px" headerText="Codigo Producto" filterBy="#{p.cod_prod_det}"  filterStyle="width:95%;" filterMatchMode="contains">
 						<h:outputText value="#{p.cod_prod_det}"/>
@@ -134,6 +143,20 @@
 					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
 					<h:panelGrid columns="2">
 							
+							#{"¿Producto o Servicio?:"}
+							<p:selectOneMenu  value="#{productoMB.productoSelec.es_servicio}" style="width:200px;" effect="fade" 
+								required="true" requiredMessage="¿Activo?">
+								<f:selectItem itemLabel="SERVICIO" itemValue="true" />
+								<f:selectItem itemLabel="PRODUCTO" itemValue="false" />
+								<p:ajax listener="#{productoMB.cambiarEstadoArticulo()}" update="stock"></p:ajax>
+							</p:selectOneMenu>		
+						
+							#{"Tipo:"}						        
+							<p:selectOneMenu style="width:200px" value="#{productoMB.productoSelec.id_tipo_servicio}" >
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{productoMB.listaTipoServicio}" var="p" itemLabel="#{p.descripcion_tipo}" itemValue="#{p.id_tipo_servicio}" />
+							</p:selectOneMenu>
+							
 							#{"CODIGO PRODUCTO:"} 
 							<p:inputText value="#{productoMB.productoSelec.cod_prod_det}" id="codigo_producto"
 								required="true" label="ruc" requiredMessage="Se necesita un codigo de producto"
@@ -202,7 +225,7 @@
 								
 							#{"Stock:"} 
 							<p:inputText value="#{productoMB.productoSelec.stock}" id="stock"
-								required="true" label="stock" requiredMessage="Se necesita un stock"
+								required="#{productoMB.categoriaArticulo}" label="stock" requiredMessage="Se necesita un stock"
 								style="width:200px;" />
 								
 							

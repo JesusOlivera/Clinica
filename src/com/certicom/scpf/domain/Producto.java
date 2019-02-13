@@ -26,6 +26,7 @@ public class Producto {
 	
 	private Integer id_tipo_servicio;
 	private TipoServicio tipoServicio;
+	private Boolean es_servicio;
 	
 	 //test
 	public Producto(){
@@ -167,6 +168,14 @@ public class Producto {
 
 	public void setTipoServicio(TipoServicio tipoServicio) {
 		this.tipoServicio = tipoServicio;
+	}
+
+	public Boolean getEs_servicio() {
+		return es_servicio;
+	}
+
+	public void setEs_servicio(Boolean es_servicio) {
+		this.es_servicio = es_servicio;
 	}
 
 	

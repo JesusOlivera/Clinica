@@ -69,13 +69,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.listTipoServicios = this.tipoServicioService.findAll();	
 		this.listTickets = this.ticketService.findAll();
 		
-		Integer cifras=6;
 		
-		Integer max = this.ticketService.obtenerMax();
-		
-		this.ticketSelected.setNro_ticket(generarNroTicket(max, cifras));
-		this.ticketSelected.setFecha_ticket(new Date());
-		this.ticketSelected.setHora_ticket(new Date());
 		
 		
 		log = (Log)getSpringBean(Constante.SESSION_LOG);
@@ -87,11 +81,61 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	public void editarTicket(Ticket ticket){
+		System.out.println("Editar Ticket : "+ticket.getNro_ticket());
+		this.ticketSelected= ticket;
+		this.editarTicket = Boolean.TRUE;
+		try {
+			this.listProductos=this.productoService.findAll();
+			this.listMedicos=this.medicoService.findAll();
+			this.producto=this.productoService.findById(this.ticketSelected.getId_producto());
+			this.pacienteParam= this.pacienteService.findById(this.ticketSelected.getId_paciente());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void eliminarTicket(Ticket ticket){
+		this.ticketSelected = ticket;
+	}
+	
+	public void confirmaEliminarTicket(){
+		try {
+		
+			this.ticketService.eliminarTicket(this.ticketSelected.getId_ticket());
+			
+			log.setAccion("DELETE");
+			log.setDescripcion("Se elimina al ticket: " + this.ticketSelected.getNro_ticket());
+			logmb.insertarLog(log);
+			FacesUtils.showFacesMessage("Ticket ha sido eliminado", 3);
+			
+			this.listTickets = this.ticketService.findAll();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	
+	public void nuevoTicket(){
+		
+		Integer cifras=6;		
+		Integer max = this.ticketService.obtenerMax();
+		this.ticketSelected = new Ticket();
+		this.ticketSelected.setNro_ticket(generarNroTicket(max, cifras));
+		this.ticketSelected.setFecha_ticket(new Date());
+		this.ticketSelected.setHora_ticket(new Date());
+	}
 	
 	public void cargarServicios(){
 		try {
 			this.listProductos = this.productoService.findByIdTipoServicio(this.ticketSelected.getId_tipo_servicio());
+			this.pacienteParam=new Paciente();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,7 +170,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		p1.setNombre(this.pacienteParam.getNombre());
 		
 		System.out.println("Nro documento: "+this.pacienteParam.getNumero_documento());
-		System.out.println("Nombre: "+this.pacienteParam.getNombre());
+//		System.out.println("Nombre: "+this.pacienteParam.getNombre());
 		
 		this.paciente = this.pacienteService.obtenerPaciente(p1);
 		
@@ -157,10 +201,47 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 	}
 	
+	public void cargaEspecialidad(){
+		System.out.println("cargaEspecialidad ----------> "+this.ticketSelected.getId_medico());
+		Medico medico= new Medico();
+		medico=this.medicoService.findById(this.ticketSelected.getId_medico());		
+		this.ticketSelected.setId_especialidad(medico.getId_especialidad());
+		
+	}
+	
 	public void guardarTicket(){
 		
-		this.ticketService.crearTicket(this.ticketSelected);
-		this.listTickets = this.ticketService.findAll();
+		
+		Boolean valido=Boolean.TRUE;
+		RequestContext context = RequestContext.getCurrentInstance();  
+   	    context.addCallbackParam("esValido", valido);
+		
+		try {
+			
+			if(this.editarTicket) {
+				this.ticketService.actualizarTicket(this.ticketSelected);
+				 log.setAccion("UPDATE");
+	             log.setDescripcion("Se actualiza el Ticket : " + this.ticketSelected.getNro_ticket());
+	             logmb.insertarLog(log);
+				FacesUtils.showFacesMessage("El ticket ha sido actualizado", 3);
+			}else{
+				this.ticketService.crearTicket(this.ticketSelected);
+				 log.setAccion("INSERT");
+	             log.setDescripcion("Se inserta ticket: " + this.ticketSelected.getNro_ticket());
+	             logmb.insertarLog(log);
+				FacesUtils.showFacesMessage("el Ticket ha sido creado", 3);
+			}
+			
+			this.ticketSelected = new Ticket();
+			this.editarTicket = Boolean.FALSE;
+			
+			this.listTickets = this.ticketService.findAll();
+			context.update("msgGeneral");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
 		limpiarDatos();
 		
 	}

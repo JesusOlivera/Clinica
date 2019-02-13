@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -31,6 +32,9 @@ public interface MedicoMapper {
 
 	@Delete("delete from t_medico  where id_medico = #{id_medico}")
 	@Options(flushCache=true)
-	void eliminarMedico(Integer id_medico);
+	void eliminarMedico(@Param("id_medico")Integer id_medico);
+	
+	@Select("select * from t_medico where id_medico= #{id_medico}")
+	public Medico findById(@Param("id_medico")Integer id_medico);
 
 }

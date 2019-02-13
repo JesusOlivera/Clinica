@@ -38,4 +38,10 @@ public class PacienteService  implements PacienteMapper{
 		// TODO Auto-generated method stub
 		return this.pacienteMapper.obtenerPaciente(paciente);
 	}
+
+	@Override
+	public Paciente findById(Integer id_paciente) {
+		// TODO Auto-generated method stub
+		return this.pacienteMapper.findById(id_paciente);
+	}
 }

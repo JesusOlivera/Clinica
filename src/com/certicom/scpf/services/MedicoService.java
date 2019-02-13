@@ -30,4 +30,10 @@ public class MedicoService implements MedicoMapper{
 		medicoMapper.eliminarMedico(id_medico);
 	}
 
+	@Override
+	public Medico findById(Integer id_medico) {
+		// TODO Auto-generated method stub
+		return medicoMapper.findById(id_medico);
+	}
+
 }

@@ -19,6 +19,10 @@ public class Ticket {
 	private Boolean flag_externo;
 	private String nro_ticket;
 	
+	private Paciente paciente;
+	private Medico medico;
+	private Producto producto;
+	
 	/* transitorios */
 	private String desServicio;
 	private String desMedico;
@@ -158,6 +162,30 @@ public class Ticket {
 
 	public void setIntegrado_sunat(boolean integrado_sunat) {
 		this.integrado_sunat = integrado_sunat;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
 	}	
 	
 }

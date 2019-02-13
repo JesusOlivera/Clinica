@@ -21,7 +21,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="flag_externo" property="flag_externo"/>
 	<result column="nro_ticket" property="nro_ticket"/>
 	
+	<association property="paciente" column="id_paciente" select="selectPaciente"/>
+	<association property="medico" column="id_medico" select="selectMedico"/>
+	<association property="producto" column="id_producto" select="selectProducto"/>
 
 </resultMap>
+
+	<select id="selectPaciente" parameterType="int" resultType="com.certicom.scpf.domain.Paciente">
+		SELECT * FROM t_paciente WHERE id_paciente=#{id_paciente}
+	</select>
+	
+	<select id="selectMedico" parameterType="int" resultType="com.certicom.scpf.domain.Medico">
+		SELECT * FROM t_medico WHERE id_medico=#{id_medico}
+	</select>
+	
+	<select id="selectProducto" parameterType="int" resultType="com.certicom.scpf.domain.Producto">
+		SELECT * FROM t_producto WHERE id_producto=#{id_producto}
+	</select>
+	
+	
+	
 		
 </mapper>	

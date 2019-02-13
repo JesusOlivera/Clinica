@@ -19,10 +19,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="genera_ticket" property="genera_ticket"/>
 	<result column="examen_auxiliar" property="examen_auxiliar"/>
 	<result column="id_tipo_servicio" property="id_tipo_servicio"/>
+	<result column="es_servicio" property="es_servicio"/>
 	
 	<association property="tipoServicio" column="id_tipo_servicio" select="selectTipoServicio"/>
 	
 </resultMap>
+
+
+		
+	<select id="findAll" resultMap="productoResult">
+				select e.* , (select d.descripcion_largo 
+				from t_tabla_tablas_detalle d where d.codigo_catalogo = e.unidad_medida_det and d.id_maestra = 3) desUnidadMedida, id_tipo_servicio
+				from t_producto e  order by e.id_producto asc
+	</select>
+
 
 	<select id="selectTipoServicio" parameterType="int" resultType="com.certicom.scpf.domain.TipoServicio">
 		SELECT * FROM t_tipo_servicio WHERE id_tipo_servicio=#{id_tipo_servicio}
