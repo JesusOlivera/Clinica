@@ -38,10 +38,10 @@
 			<h:form id="formLista">
 				<p:dataTable id="dataTicket" var="p" value="#{generaTicketMB.listTickets}" widgetVar="dtTicket" 
 					emptyMessage="No hay Tickets Disponibles." rowIndexVar="nro" 
-					 style="FONT-SIZE: 10px; ">
+					 style="FONT-SIZE: 10px; width: 1200px">
 					<f:facet name="header">Lista Tickets</f:facet>
 										
-							<p:column headerText="Orden" width="25" style="width:3%" >
+							<p:column headerText="Orden" style="width:15px" >
 								#{nro+1}
 							</p:column>					
 					        
@@ -51,6 +51,10 @@
 							
 							<p:column style="width:100px" headerText="Servicio">
 								<h:outputText value="#{p.desServicio}"/>
+							</p:column>
+							
+							<p:column width="80px" headerText="Controles">
+								<p:commandButton value="Ver Controles" rendered="#{p.id_tipo_servicio eq '1'}"/>
 							</p:column>
 							
 							<p:column width="150px" headerText="Medico" >
@@ -76,9 +80,12 @@
 							<p:column style="width:70px" headerText="Facturado Sunat">
 								<h:outputText value="#{p.integrado_sunat? 'Si':'No'}"/>
 							</p:column>
+							<p:column width="150px" headerText="Consulta Médica" rendered="#{loginMB.perfilUsuario.cod_perfil eq '54'}" >
+								<p:commandButton value="Genera Consulta Médica" />
+							</p:column>
 					
 			        
-			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
+			        <p:column headerText="Editar/Elim." style="width:80px;text-align: center">
 					
 						<p:commandButton title="Editar"  update=":dlgDetNuevoTicket" actionListener="#{generaTicketMB.editarTicket(p)}"
 										 oncomplete="PF('dlgNuevoTicket').show();" icon="icon-edit">

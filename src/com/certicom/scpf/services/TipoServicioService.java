@@ -29,4 +29,10 @@ public class TipoServicioService implements TipoServicioMapper{
 		// TODO Auto-generated method stub
 		this.tipoServicioMapper.eliminartipoServicio(id_tipo_servicio);
 	}
+
+	@Override
+	public List<TipoServicio> findAllForTicket() {
+		// TODO Auto-generated method stub
+		return this.tipoServicioMapper.findAllForTicket();
+	}
 }
