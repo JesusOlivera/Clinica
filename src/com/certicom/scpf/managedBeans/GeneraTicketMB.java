@@ -226,7 +226,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 				this.ticketSelected.setEncolado(Boolean.TRUE);
 			}
 			
-			if(!this.ticketSelected.getId_tipo_servicio().equals(Constante.COD_TIPO_SERVICIO_LABORATORIO)){
+			if(this.ticketSelected.getId_tipo_servicio().equals(Constante.COD_TIPO_SERVICIO_LABORATORIO)){
 				this.ticketSelected.setEstado("TERMINADO");
 			}else{
 				this.ticketSelected.setEstado("PENDIENTE");
