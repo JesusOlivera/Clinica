@@ -9,6 +9,7 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+
 	<ui:define name="contenido">
 	
 		<p:panel>
@@ -80,8 +81,9 @@
 							<p:column style="width:70px" headerText="Facturado Sunat">
 								<h:outputText value="#{p.integrado_sunat? 'Si':'No'}"/>
 							</p:column>
-							<p:column width="150px" headerText="Consulta Médica" rendered="#{loginMB.perfilUsuario.cod_perfil eq '54'}" >
-								<p:commandButton value="Genera Consulta Médica" />
+							<p:column width="150px" headerText="Consulta Médica">
+								<p:commandButton value="Genera Consulta Médica" update=":dlgDetConsultaMedica" rendered="#{p.id_tipo_servicio eq '1' and loginMB.perfilUsuario.cod_perfil eq '54'}" actionListener="#{generaTicketMB.nuevaConsultaMedica(p)}"
+										 oncomplete="PF('dlgConsultaMedica').show();"/>
 							</p:column>
 					
 			        
@@ -200,6 +202,84 @@
 
 				</h:form>
 			</p:confirmDialog>
+			
+			<p:dialog header="Consulta Médica" widgetVar="dlgConsultaMedica" appendTo="@(body)"
+					resizable="false" id="dlgDetConsultaMedica" modal="true">
+					
+					<h:form id="formConsultaMedica">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo1" closable="true"/>
+							<h:panelGrid columns="3">
+								#{"Ticket: "}
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.nro_ticket}"/>
+								<p:spacer/>
+								#{"Paciente:"}
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.desPaciente}"/>
+								<p:commandButton value="Historia Clínica"/>
+							</h:panelGrid>
+					
+							<h:panelGrid columns="4">
+								
+								<p:spacer></p:spacer>
+								<p:spacer></p:spacer>
+								
+								#{"Fecha: "}
+								<h:outputText value="#{generaTicketMB.consultaMedica.fecha_consulta}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+								
+								#{"Tipo Servicio: "}
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.desTipoServicio}"/>
+								
+								#{"Hora: "}
+								<h:outputText value="#{generaTicketMB.consultaMedica.hora_consulta}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+								
+								#{"Servicio: "}
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.desServicio}"/>
+								
+								#{"Fecha Ticket: "}
+								<h:outputText value="#{generaTicketMB.ticketSelected.fecha_ticket}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+								
+								#{"Médico: "}
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.desMedico}"/>
+								
+								#{"Hora Ticket: "}
+								<h:outputText value="#{generaTicketMB.ticketSelected.hora_ticket}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+																
+					        </h:panelGrid>	
+					        <br/>
+					        <h:panelGrid>
+					        	
+					        	<f:facet name="header">
+						        	<p:row>
+						        	
+						        		<p:column style="font-weight: bold;"> SIGNOS VITALES  </p:column>
+						        		
+						        		<p:column style="font-weight: bold;"> ANAMNESIS </p:column>
+						        		
+						        		<p:column style="font-weight: bold;"> LISTADO DE PROBLEMAS </p:column>
+						        		
+						        		<p:column style="font-weight: bold;"> IMPRESIÓN DIAGNÓSTICA </p:column>
+						        		
+						        		<p:column style="font-weight: bold;"> EXAMENES AUXILIARES </p:column>
+						        		
+						        		<p:column style="font-weight: bold;"> DIAGNÓSTICO </p:column>
+						        		
+						        		<p:column style="font-weight: bold;"> RECETA </p:column>
+						        	
+						        	</p:row>
+					        	</f:facet>
+					        	
+					        	<p:row>
+					        	
+					        		<p:column>
+					        		
+					        			<p:commandButton value="Actualizar" ></p:commandButton>
+					        		
+					        		</p:column>
+					        	
+					        	</p:row>
+					        </h:panelGrid>				
+					
+					</h:form>	
+			</p:dialog>
 		</p:panel>
 		
 		<script>

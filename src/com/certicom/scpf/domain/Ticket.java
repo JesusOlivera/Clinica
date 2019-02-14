@@ -27,6 +27,7 @@ public class Ticket {
 	private String desServicio;
 	private String desMedico;
 	private String desPaciente;
+	private String desTipoServicio;
 	
 	public Integer getId_ticket() {
 		return id_ticket;
@@ -186,6 +187,14 @@ public class Ticket {
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+	public String getDesTipoServicio() {
+		return desTipoServicio;
+	}
+
+	public void setDesTipoServicio(String desTipoServicio) {
+		this.desTipoServicio = desTipoServicio;
 	}	
 	
 }

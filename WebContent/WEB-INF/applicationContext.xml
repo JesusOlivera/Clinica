@@ -188,5 +188,10 @@
 		<property name="mapperInterface" value="com.certicom.scpf.mapper.TicketMapper"/>
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>	
+	
+	<bean id="consultaMedicaMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.certicom.scpf.mapper.ConsultaMedicaMapper"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>	
 
 </beans>

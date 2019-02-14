@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
 
+import com.certicom.scpf.domain.ConsultaMedica;
 import com.certicom.scpf.domain.Log;
 import com.certicom.scpf.domain.Medico;
 import com.certicom.scpf.domain.Paciente;
@@ -41,6 +42,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private Paciente paciente;
 	private Paciente pacienteParam;
 	private Producto producto;
+	private ConsultaMedica consultaMedica;
 	private PacienteService pacienteService;
 	private TipoServicioService tipoServicioService;
 	private ProductoService productoService;
@@ -261,6 +263,16 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 	}
 	
+	public void nuevaConsultaMedica(Ticket ticket){
+		
+		this.consultaMedica = new ConsultaMedica();
+		this.consultaMedica.setId_ticket(ticket.getId_ticket());
+		this.consultaMedica.setFecha_consulta(new Date());
+		this.consultaMedica.setHora_consulta(new Date());
+		this.ticketSelected = ticket;
+		
+	}
+	
 	public void limpiarDatos(){
 		
 		this.ticketSelected = new Ticket();
@@ -364,6 +376,14 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setCod_perfil(String cod_perfil) {
 		this.cod_perfil = cod_perfil;
+	}
+
+	public ConsultaMedica getConsultaMedica() {
+		return consultaMedica;
+	}
+
+	public void setConsultaMedica(ConsultaMedica consultaMedica) {
+		this.consultaMedica = consultaMedica;
 	}	
 
 }
