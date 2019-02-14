@@ -57,6 +57,8 @@ public class ProductoMB extends GenericBeans implements Serializable{
 	
 	private boolean categoriaArticulo;
 	
+	private List<Producto> listaFiltroProductos;
+	
 	private TipoServicioService tipoServicioService;
 	private List<TipoServicio> listaTipoServicio;
 	
@@ -776,6 +778,14 @@ public class ProductoMB extends GenericBeans implements Serializable{
 
 	public void setCategoriaArticulo(boolean categoriaArticulo) {
 		this.categoriaArticulo = categoriaArticulo;
+	}
+
+	public List<Producto> getListaFiltroProductos() {
+		return listaFiltroProductos;
+	}
+
+	public void setListaFiltroProductos(List<Producto> listaFiltroProductos) {
+		this.listaFiltroProductos = listaFiltroProductos;
 	}
 	
 }

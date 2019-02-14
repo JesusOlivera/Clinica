@@ -11,9 +11,9 @@ import org.primefaces.context.RequestContext;
 
 import com.certicom.scpf.domain.Log;
 import com.certicom.scpf.domain.Menu;
-import com.certicom.scpf.domain.Vendedor;
+import com.certicom.scpf.domain.Control;
 import com.certicom.scpf.services.MenuServices;
-import com.certicom.scpf.services.VendedorService;
+import com.certicom.scpf.services.ControlService;
 import com.pe.certicom.scpf.commons.Constante;
 import com.pe.certicom.scpf.commons.FacesUtils;
 import com.pe.certicom.scpf.commons.GenericBeans;
@@ -22,11 +22,11 @@ import com.pe.certicom.scpf.commons.GenericBeans;
 @ViewScoped
 public class ControlMB extends GenericBeans implements Serializable{
 
-	private Vendedor vendedorSelec;
-	private List<Vendedor> listaVendedor;
-	private Boolean editarVendedor;
+	private Control controlSelec;
+	private List<Control> listaControl;
+	private Boolean editarControl;
 	private MenuServices menuServices;
-	private VendedorService vendedorService;
+	private ControlService controlService;
 	
 	//datos Log
     private Log log;
@@ -37,18 +37,18 @@ public class ControlMB extends GenericBeans implements Serializable{
 	@PostConstruct
 	public void inicia(){
 		
-		this.vendedorSelec = new Vendedor();
-		this.vendedorService = new VendedorService();
+		this.controlSelec = new Control();
+		this.controlService = new ControlService();
 		this.menuServices=new MenuServices();
 		
-		this.editarVendedor = Boolean.FALSE;
+		this.editarControl = Boolean.FALSE;
 
 		log = (Log)getSpringBean(Constante.SESSION_LOG);
 		logmb = new LogMB();	
 		
 		try {
-			this.listaVendedor = this.vendedorService.findAll();
-			Menu codMenu = menuServices.opcionMenuByPretty("pretty:vendedor");
+			this.listaControl = this.controlService.findAll();
+			Menu codMenu = menuServices.opcionMenuByPretty("pretty:control");
 			log.setCod_menu(codMenu.getCod_menu().intValue());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,31 +59,31 @@ public class ControlMB extends GenericBeans implements Serializable{
 	
 	/* para tabla maestra */
 	
-	public void guardarVendedor(){
+	public void guardarControl(){
 		Boolean valido=Boolean.TRUE;
 		RequestContext context = RequestContext.getCurrentInstance();  
    	    context.addCallbackParam("esValido", valido);
 		
 		try {
 			
-			if(this.editarVendedor) {
-				this.vendedorService.actualizarVendedor(this.vendedorSelec);
+			if(this.editarControl) {
+				this.controlService.actualizarControl(this.controlSelec);
 				 log.setAccion("UPDATE");
-	             log.setDescripcion("Se actualiza el Vendedor : " + this.vendedorSelec.getDescripcion_vendedor());
+	             log.setDescripcion("Se actualiza el Control : " + this.controlSelec.getPaciente().getNombre());
 	             logmb.insertarLog(log);
-				FacesUtils.showFacesMessage("La Descripcion del vendedor ha sido actualizado", 3);
+				FacesUtils.showFacesMessage("La Descripcion del Control ha sido actualizado", 3);
 			}else{
-				this.vendedorService.crearVendedor(this.vendedorSelec);
+				this.controlService.crearControl(this.controlSelec);
 				 log.setAccion("INSERT");
-	             log.setDescripcion("Se inserta vendedor: " + this.vendedorSelec.getDescripcion_vendedor());
+	             log.setDescripcion("Se inserta Control: " + this.controlSelec.getPaciente().getNombre());
 	             logmb.insertarLog(log);
-				FacesUtils.showFacesMessage("Vendedor ha sido creado", 3);
+				FacesUtils.showFacesMessage("Control ha sido creado", 3);
 			}
 			
-			this.vendedorSelec = new Vendedor();
-			this.editarVendedor = Boolean.FALSE;
+			this.controlSelec = new Control();
+			this.editarControl = Boolean.FALSE;
 			
-			this.listaVendedor = this.vendedorService.findAll();
+			this.listaControl = this.controlService.findAll();
 			context.update("msgGeneral");
 			
 		} catch (Exception e) {
@@ -92,32 +92,32 @@ public class ControlMB extends GenericBeans implements Serializable{
 		
 	}
 	
-	public void nuevoVendedor(){
-		this.vendedorSelec = new Vendedor();
-		this.editarVendedor = Boolean.FALSE;
+	public void nuevoControl(){
+		this.controlSelec = new Control();
+		this.editarControl = Boolean.FALSE;
 	}
 
-	public void editarVendedor(Vendedor vendedor){
-		this.vendedorSelec = vendedor;
-		this.editarVendedor = Boolean.TRUE;
+	public void editarControl(Control Control){
+		this.controlSelec = Control;
+		this.editarControl = Boolean.TRUE;
 	}
 	
-	public void eliminarVendedor(Vendedor vendedor){
-		this.vendedorSelec = vendedor;
+	public void eliminarControl(Control Control){
+		this.controlSelec = Control;
 	}
 	
 	
-	public void confirmaEliminarVendedor(){
+	public void confirmaEliminarControl(){
 		try {
 		
-			this.vendedorService.eliminarVendedor(this.vendedorSelec.getId_vendedor());
+			this.controlService.eliminarControl(this.controlSelec.getId_control());
 			
 			log.setAccion("DELETE");
-			log.setDescripcion("Se elimina vendedor: " + this.vendedorSelec.getDescripcion_vendedor());
+			log.setDescripcion("Se elimina Control: " + this.controlSelec.getPaciente().getNombre());
 			logmb.insertarLog(log);
-			FacesUtils.showFacesMessage("Vendedor ha sido eliminado", 3);
+			FacesUtils.showFacesMessage("Control ha sido eliminado", 3);
 			
-			this.listaVendedor = this.vendedorService.findAll();
+			this.listaControl = this.controlService.findAll();
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,27 +125,27 @@ public class ControlMB extends GenericBeans implements Serializable{
 	
 	}
 
-	public Vendedor getVendedorSelec() {
-		return vendedorSelec;
+	public Control getControlSelec() {
+		return controlSelec;
 	}
 
-	public void setVendedorSelec(Vendedor vendedorSelec) {
-		this.vendedorSelec = vendedorSelec;
+	public void setControlSelec(Control ControlSelec) {
+		this.controlSelec = ControlSelec;
 	}
 
-	public List<Vendedor> getListaVendedor() {
-		return listaVendedor;
+	public List<Control> getListaControl() {
+		return listaControl;
 	}
 
-	public void setListaVendedor(List<Vendedor> listaVendedor) {
-		this.listaVendedor = listaVendedor;
+	public void setListaControl(List<Control> listaControl) {
+		this.listaControl = listaControl;
 	}
 
-	public Boolean getEditarVendedor() {
-		return editarVendedor;
+	public Boolean getEditarControl() {
+		return editarControl;
 	}
 
-	public void setEditarVendedor(Boolean editarVendedor) {
-		this.editarVendedor = editarVendedor;
+	public void setEditarControl(Boolean editarControl) {
+		this.editarControl = editarControl;
 	}
 }
