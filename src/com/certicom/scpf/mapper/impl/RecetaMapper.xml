@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.RecetaMapper">
+
+
+<resultMap id="recetaResult" type="com.certicom.scpf.domain.Receta">
+	<id column="id_receta" property="id_receta" />
+	<result column="id_consulta_medica" property="id_consulta_medica" />
+	<result column="id_producto" property="id_producto"/>
+	<result column="id_tipo_servicio" property="id_tipo_servicio" />
+	<result column="id_medico" property="id_medico"/>
+	<result column="id_especialidad" property="id_especialidad" />
+	<result column="id_paciente" property="id_paciente"/>
+	<result column="id_cliente" property="id_cliente" />
+	<result column="medicamento" property="medicamento"/>
+	<result column="cantidad" property="cantidad" />
+	<result column="dosis" property="dosis"/>
+	<result column="horas" property="horas" />
+	<result column="duracion" property="duracion"/>
+	
+
+</resultMap>
+
+		
+</mapper>	

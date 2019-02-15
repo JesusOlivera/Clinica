@@ -35,20 +35,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
        	<mapper resource="com/certicom/scpf/mapper/impl/ComprobanteMapper.xml"/>  
        	<mapper resource="com/certicom/scpf/mapper/impl/ComprobanteDetalleMapper.xml"/>  
         <mapper resource="com/certicom/scpf/mapper/impl/ComunicacionBajaMapper.xml"/> 
-        <mapper resource="com/certicom/scpf/mapper/impl/VendedorMapper.xml"/> 
-        
+        <mapper resource="com/certicom/scpf/mapper/impl/VendedorMapper.xml"/>         
         <mapper resource="com/certicom/scpf/mapper/impl/PacienteMapper.xml"/> 
         <mapper resource="com/certicom/scpf/mapper/impl/EspecialidadMapper.xml"/> 
         <mapper resource="com/certicom/scpf/mapper/impl/MedicoMapper.xml"/> 
-        <mapper resource="com/certicom/scpf/mapper/impl/TipoServicioMapper.xml"/> 
-        
+        <mapper resource="com/certicom/scpf/mapper/impl/TipoServicioMapper.xml"/>         
         <mapper resource="com/certicom/scpf/mapper/impl/TicketMapper.xml"/>
-
         <mapper resource="com/certicom/scpf/mapper/impl/ControlMapper.xml"/>
-
         <mapper resource="com/certicom/scpf/mapper/impl/ConsultaMedicaMapper.xml"/>
-
         <mapper resource="com/certicom/scpf/mapper/impl/SignoVitalMapper.xml"/>
+        <mapper resource="com/certicom/scpf/mapper/impl/ExamenAuxiliarMapper.xml"/>
+        <mapper resource="com/certicom/scpf/mapper/impl/RecetaMapper.xml"/>
 
 	</mappers>
 </configuration>

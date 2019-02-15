@@ -273,7 +273,7 @@
 						        			<p:commandButton value="Actualizar" actionListener="#{generaTicketMB.actualizarSignoVital()}" update=":dlgDetSignosVitales" 
 											 oncomplete="PF('dlgSignosVitales').show();"></p:commandButton>
 						        			
-						        			<p:dataList value="#{generaTicketMB.listaSignosVitales}" var="sigvit">
+						        			<p:dataList value="#{generaTicketMB.listaSignosVitales}" rendered="#{generaTicketMB.editarSignoVital}" var="sigvit">
 										        
 										        #{sigvit}
 										        
@@ -282,7 +282,7 @@
 					        		</p:column>
 					        		
 					        		<p:column>
-					        			<p:inputText value="#{generaTicketMB.consultaMedica.anamesis}"></p:inputText>
+					        			<p:inputTextarea value="#{generaTicketMB.consultaMedica.anamesis}"></p:inputTextarea>
 					        		</p:column>
 					        		
 					        		<p:column style="width:250px">
@@ -297,7 +297,7 @@
 														 style="FONT-SIZE: 10px; width: 240px">
 					        							
 					        							<p:column  style="width:150px">
-					        								${f}
+					        								#{f}
 					        							</p:column>
 					        							
 					        							<p:column  style="width:40px" >
@@ -310,7 +310,51 @@
 					        		</p:column>
 					        		
 					        		<p:column>
-					        			<p:inputText value="#{generaTicketMB.consultaMedica.impresion_diagnostica}"></p:inputText>
+					        			<p:inputTextarea value="#{generaTicketMB.consultaMedica.impresion_diagnostica}"></p:inputTextarea>
+					        		</p:column>
+					        		
+					        		<p:column style="width:250px">
+					        			<h:panelGrid>
+						        			<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarExamenAuxiliar()}" update=":dlgDetExamenAuxiliar" 
+												 oncomplete="PF('dlgExameneAuxiliar').show();"></p:commandButton>
+											<p:dataTable id="dataExamenAuxiliar"  var="e" value="#{generaTicketMB.listaExamenAuxiliares}" rendered="#{generaTicketMB.editarExamenAuxiliar}" widgetVar="dtExamenAuxiliar"
+												style="FONT-SIZE: 10px; width: 240px">
+												
+												<p:column  style="width:150px">
+					        						#{e.resultado} : #{e.detalle}
+					        					</p:column>
+					        							
+					        					<p:column  style="width:40px" >
+					        						<p:commandButton actionListener="#{generaTicketMB.eliminarExamenAuxiliar(e)}" update=":formConsultaMedica" icon="icon-delete"></p:commandButton>
+					        					</p:column>
+												
+											</p:dataTable>
+											
+										</h:panelGrid>
+					        		</p:column>
+					        		
+					        		<p:column>
+					        			<p:inputTextarea value="#{generaTicketMB.consultaMedica.diagnostico}"></p:inputTextarea>
+					        		</p:column>
+					        		
+					        		<p:column style="width:250px">
+					        			<h:panelGrid>
+						        			<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarReceta()}" update=":dlgDetReceta" 
+												 oncomplete="PF('dlgReceta').show();"></p:commandButton>
+											<p:dataTable id="dataReceta"  var="r" value="#{generaTicketMB.listaRecetas}" rendered="#{generaTicketMB.editarReceta}" widgetVar="dtReceta"
+												style="FONT-SIZE: 10px; width: 240px">
+												
+												<p:column  style="width:150px">
+					        						#{r.medicamento}
+					        					</p:column>
+					        							
+					        					<p:column  style="width:40px" >
+					        						<p:commandButton actionListener="#{generaTicketMB.eliminarReceta(r)}" update=":formConsultaMedica" icon="icon-delete"></p:commandButton>
+					        					</p:column>
+												
+											</p:dataTable>
+											
+										</h:panelGrid>
 					        		</p:column>
 					        	
 					        	</p:row>
@@ -400,6 +444,79 @@
 						<p:commandButton value="Cancelar" type="button" onclick="PF('dlgSignosVitales').hide()" icon="icon-cancel" />
 					
 					</h:form>
+					
+			</p:dialog>
+			
+			<p:dialog header="Examen Auxiliar" widgetVar="dlgExameneAuxiliar" appendTo="@(body)"
+					resizable="false" id="dlgDetExamenAuxiliar" modal="true">
+					
+					<h:form>
+					
+						<h:panelGrid>
+						
+							#{"Resultado: "}
+							<p:inputText id="resultado" value="#{generaTicketMB.examenAuxiliar.resultado}">
+							    <p:ajax event="blur"/>
+							</p:inputText>
+							
+							#{"Detalle: "}
+							<p:inputText id="detalle" value="#{generaTicketMB.examenAuxiliar.detalle}">
+							    <p:ajax event="blur"/>
+							</p:inputText>
+						
+						</h:panelGrid>
+					
+					</h:form>
+					
+					<br/>
+					<p:commandButton value="Agregar" actionListener="#{generaTicketMB.confirmarAgregarExamenAuxiliar()}"
+						update=":formConsultaMedica" oncomplete="PF('dlgExameneAuxiliar').hide();" icon="icon-disk" />
+						
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgExameneAuxiliar').hide()" icon="icon-cancel" />
+					
+			</p:dialog>
+			
+			<p:dialog header="Receta" widgetVar="dlgReceta" appendTo="@(body)"
+					resizable="false" id="dlgDetReceta" modal="true">
+					
+					<h:form>
+					
+						<h:panelGrid>
+						
+							#{"Medicamento: "}
+							<p:inputText id="resultado" value="#{generaTicketMB.receta.medicamento}">
+							    <p:ajax event="blur"/>
+							</p:inputText>
+							
+							#{"Cantidad: "}
+							<p:inputText id="cantidad" value="#{generaTicketMB.receta.cantidad}">
+							    <p:ajax event="blur"/>
+							</p:inputText>
+							
+							#{"Dosis: "}
+							<p:inputText id="dosis" value="#{generaTicketMB.receta.dosis}">
+							    <p:ajax event="blur"/>
+							</p:inputText>
+							
+							#{"Horas: "}
+							<p:inputText id="horas" value="#{generaTicketMB.receta.horas}">
+							    <p:ajax event="blur"/>
+							</p:inputText>
+							
+							#{"Duración: "}
+							<p:inputText id="duracion" value="#{generaTicketMB.receta.duracion}">
+							    <p:ajax event="blur"/>
+							</p:inputText>
+						
+						</h:panelGrid>
+					
+					</h:form>
+					
+					<br/>
+					<p:commandButton value="Agregar" actionListener="#{generaTicketMB.confirmarAgregarReceta()}"
+						update=":formConsultaMedica" oncomplete="PF('dlgReceta').hide();" icon="icon-disk" />
+						
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgReceta').hide()" icon="icon-cancel" />
 					
 			</p:dialog>
 		</p:panel>

@@ -13,10 +13,12 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
 
 import com.certicom.scpf.domain.ConsultaMedica;
+import com.certicom.scpf.domain.ExamenAuxiliar;
 import com.certicom.scpf.domain.Log;
 import com.certicom.scpf.domain.Medico;
 import com.certicom.scpf.domain.Paciente;
 import com.certicom.scpf.domain.Producto;
+import com.certicom.scpf.domain.Receta;
 import com.certicom.scpf.domain.SignoVital;
 import com.certicom.scpf.domain.Ticket;
 import com.certicom.scpf.domain.TipoServicio;
@@ -42,6 +44,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private List<Ticket> listTickets;
 	private List<String> listaSignosVitales;
 	private List<String> listaProblemas;
+	private List<ExamenAuxiliar> listaExamenAuxiliares;
+	private List<Receta> listaRecetas;
 	private SignoVital signoVital;
 	private Ticket ticketSelected;
 	private Paciente paciente;
@@ -49,6 +53,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private Producto producto;
 	private String problema;
 	private ConsultaMedica consultaMedica;
+	private ExamenAuxiliar examenAuxiliar;
+	private Receta receta;
 	private PacienteService pacienteService;
 	private TipoServicioService tipoServicioService;
 	private ProductoService productoService;
@@ -57,6 +63,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private SignoVitalService signoVitalService;	
 	private Boolean editarTicket;
 	private Boolean editarProblemas;
+	private Boolean editarExamenAuxiliar;
+	private Boolean editarSignoVital;
+	private Boolean editarReceta;
     private Log log;
 	private LogMB logmb;
 	
@@ -81,7 +90,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.listMedicos = this.medicoService.findAll();
 		this.listTipoServicios = this.tipoServicioService.findAllForTicket();	
 		this.listTickets = this.ticketService.findAll();
-		this.editarProblemas = Boolean.FALSE;	
+		
 		
 		
 		log = (Log)getSpringBean(Constante.SESSION_LOG);
@@ -277,13 +286,23 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.consultaMedica.setFecha_consulta(new Date());
 		this.consultaMedica.setHora_consulta(new Date());
 		this.ticketSelected = ticket;
+		this.editarProblemas = Boolean.FALSE;	
+		this.editarExamenAuxiliar = Boolean.FALSE;
+		this.editarReceta = Boolean.FALSE;
 		this.listaProblemas = new ArrayList<String>();
+		this.listaExamenAuxiliares = new ArrayList<ExamenAuxiliar>();
+		this.listaRecetas = new ArrayList<Receta>();
+		this.editarSignoVital = Boolean.FALSE;
 		
 	}
 	
 	public void actualizarSignoVital(){
 		
-		this.signoVital = new SignoVital();
+		if(this.signoVital==null){
+		
+			this.signoVital = new SignoVital();
+		
+		}
 		
 	}
 	
@@ -303,6 +322,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.listaSignosVitales.add("Otros: " + this.signoVital.getOtros1() + " " + this.signoVital.getOtros2() + " " + this.signoVital.getOtros3());
 		this.listaSignosVitales.add("Sat 02: " + this.signoVital.getSat_oxigeno());
 		
+		this.editarSignoVital = Boolean.TRUE;
 		
 		System.out.println("se almacenaron los signos vitales");
 		
@@ -332,14 +352,69 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		}
 		
 		System.out.println("cantidad de problemas: " + this.listaProblemas.size());
-		this.problema = "";
+		this.problema = "";		
 		
+	}
+	
+	public void agregarExamenAuxiliar(){
+		
+		this.examenAuxiliar = new ExamenAuxiliar();
+		
+	}
+	
+	public void agregarReceta(){
+		
+		this.receta = new Receta();
+		
+	}
+	
+	public void confirmarAgregarExamenAuxiliar(){
+		
+		this.listaExamenAuxiliares.add(this.examenAuxiliar);
+		
+		this.editarExamenAuxiliar = Boolean.TRUE;
+		
+		this.examenAuxiliar = new ExamenAuxiliar();
+		
+	}
+	
+	public void confirmarAgregarReceta(){
+		
+		this.listaRecetas.add(this.receta);
+		
+		this.editarReceta = Boolean.TRUE;
+		
+		this.receta = new Receta();
 		
 	}
 	
 	public void eliminarProblema(String problema){
 		
 		this.listaProblemas.remove(problema);
+		
+		if(this.listaProblemas.size() == 0){
+			this.editarProblemas = Boolean.FALSE;
+		}
+		
+	}
+	
+	public void eliminarExamenAuxiliar(ExamenAuxiliar exaux){
+		
+		this.listaExamenAuxiliares.remove(exaux);
+		
+		if(this.listaExamenAuxiliares.size() == 0){
+			this.editarExamenAuxiliar = Boolean.FALSE;
+		}
+		
+	}
+	
+	public void eliminarReceta(Receta recet){
+		
+		this.listaRecetas.remove(recet);
+		
+		if(this.listaRecetas.size() == 0){
+			this.editarReceta = Boolean.FALSE;
+		}
 		
 	}
 
@@ -485,6 +560,62 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setProblema(String problema) {
 		this.problema = problema;
+	}
+
+	public List<ExamenAuxiliar> getListaExamenAuxiliares() {
+		return listaExamenAuxiliares;
+	}
+
+	public void setListaExamenAuxiliares(List<ExamenAuxiliar> listaExamenAuxiliares) {
+		this.listaExamenAuxiliares = listaExamenAuxiliares;
+	}
+
+	public ExamenAuxiliar getExamenAuxiliar() {
+		return examenAuxiliar;
+	}
+
+	public void setExamenAuxiliar(ExamenAuxiliar examenAuxiliar) {
+		this.examenAuxiliar = examenAuxiliar;
+	}
+
+	public Boolean getEditarExamenAuxiliar() {
+		return editarExamenAuxiliar;
+	}
+
+	public void setEditarExamenAuxiliar(Boolean editarExamenAuxiliar) {
+		this.editarExamenAuxiliar = editarExamenAuxiliar;
+	}
+
+	public Boolean getEditarSignoVital() {
+		return editarSignoVital;
+	}
+
+	public void setEditarSignoVital(Boolean editarSignoVital) {
+		this.editarSignoVital = editarSignoVital;
+	}
+
+	public List<Receta> getListaRecetas() {
+		return listaRecetas;
+	}
+
+	public void setListaRecetas(List<Receta> listaRecetas) {
+		this.listaRecetas = listaRecetas;
+	}
+
+	public Receta getReceta() {
+		return receta;
+	}
+
+	public void setReceta(Receta receta) {
+		this.receta = receta;
+	}
+
+	public Boolean getEditarReceta() {
+		return editarReceta;
+	}
+
+	public void setEditarReceta(Boolean editarReceta) {
+		this.editarReceta = editarReceta;
 	}	
 
 }
