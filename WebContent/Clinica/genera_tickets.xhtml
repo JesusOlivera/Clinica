@@ -358,7 +358,29 @@
 					        		</p:column>
 					        	
 					        	</p:row>
-					        </p:panelGrid>				
+					        </p:panelGrid>		
+					        	
+					        <h:panelGrid >
+						        #{"Estado: "}
+								<p:selectOneMenu id="cmbEstado" value="#{generaTicketMB.consultaMedica.estado}" style="width:200px;">
+									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItem itemValue="" itemLabel="PENDIENTE"></f:selectItem>
+									<f:selectItem itemValue="" itemLabel="CANCELADO"></f:selectItem>
+									<f:selectItem itemValue="" itemLabel="TERMINADO"></f:selectItem>
+									<p:ajax event="change"></p:ajax>
+								</p:selectOneMenu>
+					        </h:panelGrid>	
+					        <h:panelGrid>
+					        	<p:selectOneRadio id="chn" value="#{generaTicketMB.}" unselectable="true">
+						            <f:selectItem itemLabel="CONTROL" itemValue="CONTROL" />
+						            <f:selectItem itemLabel="HOSPITALIZACION" itemValue="HOSPITALIZACION" />
+						            <f:selectItem itemLabel="NINGUNO" itemValue="NINGUNO" />
+						            <p:ajax event="change"></p:ajax>
+						        </p:selectOneRadio>
+						        <h:panelGrid>
+						        </h:panelGrid>
+					        </h:panelGrid>
+					        	
 					
 					</h:form>	
 			</p:dialog>
