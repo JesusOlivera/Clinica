@@ -204,7 +204,7 @@
 			</p:confirmDialog>
 			
 			<p:dialog header="Consulta Médica" widgetVar="dlgConsultaMedica" appendTo="@(body)"
-					resizable="false" id="dlgDetConsultaMedica" modal="true">
+					resizable="false" id="dlgDetConsultaMedica" modal="true" position="top">
 					
 					<h:form id="formConsultaMedica">
 					<p:messages showDetail="false" showSummary="true" id="msgNuevo1" closable="true"/>
@@ -245,9 +245,9 @@
 																
 					        </h:panelGrid>	
 					        <br/>
-					        <h:panelGrid>
+					        <p:panelGrid>
 					        	
-					        	<f:facet name="header">
+					        	
 						        	<p:row>
 						        	
 						        		<p:column style="font-weight: bold;"> SIGNOS VITALES  </p:column>
@@ -265,20 +265,142 @@
 						        		<p:column style="font-weight: bold;"> RECETA </p:column>
 						        	
 						        	</p:row>
-					        	</f:facet>
 					        	
-					        	<p:row>
+					        		<p:row>
 					        	
 					        		<p:column>
+					        			<h:panelGrid>
+						        			<p:commandButton value="Actualizar" actionListener="#{generaTicketMB.actualizarSignoVital()}" update=":dlgDetSignosVitales" 
+											 oncomplete="PF('dlgSignosVitales').show();"></p:commandButton>
+						        			
+						        			<p:dataList value="#{generaTicketMB.listaSignosVitales}" var="sigvit">
+										        
+										        #{sigvit}
+										        
+										    </p:dataList>
+					        			</h:panelGrid>
+					        		</p:column>
 					        		
-					        			<p:commandButton value="Actualizar" ></p:commandButton>
+					        		<p:column>
+					        			<p:inputText value="#{generaTicketMB.consultaMedica.anamesis}"></p:inputText>
+					        		</p:column>
 					        		
+					        		<p:column style="width:250px">
+					        			
+					        			<h:panelGrid columns="2">
+					        			
+					        				<p:inputText value="#{generaTicketMB.problema}"><p:ajax event="blur"/></p:inputText>
+					        				<p:commandButton icon="icon-add" actionListener="#{generaTicketMB.agregarProblema()}" update=":formConsultaMedica"></p:commandButton>
+					        			</h:panelGrid>
+					        				
+					        				<p:dataTable id="dataProblema"  var="f" value="#{generaTicketMB.listaProblemas}" rendered="#{generaTicketMB.editarProblemas}" widgetVar="dtProblema" 
+														 style="FONT-SIZE: 10px; width: 240px">
+					        							
+					        							<p:column  style="width:150px">
+					        								${f}
+					        							</p:column>
+					        							
+					        							<p:column  style="width:40px" >
+					        								<p:commandButton actionListener="#{generaTicketMB.eliminarProblema(f)}" update=":formConsultaMedica" icon="icon-delete"></p:commandButton>
+					        							</p:column>
+					        				
+					        				</p:dataTable>					        				
+					        			
+					        			
+					        		</p:column>
+					        		
+					        		<p:column>
+					        			<p:inputText value="#{generaTicketMB.consultaMedica.impresion_diagnostica}"></p:inputText>
 					        		</p:column>
 					        	
 					        	</p:row>
-					        </h:panelGrid>				
+					        </p:panelGrid>				
 					
 					</h:form>	
+			</p:dialog>
+			
+			<p:dialog header="Signos Vitales" widgetVar="dlgSignosVitales" appendTo="@(body)"
+					resizable="false" id="dlgDetSignosVitales" modal="true">
+			
+					<h:form>
+					
+						<h:panelGrid columns="2">
+						
+						#{"Talla: "}
+						<p:inputText id="talla" value="#{generaTicketMB.signoVital.talla}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Ocupación: "}
+						<p:inputText id="ocupacion" value="#{generaTicketMB.signoVital.ocupacion}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Peso: "}
+						<p:inputText id="peso" value="#{generaTicketMB.signoVital.peso}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Temperatura: "}
+						<p:inputText id="temperatura" value="#{generaTicketMB.signoVital.temperatura}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Alergia: "}
+						<p:inputText id="alergia" value="#{generaTicketMB.signoVital.alergia}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Frecuencia Cardiaca: "}
+						<p:inputText id="frec_card" value="#{generaTicketMB.signoVital.frecuencia_cardiaca}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Frecuencia Respiratoria: "}
+						<p:inputText id="frec_resp" value="#{generaTicketMB.signoVital.frecuencia_respiratoria}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Presión Arterial: "}
+						<p:inputText id="pres_arte" value="#{generaTicketMB.signoVital.presion_arterial}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Embarazada: "}
+						<p:inputText id="embarazo" value="#{generaTicketMB.signoVital.embarazo}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Otros 1: "}
+						<p:inputText id="otros1" value="#{generaTicketMB.signoVital.otros1}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Otros 2: "}
+						<p:inputText id="otros2" value="#{generaTicketMB.signoVital.otros2}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Otros 3: "}
+						<p:inputText id="otros3" value="#{generaTicketMB.signoVital.otros3}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Sat 02: "}
+						<p:inputText id="sat_oxigeno" value="#{generaTicketMB.signoVital.sat_oxigeno}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						</h:panelGrid>
+						
+						<br/>
+						<p:commandButton value="Aceptar" actionListener="#{generaTicketMB.confirmarActualizarSignoVital()}"
+							update=":formConsultaMedica" oncomplete="PF('dlgSignosVitales').hide();" icon="icon-disk" />
+						
+						<p:commandButton value="Cancelar" type="button" onclick="PF('dlgSignosVitales').hide()" icon="icon-cancel" />
+					
+					</h:form>
+					
 			</p:dialog>
 		</p:panel>
 		

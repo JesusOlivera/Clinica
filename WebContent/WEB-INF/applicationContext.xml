@@ -193,5 +193,10 @@
 		<property name="mapperInterface" value="com.certicom.scpf.mapper.ConsultaMedicaMapper"/>
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>	
+	
+	<bean id="signoVitalMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.certicom.scpf.mapper.SignoVitalMapper"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>	
 
 </beans>
