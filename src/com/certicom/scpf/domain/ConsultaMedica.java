@@ -21,6 +21,10 @@ public class ConsultaMedica {
 	private String diagnostico;
 	private String resumen_hospitalizacion;
 	
+	private Producto producto;
+	
+	private String tipo_control;
+	
 	public Integer getId_consulta_medica() {
 		return id_consulta_medica;
 	}
@@ -147,6 +151,22 @@ public class ConsultaMedica {
 	
 	public void setResumen_hospitalizacion(String resumen_hospitalizacion) {
 		this.resumen_hospitalizacion = resumen_hospitalizacion;
+	}
+
+	public String getTipo_control() {
+		return tipo_control;
+	}
+
+	public void setTipo_control(String tipo_control) {
+		this.tipo_control = tipo_control;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
 	}	
 	
 }

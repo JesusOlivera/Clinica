@@ -49,6 +49,13 @@
 						<h:outputText value="#{p.descripcion_tipo}"/>
 					</p:column>
 					
+					<p:column style="width:5%; text-align: center" headerText="Genera Ticket">
+								<p:commandLink update="@form :msgGeneral" actionListener="#{tipoServicioMB.cambiarEstadoGeneraTicket(p)}" > 
+									<h:graphicImage value="#{p.genera_ticket?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+									title="#{p.genera_ticket?'Activo':'Bloqueado'}" />
+								</p:commandLink>
+					</p:column>	
+					
 			        
 			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
 					
@@ -84,6 +91,13 @@
 						<p:inputText value="#{tipoServicioMB.tipoServicioSelec.descripcion_tipo}" id="descripcion_tipo"
 							required="true" label="nombreTipo" requiredMessage="Se necesita una descripcion del Tipo de Servicio"
 							style="width:200px;" />
+							
+						#{"Genera Ticket?:"}
+						<p:selectOneMenu  value="#{tipoServicioMB.tipoServicioSelec.genera_ticket}" style="width:200px;" effect="fade" 
+							required="true" requiredMessage="¿Genera Ticket?">
+							<f:selectItem itemLabel="SI" itemValue="true" />
+							<f:selectItem itemLabel="NO" itemValue="false" />
+						</p:selectOneMenu>
 															
 					</h:panelGrid>
 					<br/>

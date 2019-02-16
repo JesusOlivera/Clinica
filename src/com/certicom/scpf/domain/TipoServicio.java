@@ -4,6 +4,8 @@ public class TipoServicio {
 
 	private Integer id_tipo_servicio;
 	private String descripcion_tipo;
+	private Boolean genera_ticket;
+	
 	public Integer getId_tipo_servicio() {
 		return id_tipo_servicio;
 	}
@@ -15,6 +17,12 @@ public class TipoServicio {
 	}
 	public void setDescripcion_tipo(String descripcion_tipo) {
 		this.descripcion_tipo = descripcion_tipo;
+	}
+	public Boolean getGenera_ticket() {
+		return genera_ticket;
+	}
+	public void setGenera_ticket(Boolean genera_ticket) {
+		this.genera_ticket = genera_ticket;
 	}
 
 	

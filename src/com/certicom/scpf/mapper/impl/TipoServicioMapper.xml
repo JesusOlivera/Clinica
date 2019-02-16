@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <resultMap id="tipoServicioResult" type="com.certicom.scpf.domain.TipoServicio">
 	<id column="id_tipo_servicio" property="id_tipo_servicio" />
 	<result column="descripcion_tipo" property="descripcion_tipo" />
+	<result column="genera_ticket" property="genera_ticket" />
 	
 
 </resultMap>

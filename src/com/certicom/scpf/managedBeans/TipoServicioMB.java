@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
 
 import com.certicom.scpf.domain.Log;
+import com.certicom.scpf.domain.Producto;
 import com.certicom.scpf.domain.TipoServicio;
 import com.certicom.scpf.services.TipoServicioService;
 import com.pe.certicom.scpf.commons.Constante;
@@ -90,6 +91,31 @@ public class TipoServicioMB extends GenericBeans implements Serializable{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void cambiarEstadoGeneraTicket(TipoServicio tipoServicio){
+		
+		   if(tipoServicio.getGenera_ticket()){
+			   //System.out.println("es igual a uno se pone a cero");
+			   tipoServicio.setGenera_ticket(Boolean.FALSE);
+			   //sistem.setInd_activo(new Integer(0));
+		   }else{
+			   //System.out.println("es igual a cero");
+			   tipoServicio.setGenera_ticket(Boolean.TRUE);
+			   //sistem.setInd_activo(new Integer(1));
+		   }
+		   
+		   try {
+			   this.tipoServicioService.actualizartipoServicio(tipoServicio);
+				   //this.sistemaServices.updateSistema(sistem);
+			   FacesUtils.showFacesMessage("Estado de Genera Ticket",Constante.INFORMACION);
+			   log.setAccion("UPDATE");
+	           log.setDescripcion("Se actualizó el estado a  : " + tipoServicio.getGenera_ticket());
+	           logmb.insertarLog(log);
+		   } catch (Exception e) {
+			   System.out.println("Error:"+e.getMessage());
+			   e.printStackTrace();
+		   }   
 	}
 	
 	public void confirmaEliminartipoServicio(){

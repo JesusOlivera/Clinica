@@ -82,7 +82,7 @@
 								<h:outputText value="#{p.integrado_sunat? 'Si':'No'}"/>
 							</p:column>
 							<p:column width="150px" headerText="Consulta Médica">
-								<p:commandButton value="Genera Consulta Médica" update=":dlgDetConsultaMedica" rendered="#{p.id_tipo_servicio eq '1' and loginMB.perfilUsuario.cod_perfil eq '54'}" actionListener="#{generaTicketMB.nuevaConsultaMedica(p)}"
+								<p:commandButton value="Genera Consulta Médica" update=":dlgDetConsultaMedica" rendered="#{p.producto.genera_cola eq 'FALSE' or loginMB.perfilUsuario.cod_perfil eq '54'}" actionListener="#{generaTicketMB.nuevaConsultaMedica(p)}"
 										 oncomplete="PF('dlgConsultaMedica').show();"/>
 							</p:column>
 					
@@ -371,7 +371,7 @@
 								</p:selectOneMenu>
 					        </h:panelGrid>	
 					        <h:panelGrid>
-					        	<p:selectOneRadio id="chn" value="#{generaTicketMB.}" unselectable="true">
+					        	<p:selectOneRadio id="chn" value="#{generaTicketMB.consultaMedica.tipo_control}" unselectable="true">
 						            <f:selectItem itemLabel="CONTROL" itemValue="CONTROL" />
 						            <f:selectItem itemLabel="HOSPITALIZACION" itemValue="HOSPITALIZACION" />
 						            <f:selectItem itemLabel="NINGUNO" itemValue="NINGUNO" />
@@ -381,7 +381,11 @@
 						        </h:panelGrid>
 					        </h:panelGrid>
 					        	
-					
+							<br/> 
+							<p:commandButton value="Guardar Consulta" actionListener="#{generaTicketMB.guardarConsultaMedica()}"
+								update=":formConsultaMedica "  icon="icon-disk" />
+							
+							<p:commandButton value="Cancelar" type="button" onclick="PF('dlgConsultaMedica').hide()" icon="icon-cancel" />
 					</h:form>	
 			</p:dialog>
 			

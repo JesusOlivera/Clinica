@@ -20,10 +20,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="encolado" property="encolado"/>
 	<result column="flag_externo" property="flag_externo"/>
 	<result column="nro_ticket" property="nro_ticket"/>
+	<result column="tipo_control" property="tipo_control"/>
 	
 	<association property="paciente" column="id_paciente" select="selectPaciente"/>
 	<association property="medico" column="id_medico" select="selectMedico"/>
 	<association property="producto" column="id_producto" select="selectProducto"/>
+	<association property="tipoServicio" column="id_tipo_servicio" select="selectTipoServicio"/>
+
 
 </resultMap>
 
@@ -39,7 +42,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM t_producto WHERE id_producto=#{id_producto}
 	</select>
 	
+	<select id="selectTipoServicio" parameterType="int" resultType="com.certicom.scpf.domain.TipoServicio">
+		SELECT * FROM t_tipo_servicio WHERE id_tipo_servicio=#{id_tipo_servicio}
+	</select>
 	
+		<select id="findAll" resultMap="ticketResult">
+				select t.*, pa.nombre as desPaciente, pr.descripcion_prod_det as desServicio, m.nombre_medico as desMedico, 
+				tts.descripcion_tipo as desTipoServicio 
+				from (((t_ticket t inner join t_paciente pa on pa.id_paciente = t.id_paciente) 
+					inner join t_producto pr on pr.id_producto = t.id_producto) 
+					inner join t_medico m on m.id_medico = t.id_medico) 
+					inner join t_tipo_servicio tts on tts.id_tipo_servicio = t.id_tipo_servicio order by t.id_ticket desc 
+	</select>
 	
 		
 </mapper>	

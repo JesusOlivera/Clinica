@@ -22,6 +22,7 @@ import com.certicom.scpf.domain.Receta;
 import com.certicom.scpf.domain.SignoVital;
 import com.certicom.scpf.domain.Ticket;
 import com.certicom.scpf.domain.TipoServicio;
+import com.certicom.scpf.services.ConsultaMedicaService;
 import com.certicom.scpf.services.MedicoService;
 import com.certicom.scpf.services.PacienteService;
 import com.certicom.scpf.services.ProductoService;
@@ -60,7 +61,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private ProductoService productoService;
 	private MedicoService medicoService;
 	private TicketService ticketService;
-	private SignoVitalService signoVitalService;	
+	private SignoVitalService signoVitalService;
+	private ConsultaMedicaService consultaMedicaService;
 	private Boolean editarTicket;
 	private Boolean editarProblemas;
 	private Boolean editarExamenAuxiliar;
@@ -91,7 +93,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.listTipoServicios = this.tipoServicioService.findAllForTicket();	
 		this.listTickets = this.ticketService.findAll();
 		
-		
+		this.consultaMedicaService= new ConsultaMedicaService();
 		
 		log = (Log)getSpringBean(Constante.SESSION_LOG);
 		logmb = new LogMB();	
@@ -142,6 +144,10 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	
 	}
 	
+	public void guardarConsultaMedica(){
+		
+		this.consultaMedicaService.crearConsultaMedica(this.consultaMedica);
+	}
 	
 	public void nuevoTicket(){
 		
@@ -285,6 +291,13 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.consultaMedica.setId_ticket(ticket.getId_ticket());
 		this.consultaMedica.setFecha_consulta(new Date());
 		this.consultaMedica.setHora_consulta(new Date());
+		this.consultaMedica.setProducto(ticket.getProducto());
+		this.consultaMedica.setId_producto(ticket.getProducto().getId_producto());
+		this.consultaMedica.setId_tipo_servicio(ticket.getId_tipo_servicio());
+		this.consultaMedica.setId_medico(ticket.getId_medico());
+		this.consultaMedica.setId_paciente(ticket.getId_paciente());
+		this.consultaMedica.setId_cliente(ticket.getId_cliente());
+		this.consultaMedica.setId_especialidad(ticket.getId_especialidad());
 		this.ticketSelected = ticket;
 		this.editarProblemas = Boolean.FALSE;	
 		this.editarExamenAuxiliar = Boolean.FALSE;

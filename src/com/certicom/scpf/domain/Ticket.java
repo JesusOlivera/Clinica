@@ -22,6 +22,7 @@ public class Ticket {
 	private Paciente paciente;
 	private Medico medico;
 	private Producto producto;
+	private TipoServicio tipoServicio;
 	
 	/* transitorios */
 	private String desServicio;
@@ -195,6 +196,14 @@ public class Ticket {
 
 	public void setDesTipoServicio(String desTipoServicio) {
 		this.desTipoServicio = desTipoServicio;
+	}
+
+	public TipoServicio getTipoServicio() {
+		return tipoServicio;
+	}
+
+	public void setTipoServicio(TipoServicio tipoServicio) {
+		this.tipoServicio = tipoServicio;
 	}	
 	
 }

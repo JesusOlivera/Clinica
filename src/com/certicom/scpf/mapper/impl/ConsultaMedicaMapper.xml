@@ -23,8 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="diagnostico" property="diagnostico"/>
 	<result column="resumen_hospitalizacion" property="resumen_hospitalizacion"/>
 	
+	<association property="producto" column="id_producto" select="selectProducto"/>
 
 </resultMap>
 
+	<select id="selectProducto" parameterType="int" resultType="com.certicom.scpf.domain.Producto">
+		SELECT * FROM t_producto WHERE id_producto=#{id_producto}
+	</select>
 		
 </mapper>	
