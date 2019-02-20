@@ -24,5 +24,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 </resultMap>
 
-		
+	<select id="findByConsulta" resultMap="recetaResult" parameterType="int" >
+		select rec.*, con.* from t_receta rec 
+		inner join t_consulta_medica con on con.id_consulta_medica=rec.id_consulta_medica
+		where rec.id_consulta_medica=#{id_consulta_medica}
+	</select>
 </mapper>	

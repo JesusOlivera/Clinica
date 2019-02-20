@@ -30,5 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectProducto" parameterType="int" resultType="com.certicom.scpf.domain.Producto">
 		SELECT * FROM t_producto WHERE id_producto=#{id_producto}
 	</select>
+	
+	<select id="findByTicket" resultMap="consultaMedicaResult" parameterType="int" >
+		select con.*, pro.* from t_consulta_medica con inner join t_producto pro on pro.id_producto=con.id_producto
+		where con.id_ticket=#{id_ticket}
+	</select>
 		
 </mapper>	

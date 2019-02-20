@@ -82,13 +82,14 @@
 								<h:outputText value="#{p.integrado_sunat? 'Si':'No'}"/>
 							</p:column>
 							<p:column width="150px" headerText="Consulta Médica">
-								<p:commandButton value="Genera Consulta Médica" update=":dlgDetConsultaMedica" rendered="#{p.producto.genera_cola eq 'FALSE' or loginMB.perfilUsuario.cod_perfil eq '54'}" actionListener="#{generaTicketMB.nuevaConsultaMedica(p)}"
+								<p:commandButton value="Genera Consulta Médica" update=":dlgDetConsultaMedica" 
+								rendered="#{p.producto.genera_cola  or loginMB.perfilUsuario.cod_perfil eq '54'}" 
+								actionListener="#{generaTicketMB.nuevaConsultaMedica(p)}"
 										 oncomplete="PF('dlgConsultaMedica').show();"/>
 							</p:column>
 					
 			        
-			        <p:column headerText="Editar/Elim." style="width:80px;text-align: center">
-					
+			        <p:column headerText="Editar/Elim." style="width:80px;text-align: center">					
 						<p:commandButton title="Editar"  update=":dlgDetNuevoTicket" actionListener="#{generaTicketMB.editarTicket(p)}"
 										 oncomplete="PF('dlgNuevoTicket').show();" icon="icon-edit">
 						</p:commandButton> 
@@ -96,8 +97,16 @@
 						<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminarTicket').show();" 
 								actionListener="#{generaTicketMB.eliminarTicket(p)}" update=":dlgDetEliminarTicket" icon="icon-delete">
 	
-						</p:commandButton>
-								
+						</p:commandButton>	
+					</p:column>
+					
+					<p:column headerText="Comprobante." style="width:80px;text-align: center">					
+						<p:commandButton title="Generar Comprobante"  update=":dlgDetNuevoComprobante" 
+											actionListener="#{generaTicketMB.prepararComprobante(p)}"
+										 	oncomplete="PF('dlgNuevoComprobante').show();" icon="icon-edit">
+						</p:commandButton> 
+
+						
 					</p:column>
 
 				</p:dataTable>
@@ -107,7 +116,179 @@
 			
 			<!-- #############    TABLA MAESTRA      ################ -->
 			
-			<!-- dialogo nuevo/editar perfil -->
+			<!-- dialogo -->
+			
+			<p:dialog header="Registrar Comprobante" widgetVar="dlgNuevoComprobante" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoComprobante" modal="true">
+				<h:form style="margin-bottom: 8px" id="formPN"> 
+					<h:panelGrid columns="4">						
+						#{"Tipo de Documento:"}						        
+						<p:selectOneMenu style="width:200px" value="#{generaTicketMB.comprobanteSelec.tipo_comprobante}"  required="true" 
+							requiredMessage="Se necesita un tipo de comprobante" >
+							<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+							<f:selectItems value="#{generaTicketMB.listTablaTablasDetallesComprobante}" var="p" itemLabel="#{p.descripcion_largo}" 
+								itemValue="#{p.codigo_catalogo}" />
+							<p:ajax event="itemSelect" listener="#{generaTicketMB.mostrarDatosCliente()}" update="idValoresCabecera formAccion"/>
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<h:panelGrid id="idValoresCabecera">
+						<h:panelGrid columns="3">
+							
+								#{"Cliente:"}
+								<h:outputLabel id="clientePojo" value="#{generaTicketMB.comprobanteSelec.cliente.nombre_cab}" 
+												disabled="#{generaTicketMB.ingresarCliente}">
+								</h:outputLabel>
+		                        
+		                        <p:outputLabel value=" #{generaTicketMB.comprobanteSelec.cliente.desTipoDocumento}  
+		                        					   #{generaTicketMB.comprobanteSelec.cliente.numero_docu_iden_cab}" id="id_nombre"
+									style="width:200px ;font-size:15px; color:blue" />	
+								
+						</h:panelGrid>
+						
+						<h:panelGrid columns="6" id="pnFields">
+						
+							#{"Numero del Documento:"} 
+							<p:outputLabel value="#{generaTicketMB.comprobanteSelec.numero_serie_documento_cab}" id="numero_documento"
+								required="true" label="numero_documento" requiredMessage="Se necesita un numero de documento"
+								style="width:200px ;font-size:25px; " disabled="#{generaTicketMB.ingresarCliente}"/>
+							
+							#{"Fecha de Emisión:"} 
+							<p:calendar style="width:200px" readonlyInput="true" value="#{generaTicketMB.comprobanteSelec.fecha_emision_cab}" 
+									pattern="dd/MM/yyyy" locale="es" maxdate="#{cicloMB.fechaActual}"
+								  navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio" 
+								  disabled="#{generaTicketMB.ingresarCliente}">
+								  <p:ajax event="dateSelect" />
+							</p:calendar>
+							
+							#{"Modo Pago:"}						        
+							<p:selectOneMenu style="width:200px" 
+								required="true" requiredMessage="Se necesita un modo de pago" disabled="#{generaTicketMB.ingresarCliente}">
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{generaTicketMB.listModoPagos}" var="p" itemLabel="#{p.descripcion_modo_pago}" 
+								itemValue="#{p.id_modo_pago}" />
+								<p:ajax event="change" />
+							</p:selectOneMenu>
+							
+							#{"Tipo Operación:"}						        
+							<p:selectOneMenu style="width:200px" value="#{generaTicketMB.comprobanteSelec.tipo_operacion_cab}"  
+								required="true" requiredMessage="Se necesita un tipo de operacion"  disabled="#{generaTicketMB.ingresarCliente}">
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{generaTicketMB.listTablaTablasDetallesOperacion}" var="p" 
+									itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
+								<p:ajax event="change"/>
+							</p:selectOneMenu>
+							
+							#{"Hora de Emisión:"} 
+							<p:calendar style="width:200px" readonlyInput="true"  value="#{generaTicketMB.comprobanteSelec.hora_emision_cab}" 
+									pattern="hh:mm:ss" timeOnly="true" locale="es" maxdate="#{cicloMB.fechaActual}" 
+									disabled="#{generaTicketMB.ingresarCliente}"
+								  navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio">
+								  <p:ajax event="dateSelect"/>
+							</p:calendar>
+							
+							#{"Vendedor:"}						        
+							<p:selectOneMenu style="width:200px" value="#{generaTicketMB.comprobanteSelec.id_vendedor}"  
+								required="true" requiredMessage="Se necesita un Canal"  disabled="#{generaTicketMB.ingresarCliente}">
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{generaTicketMB.listaVendedores}" var="p" 
+									itemLabel="#{p.descripcion_vendedor}" itemValue="#{p.id_vendedor}" />
+								<p:ajax event="change"/>
+							</p:selectOneMenu>
+							
+							
+							#{"Tipo de Moneda:"}						        
+							<p:selectOneMenu style="width:200px" value="#{generaTicketMB.comprobanteSelec.tipo_moneda_cab}"  
+								required="true" requiredMessage="Se necesita un domicilio fiscal" disabled="#{generaTicketMB.ingresarCliente}">
+								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+								<f:selectItems value="#{generaTicketMB.listTablaTablasDetallesMoneda}" var="p" 
+									itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
+								<p:ajax event="change"/>
+							</p:selectOneMenu>
+							
+							#{"Fecha de Vencimiento:"} 
+							<p:calendar style="width:200px" readonlyInput="true" value="#{generaTicketMB.comprobanteSelec.fecha_vencimiento_cab}" 
+									pattern="dd/MM/yyyy" locale="es" maxdate="#{cicloMB.fechaActual}"
+								  	navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio" 
+								  	disabled="#{generaTicketMB.ingresarCliente}">
+								  <p:ajax event="dateSelect"/>
+							</p:calendar>
+						
+						</h:panelGrid>
+					
+					</h:panelGrid>
+				
+				</h:form>
+				<h:form id="formAccion">
+					<p:panel>
+						<p:dataTable id="dataComprobante" var="det" value="#{generaTicketMB.listaComprobanteDetalle}" widgetVar="dtComprobante" 
+						emptyMessage="No hay Compras Disponibles." rowIndexVar="nro" 
+						 style="FONT-SIZE: 10px; ">
+						<f:facet name="header">Detalle de Comprobante</f:facet>
+						<p:column headerText="Orden" width="25" style="width:3%" >
+							#{nro+1}
+						</p:column>
+						<p:column style="width:70px" headerText="Código de Producto">
+							<h:outputText value="#{det.producto.cod_prod_det}"/>
+						</p:column>
+						<p:column style="width:70px" headerText="Nombre Producto">
+							<h:outputText value="#{det.producto.descripcion_prod_det}"/>
+						</p:column>
+						<p:column style="width:70px" headerText="Cantidad">
+							<h:outputText value="#{det.cant_unidades_item_det}" converter="montoDefaultConverter" />
+						</p:column>						
+						<p:column style="width:70px" headerText="Valor Unitario">
+							<h:outputText value="#{det.producto.precio_final_editado_cliente}" converter="montoDefaultConverter" />
+						</p:column>
+						<p:column style="width:70px" headerText="Sub Total">
+							<h:outputText value="#{det.valor_venta_item_det}" converter="montoDefaultConverter" />
+						</p:column>
+						<p:column style="width:70px" headerText="Tributo">
+							<h:outputText value="#{det.suma_tributos_det}" converter="montoDefaultConverter"/>
+						</p:column>
+						<p:column style="width:70px" headerText="Total">
+							<h:outputText value="#{det.precio_venta_unitario_det}" converter="montoDefaultConverter"/>
+						</p:column>
+					</p:dataTable>
+					</p:panel>
+					
+					<p:panel>
+						<h:panelGrid columns="2" border="1" >
+					
+							#{"Sumatoria Tributos:"}
+							<h:outputLabel value="#{generaTicketMB.comprobanteSelec.suma_tributos_cab}" id="sumatoria_tributos"
+									style="width:200px;" converter="montoDefaultConverter" />
+							#{"Sub Total venta:"}
+							<h:outputLabel value="#{generaTicketMB.comprobanteSelec.total_valor_venta_cab}" id="valor_venta"
+									style="width:200px;" converter="montoDefaultConverter" />
+							#{"Total venta:"}
+							<h:outputLabel value="#{generaTicketMB.comprobanteSelec.total_precio_venta_cab}" id="precio_venta"
+									style="width:200px;" converter="montoDefaultConverter" />
+							#{"Total descuentos:"}
+							<h:outputLabel value="0" id="total_descuentos"
+									style="width:200px;" converter="montoDefaultConverter"/>
+							#{"Sumatoria otros Cargos:"}
+							<h:outputLabel value="0" id="otros_cargos"
+									style="width:200px;" converter="montoDefaultConverter" />
+							#{"Total Anticipos:"}
+							<h:outputLabel value="0" id="total_anticipos"
+									style="width:200px;" converter="montoDefaultConverter"  />
+							#{"Importe total:"}
+							<h:outputLabel value="#{generaTicketMB.comprobanteSelec.importe_total_venta_cab}" id="importe_total"
+									style="width:200px;" converter="montoDefaultConverter" />
+					
+						</h:panelGrid>
+						
+						<h:panelGrid>
+					         <p:commandButton value="Generar Comprobante" actionListener="#{generaTicketMB.generarComprobante()}" 
+					         	update=":formAccion: :formPN" disabled="#{generaTicketMB.generarComprobante}">
+							 </p:commandButton>
+						 </h:panelGrid>
+					
+					</p:panel>
+					
+				
+				</h:form>	
+			</p:dialog>
 			
 			<p:dialog header="Registrar Ticket" widgetVar="dlgNuevoTicket" appendTo="@(body)"
 					resizable="false" id="dlgDetNuevoTicket" modal="true">
@@ -272,12 +453,24 @@
 					        			<h:panelGrid>
 						        			<p:commandButton value="Actualizar" actionListener="#{generaTicketMB.actualizarSignoVital()}" update=":dlgDetSignosVitales" 
 											 oncomplete="PF('dlgSignosVitales').show();"></p:commandButton>
-						        			
-						        			<p:dataList value="#{generaTicketMB.listaSignosVitales}" rendered="#{generaTicketMB.editarSignoVital}" var="sigvit">
-										        
-										        #{sigvit}
-										        
-										    </p:dataList>
+						        			<h:panelGrid columns="4">
+						        			#{"Talla: "}
+						        			<h:outputText value="#{generaTicketMB.signoVital.talla}"></h:outputText>
+						        			#{"Peso: "}
+						        			<h:outputText value="#{generaTicketMB.signoVital.peso}"></h:outputText>
+						        			#{"Ocupacion: "}
+						        			<h:outputText value="#{generaTicketMB.signoVital.ocupacion}"></h:outputText>
+						        			#{"Temperatura: "}
+						        			<h:outputText value="#{generaTicketMB.signoVital.temperatura}"></h:outputText>
+						        			#{"Alergia: "}
+						        			<h:outputText value="#{generaTicketMB.signoVital.alergia}"></h:outputText>
+						        			#{"Frec. Cardiaca: "}
+						        			<h:outputText value="#{generaTicketMB.signoVital.frecuencia_cardiaca}"></h:outputText>
+						        			#{"Frec. Respiratoria: "}
+						        			<h:outputText value="#{generaTicketMB.signoVital.frecuencia_respiratoria}"></h:outputText>
+						        			#{"Presion Arterial:: "}
+						        			<h:outputText value="#{generaTicketMB.signoVital.presion_arterial}"></h:outputText>
+						        			</h:panelGrid>
 					        			</h:panelGrid>
 					        		</p:column>
 					        		
@@ -293,7 +486,7 @@
 					        				<p:commandButton icon="icon-add" actionListener="#{generaTicketMB.agregarProblema()}" update=":formConsultaMedica"></p:commandButton>
 					        			</h:panelGrid>
 					        				
-					        				<p:dataTable id="dataProblema"  var="f" value="#{generaTicketMB.listaProblemas}" rendered="#{generaTicketMB.editarProblemas}" widgetVar="dtProblema" 
+					        				<p:dataTable id="dataProblema"  var="f" value="#{generaTicketMB.listaProblemas}"  widgetVar="dtProblema" 
 														 style="FONT-SIZE: 10px; width: 240px">
 					        							
 					        							<p:column  style="width:150px">
@@ -317,11 +510,11 @@
 					        			<h:panelGrid>
 						        			<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarExamenAuxiliar()}" update=":dlgDetExamenAuxiliar" 
 												 oncomplete="PF('dlgExameneAuxiliar').show();"></p:commandButton>
-											<p:dataTable id="dataExamenAuxiliar"  var="e" value="#{generaTicketMB.listaExamenAuxiliares}" rendered="#{generaTicketMB.editarExamenAuxiliar}" widgetVar="dtExamenAuxiliar"
+											<p:dataTable id="dataExamenAuxiliar"  var="e" value="#{generaTicketMB.listaExamenAuxiliares}"  widgetVar="dtExamenAuxiliar"
 												style="FONT-SIZE: 10px; width: 240px">
 												
 												<p:column  style="width:150px">
-					        						#{e.resultado} : #{e.detalle}
+					        						Examen :#{e.producto.descripcion_prod_det} --->Resultado #{e.resultado} : #{e.detalle}
 					        					</p:column>
 					        							
 					        					<p:column  style="width:40px" >
@@ -341,11 +534,11 @@
 					        			<h:panelGrid>
 						        			<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarReceta()}" update=":dlgDetReceta" 
 												 oncomplete="PF('dlgReceta').show();"></p:commandButton>
-											<p:dataTable id="dataReceta"  var="r" value="#{generaTicketMB.listaRecetas}" rendered="#{generaTicketMB.editarReceta}" widgetVar="dtReceta"
+											<p:dataTable id="dataReceta"  var="r" value="#{generaTicketMB.listaRecetas}"  widgetVar="dtReceta"
 												style="FONT-SIZE: 10px; width: 240px">
 												
 												<p:column  style="width:150px">
-					        						#{r.medicamento}
+					        					  Medicamento: #{r.medicamento} -  Cantidad:#{r.cantidad} - Duracion:#{r.duracion}
 					        					</p:column>
 					        							
 					        					<p:column  style="width:40px" >
@@ -382,10 +575,14 @@
 					        </h:panelGrid>
 					        	
 							<br/> 
-							<p:commandButton value="Guardar Consulta" actionListener="#{generaTicketMB.guardarConsultaMedica()}"
-								update=":formConsultaMedica "  icon="icon-disk" />
-							
-							<p:commandButton value="Cancelar" type="button" onclick="PF('dlgConsultaMedica').hide()" icon="icon-cancel" />
+							<p:panelGrid>
+								<p:commandButton value="Guardar Consulta" actionListener="#{generaTicketMB.guardarConsultaMedica()}" onclick="PF('dlgConsultaMedica').hide()"
+									update=":formConsultaMedica "  icon="icon-disk" rendered="#{generaTicketMB.editarConsulta eq 'FALSE'}"/>
+								<p:commandButton value="Actualizar Consulta" actionListener="#{generaTicketMB.actualizarConsultaMedica()}" onclick="PF('dlgConsultaMedica').hide()"
+									update=":formConsultaMedica "  icon="icon-disk" rendered="#{generaTicketMB.editarConsulta eq 'TRUE'}" />
+								
+								<p:commandButton value="Cancelar" type="button" onclick="PF('dlgConsultaMedica').hide()" icon="icon-cancel" />
+							</p:panelGrid>
 					</h:form>	
 			</p:dialog>
 			
@@ -478,7 +675,23 @@
 					
 					<h:form>
 					
-						<h:panelGrid>
+						<h:panelGrid columns="2">
+						
+							#{"Tipo Servicio: "}
+								<p:selectOneMenu id="cmbTipoEX" value="#{generaTicketMB.id_tipo_servicio_EX}" style="width:200px;" >
+									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItems value="#{generaTicketMB.listTipoServicios}" var="p" 
+									itemLabel="#{p.descripcion_tipo}" itemValue="#{p.id_tipo_servicio}" />
+									<p:ajax listener="#{generaTicketMB.cargarServiciosEX()}" update="cmbServicioEX"></p:ajax>
+								</p:selectOneMenu>	
+								
+								#{"Servicio: "}
+								<p:selectOneMenu id="cmbServicioEX" value="#{generaTicketMB.id_producto_EX}" style="width:200px;">
+									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItems value="#{generaTicketMB.listProductos}" var="p" 
+									itemLabel="#{p.descripcion_prod_det}" itemValue="#{p.id_producto}" />
+									<p:ajax event="change" listener="#{generaTicketMB.cargaProductoEX()}"></p:ajax>
+								</p:selectOneMenu>
 						
 							#{"Resultado: "}
 							<p:inputText id="resultado" value="#{generaTicketMB.examenAuxiliar.resultado}">

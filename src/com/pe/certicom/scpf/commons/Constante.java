@@ -66,6 +66,10 @@ public class Constante {
 	public static final Integer  COD_TIPO_SERVICIO_CONTROL = 6;
 	public static final Integer  COD_TIPO_SERVICIO_HOSPITALIZACION = 7;
 	
+	public static final String  TICKET_ESTADO_PENDIENTE = "PENDIENTE";
+	public static final String  TICKET_ESTADO_TERMINADO = "TERMINADO";
+	
+	
 	/*CODIGOS DE PERFIL*/
 	public static final Integer  PERFIL_COD_GERENTE_PROYECTO = 1;
 	public static final Integer  PERFIL_COD_SUPERVISOR = 44 ;

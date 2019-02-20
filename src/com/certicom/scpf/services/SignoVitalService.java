@@ -40,4 +40,16 @@ public class SignoVitalService implements SignoVitalMapper{
 		return signoVitalMapper.cantidadXConsultaMedica(codigoConsultaMedica);
 	}
 
+	@Override
+	public SignoVital findByConsulta(Integer id_consulta_medica) {
+		// TODO Auto-generated method stub
+		return signoVitalMapper.findByConsulta(id_consulta_medica);
+	}
+
+	@Override
+	public void eliminarSignosByConsulta(Integer id_consulta_medica) {
+		// TODO Auto-generated method stub
+		this.signoVitalMapper.eliminarSignosByConsulta(id_consulta_medica);
+	}
+
 }

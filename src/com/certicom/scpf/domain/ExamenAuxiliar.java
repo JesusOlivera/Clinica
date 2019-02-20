@@ -13,6 +13,17 @@ public class ExamenAuxiliar {
 	private String  resultado;
 	private String  detalle;
 	
+	private String desServicio;
+	private Producto producto;
+	private Boolean ticket_generado;
+	private TipoServicio tipoServicio;
+	private Medico medico;
+	private Especialidad especialidad;
+	private Paciente paciente;
+	private ConsultaMedica consultaMedica;
+	private Cliente cliente;
+	
+	
 	public Integer getId_examen_auxiliar() {
 		return id_examen_auxiliar;
 	}
@@ -91,6 +102,78 @@ public class ExamenAuxiliar {
 	
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
+	}
+
+	public String getDesServicio() {
+		return desServicio;
+	}
+
+	public void setDesServicio(String desServicio) {
+		this.desServicio = desServicio;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	public Boolean getTicket_generado() {
+		return ticket_generado;
+	}
+
+	public void setTicket_generado(Boolean ticket_generado) {
+		this.ticket_generado = ticket_generado;
+	}
+
+	public TipoServicio getTipoServicio() {
+		return tipoServicio;
+	}
+
+	public void setTipoServicio(TipoServicio tipoServicio) {
+		this.tipoServicio = tipoServicio;
+	}
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+	public Especialidad getEspecialidad() {
+		return especialidad;
+	}
+
+	public void setEspecialidad(Especialidad especialidad) {
+		this.especialidad = especialidad;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	public ConsultaMedica getConsultaMedica() {
+		return consultaMedica;
+	}
+
+	public void setConsultaMedica(ConsultaMedica consultaMedica) {
+		this.consultaMedica = consultaMedica;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}	
 	
 }

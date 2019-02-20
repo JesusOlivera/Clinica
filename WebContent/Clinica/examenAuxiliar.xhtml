@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+		<p:panel>
+			
+			<h:form>
+				<p:breadCrumb>  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Configuracion" url="#" />
+    				<p:menuitem value="Gestion de Examenes Auxiliares" url="examenesAuxiliares" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+
+			
+				<!-- listado de Examenes -->
+			<h:form id="formLista">
+				<p:dataTable id="dataExamen" var="p" value="#{examenAuxiliarMB.listaExamenAuxiliares}" widgetVar="dtExamen" 
+					emptyMessage="No hay Examenes Disponibles." rowIndexVar="nro" 
+					 style="FONT-SIZE: 10px; ">
+					<f:facet name="header">Lista Examenes Auxiliares</f:facet>
+										
+					<p:column headerText="Orden" width="25" style="width:3%" >
+						#{nro+1}
+					</p:column>	
+					
+					<p:column style="width:50px" headerText="Numero Documento">
+						<h:outputText value="#{p.paciente.numero_documento}"/>
+					</p:column>
+									
+					<p:column style="width:150px" headerText="Paciente">
+						<h:outputText value="#{p.paciente.nombre}"/>
+					</p:column>
+					
+					<p:column style="width:200px" headerText="Examen">
+						<h:outputText value="#{p.producto.descripcion_prod_det}"/>
+					</p:column>
+					
+					<p:column style="width:150px" headerText="Medico">
+						<h:outputText value="#{p.medico.nombre_medico}"/>
+					</p:column>
+					
+					<p:column style="width:50px" headerText="Ticket Generado?">
+						<h:outputText value="#{p.ticket_generado eq 'TRUE' ? 'TICKET GENERADO':'SIN TICKET'}"/>
+					</p:column>
+					
+					<p:column style="width:200px" headerText="Resultado">
+						<h:outputText value="#{p.resultado}"/>
+					</p:column>
+					
+					
+			        
+			        <p:column headerText="Editar" style="width:15%;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevoExamen" actionListener="#{examenAuxiliarMB.editarExamen(p)}"
+										 oncomplete="PF('dlgNuevoExamen').show();" icon="icon-edit">
+						</p:commandButton> 								
+					</p:column>
+					
+					  <p:column headerText="Ticket" style="width:15%;text-align: center">
+					
+						<p:commandButton title="Generar Ticket"  update=":dlgDetNuevoTicket" actionListener="#{examenAuxiliarMB.nuevoTicket(p)}"
+										 oncomplete="PF('dlgNuevoTicket').show();" icon="icon-edit">
+						</p:commandButton> 								
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- #############    TABLA MAESTRA      ################ -->
+			
+			<!-- dialogo  -->
+			
+			<p:dialog header="Registrar Ticket" widgetVar="dlgNuevoTicket" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoTicket" modal="true">
+					
+					<h:form id="formTicket">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+							<h:panelGrid columns="2">
+								#{"Tipo Servicio: "}
+								<h:outputLabel value="#{examenAuxiliarMB.examenAuxiliar.tipoServicio.descripcion_tipo}">
+								</h:outputLabel>
+								
+								#{"Servicio: "}
+								<h:outputLabel value="#{examenAuxiliarMB.examenAuxiliar.producto.descripcion_prod_det}">
+								</h:outputLabel>
+								
+								#{"Número de Ticket: "}
+								<h:outputLabel value="#{examenAuxiliarMB.ticketSelected.nro_ticket}">
+								</h:outputLabel>
+								
+								#{"DNI"}
+								<h:outputLabel value="#{examenAuxiliarMB.examenAuxiliar.paciente.numero_documento}">
+								</h:outputLabel>
+						        
+						        #{"Nombres"}
+								<h:outputLabel style="width:200px;" id="nombre" value="#{examenAuxiliarMB.examenAuxiliar.paciente.nombre}" disabled="true">						   
+						        </h:outputLabel>
+					        </h:panelGrid>
+					        
+					        <h:panelGrid columns="2">
+					        	<h:panelGrid columns="2" >
+					        		<p:selectBooleanCheckbox value="#{examenAuxiliarMB.ticketSelected.flag_externo}" itemLabel="Es externo">
+						            	<p:ajax event="change"/>
+						        	</p:selectBooleanCheckbox>
+						        	<p:spacer></p:spacer>
+							        #{"Doctor: "}
+									<p:selectOneMenu id="cmbMedico" value="#{examenAuxiliarMB.id_medico_EX}" style="width:200px;">
+										<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+										<f:selectItems value="#{examenAuxiliarMB.listaMedicos}" var="p" 
+										itemLabel="#{p.nombre_medico}" itemValue="#{p.id_medico}" />
+										<p:ajax event="change" listener="#{examenAuxiliarMB.cargaEspecialidad}"></p:ajax>
+									</p:selectOneMenu>
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+								
+									#{"Fecha: "}
+									<p:calendar style="width:200px" readonlyInput="true" value="#{examenAuxiliarMB.ticketSelected.fecha_ticket}" pattern="dd/MM/yyyy" locale="es" 
+											  navigator="true"  required="true" requiredMessage="Seleccione una fecha" disabled="true">
+									</p:calendar>					
+									
+									#{"Hora:"} 
+									<p:calendar style="width:200px" readonlyInput="true"  value="#{examenAuxiliarMB.ticketSelected.hora_ticket}" pattern="hh:mm:ss" timeOnly="true" locale="es" disabled="true"
+										navigator="true"  required="true" requiredMessage="Seleccione una hora" >								  
+									</p:calendar>
+									
+									#{"Precio"}
+									<h:outputLabel value="#{examenAuxiliarMB.examenAuxiliar.producto.valor_unitario_prod_det}" id="precio"></h:outputLabel>
+								</h:panelGrid>
+							</h:panelGrid>
+						
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{examenAuxiliarMB.guardarTicket()}"
+						update=":formLista msgNuevo" oncomplete="PF('dlgNuevoTicket').hide()" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoTicket').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+			<p:dialog header="Agregar Resultado" widgetVar="dlgNuevoExamen" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevoExamen" modal="true">
+					
+					<h:form id="formExamen">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">
+											
+						#{"Resultado: "}
+						<p:inputText id="resultado" value="#{examenAuxiliarMB.examenAuxiliar.resultado}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+						
+						#{"Detalle: "}
+						<p:inputText id="detalle" value="#{examenAuxiliarMB.examenAuxiliar.detalle}">
+						    <p:ajax event="blur"/>
+						</p:inputText>
+								
+							
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{examenAuxiliarMB.actualizarExamen()}"
+						update=":formLista msgNuevo" oncomplete="PF('dlgNuevoExamen').hide();" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoExamen').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+
+
+		</p:panel>
+		
+		<script>
+			
+		function validarExamen(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevoExamen').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevoExamen').hide();
+				console.log("cerro")
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

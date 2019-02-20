@@ -23,6 +23,9 @@ public class Ticket {
 	private Medico medico;
 	private Producto producto;
 	private TipoServicio tipoServicio;
+	private Cliente cliente;
+	
+	private Integer id_examen;
 	
 	/* transitorios */
 	private String desServicio;
@@ -204,6 +207,22 @@ public class Ticket {
 
 	public void setTipoServicio(TipoServicio tipoServicio) {
 		this.tipoServicio = tipoServicio;
+	}
+
+	public Integer getId_examen() {
+		return id_examen;
+	}
+
+	public void setId_examen(Integer id_examen) {
+		this.id_examen = id_examen;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}	
 	
 }

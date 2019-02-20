@@ -164,5 +164,10 @@
 		<view-id value="/faces/Clinica/control.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="examenAuxiliar"> 
+		<pattern value="/examenAuxiliar" />
+		<view-id value="/faces/Clinica/examenAuxiliar.xhtml" />
+	</url-mapping>
+	
 
 </pretty-config>

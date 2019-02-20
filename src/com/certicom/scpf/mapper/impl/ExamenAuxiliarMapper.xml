@@ -17,9 +17,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="id_cliente" property="id_cliente"/>
 	<result column="resultado" property="resultado"/>
 	<result column="detalle" property="detalle"/>
+	<result column="ticket_generado" property="ticket_generado"/>
 	
+	<association property="producto" column="id_producto" select="selectProducto"/>
+	<association property="tipoServicio" column="id_tipo_servicio" select="selectTipoServicio"/>
+	<association property="medico" column="id_medico" select="selectMedico"/>
+	<association property="especialidad" column="id_especialidad" select="selectEspecialidad"/>
+	<association property="paciente" column="id_paciente" select="selectPaciente"/>
+	<association property="consultaMedica" column="id_consulta_medica" select="selectConsultaMedica"/>
+	<association property="cliente" column="id_cliente" select="selectCliente"/>
 
 </resultMap>
 
+	<select id="selectProducto" parameterType="int" resultType="com.certicom.scpf.domain.Producto">
+		SELECT * FROM t_producto WHERE id_producto=#{id_producto}
+	</select>
+	
+	<select id="selectTipoServicio" parameterType="int" resultType="com.certicom.scpf.domain.TipoServicio">
+		SELECT * FROM t_tipo_servicio WHERE id_tipo_servicio=#{id_tipo_servicio}
+	</select>
+	
+	<select id="selectMedico" parameterType="int" resultType="com.certicom.scpf.domain.Medico">
+		SELECT * FROM t_medico WHERE id_medico=#{id_medico}
+	</select>
+	
+	<select id="selectEspecialidad" parameterType="int" resultType="com.certicom.scpf.domain.Especialidad">
+		SELECT * FROM t_especialidad WHERE id_especialidad=#{id_especialidad}
+	</select>
+	
+	<select id="selectPaciente" parameterType="int" resultType="com.certicom.scpf.domain.Paciente">
+		SELECT * FROM t_paciente WHERE id_paciente=#{id_paciente}
+	</select>
+	
+	<select id="selectConsultaMedica" parameterType="int" resultType="com.certicom.scpf.domain.ConsultaMedica">
+		SELECT * FROM t_consulta_medica WHERE id_consulta_medica=#{id_consulta_medica}
+	</select>
+	
+	<select id="selectCliente" parameterType="int" resultType="com.certicom.scpf.domain.Cliente">
+		SELECT * FROM t_cliente WHERE id_cliente=#{id_cliente}
+	</select>
+	
+
+	<select id="findByConsulta" resultMap="examenAuxiliarResult" parameterType="int" >
+		select pro.*,ex.*  from t_examen_auxiliar ex inner join t_producto pro on pro.id_producto=ex.id_producto
+		where id_consulta_medica=#{id_consulta_medica}
+		order by id_examen_auxiliar asc
+	</select>
+
+	<select id="findAll" resultMap="examenAuxiliarResult"  >
+		select ex.*, con.*,pro.*,pac.* from t_examen_auxiliar ex 
+		inner join t_consulta_medica con on con.id_consulta_medica=ex.id_consulta_medica
+		inner join t_producto pro on pro.id_producto=ex.id_producto
+		inner join t_paciente pac on pac.id_paciente=ex.id_paciente
+		order by ex.id_examen_auxiliar asc
+	</select>
+	
 		
 </mapper>	

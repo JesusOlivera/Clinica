@@ -21,7 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="flag_externo" property="flag_externo"/>
 	<result column="nro_ticket" property="nro_ticket"/>
 	<result column="tipo_control" property="tipo_control"/>
+	<result column="id_examen" property="id_examen"/>
 	
+	
+	<association property="cliente" column="id_cliente" select="selectCliente"/>
 	<association property="paciente" column="id_paciente" select="selectPaciente"/>
 	<association property="medico" column="id_medico" select="selectMedico"/>
 	<association property="producto" column="id_producto" select="selectProducto"/>
@@ -29,6 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 </resultMap>
+
+	<select id="selectCliente" parameterType="int" resultType="com.certicom.scpf.domain.Cliente">
+		SELECT * FROM t_cliente WHERE id_cliente=#{id_cliente}
+	</select>
 
 	<select id="selectPaciente" parameterType="int" resultType="com.certicom.scpf.domain.Paciente">
 		SELECT * FROM t_paciente WHERE id_paciente=#{id_paciente}

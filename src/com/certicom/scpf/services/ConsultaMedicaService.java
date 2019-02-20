@@ -2,8 +2,16 @@ package com.certicom.scpf.services;
 
 import java.util.List;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import com.certicom.scpf.domain.ComprobanteDetalle;
 import com.certicom.scpf.domain.ConsultaMedica;
+import com.certicom.scpf.domain.ExamenAuxiliar;
+import com.certicom.scpf.mapper.ComprobanteDetalleMapper;
 import com.certicom.scpf.mapper.ConsultaMedicaMapper;
+import com.certicom.scpf.mapper.ExamenAuxiliarMapper;
 import com.pe.certicom.scpf.commons.ServiceFinder;
 
 public class ConsultaMedicaService implements ConsultaMedicaMapper{
@@ -34,5 +42,12 @@ public class ConsultaMedicaService implements ConsultaMedicaMapper{
 		consultaMedicaMapper.eliminarConsultaMedica(id_consulta_medica);
 	}
 
+	@Override
+	public ConsultaMedica findByTicket(Integer id_ticket) {
+		// TODO Auto-generated method stub
+		return consultaMedicaMapper.findByTicket(id_ticket);
+	}
+	
+	
 	
 }
