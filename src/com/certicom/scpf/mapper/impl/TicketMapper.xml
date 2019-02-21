@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="nro_ticket" property="nro_ticket"/>
 	<result column="tipo_control" property="tipo_control"/>
 	<result column="id_examen" property="id_examen"/>
+	<result column="tipo_ticket" property="tipo_ticket"/>
 	
 	
 	<association property="cliente" column="id_cliente" select="selectCliente"/>

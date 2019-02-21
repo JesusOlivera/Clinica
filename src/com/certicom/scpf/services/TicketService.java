@@ -40,5 +40,17 @@ public class TicketService implements TicketMapper{
 		ticketMapper.eliminarTicket(id_ticket);
 	}
 
+	@Override
+	public Integer obtenerMaxCF() {
+		// TODO Auto-generated method stub
+		return ticketMapper.obtenerMaxCF();
+	}
+
+	@Override
+	public Integer obtenerMaxEX() {
+		// TODO Auto-generated method stub
+		return ticketMapper.obtenerMaxEX();
+	}
+
 	
 }

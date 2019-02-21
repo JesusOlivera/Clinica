@@ -333,7 +333,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	public void nuevoTicket(){
 		
 		Integer cifras=6;		
-		Integer max = this.ticketService.obtenerMax();
+		Integer max = this.ticketService.obtenerMaxCF();
 		limpiarDatos();
 		this.ticketSelected.setNro_ticket(generarNroTicket(max, cifras));
 		this.ticketSelected.setFecha_ticket(new Date());
@@ -437,6 +437,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 		try {
 			this.ticketSelected.setEstado(Constante.TICKET_ESTADO_PENDIENTE);
+			this.ticketSelected.setTipo_ticket("CF");
 			Producto producto=this.productoService.findById(this.ticketSelected.getId_producto());
 			if(producto!=null){					
 				this.ticketSelected.setEncolado(producto.getGenera_cola());

@@ -18,6 +18,7 @@ public class Ticket {
 	private Boolean encolado;
 	private Boolean flag_externo;
 	private String nro_ticket;
+	private String tipo_ticket;
 	
 	private Paciente paciente;
 	private Medico medico;
@@ -223,6 +224,14 @@ public class Ticket {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public String getTipo_ticket() {
+		return tipo_ticket;
+	}
+
+	public void setTipo_ticket(String tipo_ticket) {
+		this.tipo_ticket = tipo_ticket;
 	}	
 	
 }

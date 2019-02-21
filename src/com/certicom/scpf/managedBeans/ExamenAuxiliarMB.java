@@ -85,7 +85,7 @@ public class ExamenAuxiliarMB extends GenericBeans implements Serializable{
 		
 		if(!examenAuxiliar.getTicket_generado()){
 			Integer cifras=6;		
-			Integer max = this.ticketService.obtenerMax();	
+			Integer max = this.ticketService.obtenerMaxEX();	
 			this.examenAuxiliar=examenAuxiliar;
 			this.ticketSelected = new Ticket();
 			this.ticketSelected.setNro_ticket(generarNroTicket(max, cifras));
@@ -97,6 +97,7 @@ public class ExamenAuxiliarMB extends GenericBeans implements Serializable{
 			this.ticketSelected.setId_tipo_servicio(this.examenAuxiliar.getId_tipo_servicio());
 			this.ticketSelected.setEstado(Constante.TICKET_ESTADO_PENDIENTE);
 			this.ticketSelected.setId_examen(this.examenAuxiliar.getId_examen_auxiliar());
+			this.ticketSelected.setTipo_ticket("EX");
 			try {
 				Producto producto=this.productoService.findById(this.examenAuxiliar.getId_producto());
 				if(producto!=null){					

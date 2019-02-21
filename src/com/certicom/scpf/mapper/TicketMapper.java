@@ -17,14 +17,20 @@ public interface TicketMapper {
 	
 	@Select("select count(*) from t_ticket")
 	Integer obtenerMax();
+	
+	@Select("select count(*) from t_ticket where tipo_ticket = 'CF'")
+	Integer obtenerMaxCF();
+	
+	@Select("select count(*) from t_ticket where tipo_ticket = 'EX'")
+	Integer obtenerMaxEX();
 
-	@Update("update t_ticket set id_producto = #{id_producto}, id_tipo_servicio = #{id_tipo_servicio}, id_medico = #{id_medico}, id_especialidad = #{id_especialidad}, id_paciente = #{id_paciente}, id_cliente = #{id_cliente}, fecha_ticket = #{fecha_ticket}, hora_ticket = #{hora_ticket}, estado = #{estado}, integrado_sunat = #{integrado_sunat}, encolado = #{encolado}, flag_externo = #{flag_externo}, nro_ticket = #{nro_ticket} "			
+	@Update("update t_ticket set id_producto = #{id_producto}, id_tipo_servicio = #{id_tipo_servicio}, id_medico = #{id_medico}, id_especialidad = #{id_especialidad}, id_paciente = #{id_paciente}, id_cliente = #{id_cliente}, fecha_ticket = #{fecha_ticket}, hora_ticket = #{hora_ticket}, estado = #{estado}, integrado_sunat = #{integrado_sunat}, encolado = #{encolado}, flag_externo = #{flag_externo}, nro_ticket = #{nro_ticket}, tipo_ticket = #{tipo_ticket} "			
 			+ "where id_ticket= #{id_ticket}")
 	@Options(flushCache=true,useCache=true)
 	void actualizarTicket(Ticket ticketSelec);
 
-	@Insert("insert into t_ticket (id_producto,id_tipo_servicio, id_medico, id_especialidad, id_paciente, id_cliente, fecha_ticket, hora_ticket, estado, integrado_sunat, encolado, flag_externo, nro_ticket ) "
-			+ " values ( #{id_producto},#{id_tipo_servicio},#{id_medico},#{id_especialidad},#{id_paciente},#{id_cliente},#{fecha_ticket},#{hora_ticket},#{estado},#{integrado_sunat},#{encolado},#{flag_externo},#{nro_ticket})")
+	@Insert("insert into t_ticket (id_producto,id_tipo_servicio, id_medico, id_especialidad, id_paciente, id_cliente, fecha_ticket, hora_ticket, estado, integrado_sunat, encolado, flag_externo, nro_ticket, tipo_ticket ) "
+			+ " values ( #{id_producto},#{id_tipo_servicio},#{id_medico},#{id_especialidad},#{id_paciente},#{id_cliente},#{fecha_ticket},#{hora_ticket},#{estado},#{integrado_sunat},#{encolado},#{flag_externo},#{nro_ticket},#{tipo_ticket})")
 	void crearTicket(Ticket ticketSelec);
 
 	@Delete("delete from t_ticket  where id_ticket = #{id_ticket}")
