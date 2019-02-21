@@ -269,7 +269,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	}
 	
 	public void guardarConsultaMedica(){
-		
+		RequestContext context = RequestContext.getCurrentInstance();  
 		this.consultaMedica.setListado_problemas(getProblemas(this.listaProblemas));		
 		this.consultaMedicaService.crearConsultaMedica(this.consultaMedica);
 		this.consultaMedica=this.consultaMedicaService.findByTicket(this.consultaMedica.getId_ticket());
@@ -281,10 +281,14 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.listaExamenAuxiliares=new ArrayList<>();
 			this.listaRecetas= new ArrayList<>(); 
 			this.listaProblemas= new ArrayList<>(); 
+			
+			FacesUtils.showFacesMessage("se ha generado la consulta médica", 3);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		context.update("msgGeneral");
 	}
 	
 	public String getProblemas(List<String> lista){
@@ -350,7 +354,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	
 	public void cargarServiciosEX(){
 		try {
-			this.listProductos = this.productoService.findByIdTipoServicio(this.id_tipo_servicio_EX);
+			this.listProductos = this.productoService.findByIdTipoServicioEX(this.id_tipo_servicio_EX);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

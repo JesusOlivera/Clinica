@@ -26,6 +26,9 @@ public interface ProductoMapper {
 	@Select("select e.* from t_producto e where e.id_tipo_servicio = #{p_id_tipo_servicio} and e.es_servicio='TRUE'")
 	public List<Producto> findByIdTipoServicio(@Param("p_id_tipo_servicio") Integer id_tipo_servicio) throws Exception;
 	
+	@Select("select e.* from t_producto e where e.id_tipo_servicio = #{p_id_tipo_servicio} and e.es_servicio='TRUE' and examen_auxiliar = 'TRUE'")
+	public List<Producto> findByIdTipoServicioEX(@Param("p_id_tipo_servicio") Integer id_tipo_servicio) throws Exception;
+	
 //	@Select("select e.* , (select d.descripcion_largo from t_tabla_tablas_detalle d where d.codigo_catalogo = e.unidad_medida_det and d.id_maestra = 3) desUnidadMedida from t_producto e  order by e.id_producto asc")
 	public List<Producto> findAll() throws Exception;
 	

@@ -47,6 +47,13 @@ public class ProductoService implements ProductoMapper{
 		return productoMapper.findByIdTipoServicio(id_tipo_servicio);
 	}
 
+	@Override
+	public List<Producto> findByIdTipoServicioEX(Integer id_tipo_servicio)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return productoMapper.findByIdTipoServicioEX(id_tipo_servicio);
+	}
+
 	
 	
 }

@@ -323,7 +323,7 @@
 						        </p:inputText>
 						        
 						        #{"Nombres"}
-								<p:inputText id="nombre" value="#{generaTicketMB.pacienteParam.nombre}">
+								<p:inputText id="nombre" value="#{generaTicketMB.pacienteParam.nombre}" style="width:225px">
 						            <p:ajax event="blur" update="dni nombre" />
 						        </p:inputText>
 					        </h:panelGrid>
@@ -576,12 +576,14 @@
 					        	
 							<br/> 
 							<p:panelGrid>
-								<p:commandButton value="Guardar Consulta" actionListener="#{generaTicketMB.guardarConsultaMedica()}" onclick="PF('dlgConsultaMedica').hide()"
-									update=":formConsultaMedica "  icon="icon-disk" rendered="#{generaTicketMB.editarConsulta eq 'FALSE'}"/>
-								<p:commandButton value="Actualizar Consulta" actionListener="#{generaTicketMB.actualizarConsultaMedica()}" onclick="PF('dlgConsultaMedica').hide()"
-									update=":formConsultaMedica "  icon="icon-disk" rendered="#{generaTicketMB.editarConsulta eq 'TRUE'}" />
-								
-								<p:commandButton value="Cancelar" type="button" onclick="PF('dlgConsultaMedica').hide()" icon="icon-cancel" />
+								<h:panelGroup style="display:block; text-align:center">
+									<p:commandButton value="Guardar Consulta" actionListener="#{generaTicketMB.guardarConsultaMedica()}" onclick="PF('dlgConsultaMedica').hide()"
+										update=":formConsultaMedica "  icon="icon-disk" rendered="#{generaTicketMB.editarConsulta eq 'FALSE'}"/>
+									<p:commandButton value="Actualizar Consulta" actionListener="#{generaTicketMB.actualizarConsultaMedica()}" onclick="PF('dlgConsultaMedica').hide()"
+										update=":formConsultaMedica "  icon="icon-disk" rendered="#{generaTicketMB.editarConsulta eq 'TRUE'}" />
+									
+									<p:commandButton value="Cancelar" type="button" onclick="PF('dlgConsultaMedica').hide()" icon="icon-cancel" />
+								</h:panelGroup>
 							</p:panelGrid>
 					</h:form>	
 			</p:dialog>
@@ -692,16 +694,6 @@
 									itemLabel="#{p.descripcion_prod_det}" itemValue="#{p.id_producto}" />
 									<p:ajax event="change" listener="#{generaTicketMB.cargaProductoEX()}"></p:ajax>
 								</p:selectOneMenu>
-						
-							#{"Resultado: "}
-							<p:inputText id="resultado" value="#{generaTicketMB.examenAuxiliar.resultado}">
-							    <p:ajax event="blur"/>
-							</p:inputText>
-							
-							#{"Detalle: "}
-							<p:inputText id="detalle" value="#{generaTicketMB.examenAuxiliar.detalle}">
-							    <p:ajax event="blur"/>
-							</p:inputText>
 						
 						</h:panelGrid>
 					
