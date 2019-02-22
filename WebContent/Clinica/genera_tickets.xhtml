@@ -133,9 +133,16 @@
 					</h:panelGrid>
 					<h:panelGrid id="idValoresCabecera">
 						<h:panelGrid columns="3">
-							
+								
+								<p:selectOneRadio id="cp" value="#{generaTicketMB.cp}" unselectable="true">
+						            <f:selectItem itemLabel="CLIENTE" itemValue="CLIENTE" />
+						            <f:selectItem itemLabel="PACIENTE" itemValue="PACIENTE" />
+						            <p:ajax event="change" listener="#{generaTicketMB.cambioPacienteCliente()}" update=":formPN"></p:ajax>
+						        </p:selectOneRadio>	
+						        <p:spacer></p:spacer>						
+								<p:spacer></p:spacer>
 								#{"Cliente:"}
-								<h:outputLabel id="clientePojo" value="#{generaTicketMB.comprobanteSelec.cliente.nombre_cab}" 
+								<h:outputLabel id="clientePojo" value="#{generaTicketMB.nombrePacienteCliente}" 
 												disabled="#{generaTicketMB.ingresarCliente}">
 								</h:outputLabel>
 		                        
@@ -570,8 +577,6 @@
 						            <f:selectItem itemLabel="NINGUNO" itemValue="NINGUNO" />
 						            <p:ajax event="change"></p:ajax>
 						        </p:selectOneRadio>
-						        <h:panelGrid>
-						        </h:panelGrid>
 					        </h:panelGrid>
 					        	
 							<br/> 

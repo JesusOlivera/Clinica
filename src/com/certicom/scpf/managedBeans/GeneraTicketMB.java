@@ -86,6 +86,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private Paciente pacienteParam;
 	private Producto producto;
 	private String problema;
+	private String cp;
+	private String nombrePacienteCliente;
 	private ConsultaMedica consultaMedica;
 	private ExamenAuxiliar examenAuxiliar;
 	private Receta receta;
@@ -205,9 +207,17 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+				
 		this.listaComprobanteDetalle.add(comprobanteDetalle);
+	}
+	
+	public void cambioPacienteCliente(){
+		System.out.println("CP: "+this.cp);
+		if(this.cp.equals("CLIENTE")){
+			this.nombrePacienteCliente = this.ticketSelected.getCliente().getNombre_cab();
+		}else{
+			this.nombrePacienteCliente = this.ticketSelected.getPaciente().getNombre();
+		}
 	}
 	
 	public void mostrarDatosCliente(){
@@ -670,7 +680,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.comprobanteSelec.setEstado_comunicacion_baja(Boolean.FALSE);
 			this.comprobanteSelec.setCorrelativo(this.comprobanteService.getCorrelativoComprobante(this.comprobanteSelec.getTipo_comprobante()));
 			this.comprobanteSelec.setEstado_sunat(Constante.ESTADO_PENDIENTE);
+			this.comprobanteSelec.setId_ticket(this.ticketSelected.getId_ticket());
 			this.comprobanteService.crearComprobanteSec(this.comprobanteSelec);
+			
 			int id = this.comprobanteService.getSecIdComprobante();
 			System.out.println("ID: "+id);
 			
@@ -1407,6 +1419,22 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setGenerarComprobante(boolean generarComprobante) {
 		this.generarComprobante = generarComprobante;
+	}
+
+	public String getCp() {
+		return cp;
+	}
+
+	public void setCp(String cp) {
+		this.cp = cp;
+	}
+
+	public String getNombrePacienteCliente() {
+		return nombrePacienteCliente;
+	}
+
+	public void setNombrePacienteCliente(String nombrePacienteCliente) {
+		this.nombrePacienteCliente = nombrePacienteCliente;
 	}	
 
 }

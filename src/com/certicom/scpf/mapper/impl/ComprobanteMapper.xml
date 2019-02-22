@@ -34,6 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="tipo_docu_iden_cab" property="tipo_docu_iden_cab"/>
 	<result column="estado_comunicacion_baja" property="estado_comunicacion_baja"/>
 	<result column="correlativo" property="correlativo"/>
+	<result column="tipo_moneda_cab" property="tipo_moneda_cab"/>
+	<result column="version_ubl" property="version_ubl"/>
+	<result column="id_vendedor" property="id_vendedor"/>
+	<result column="id_ticket" property="id_ticket"/>
 	
 <!-- 	MODIFICACION JCTV -->
 	<result column="estado_comunicacion_baja" property="estado_comunicacion_baja"/>

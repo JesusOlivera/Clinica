@@ -43,6 +43,7 @@ public class Comprobante {
 	private String estado_respuesta_sunat;
 	private String descripcion_respuesta_sunat;
 	private Emisor emisor;
+	private Integer id_ticket;
 	
 	private Integer id_vendedor; /*Vega.com*/
 	private Vendedor vendedor; /*Vega.com*/
@@ -364,6 +365,14 @@ public class Comprobante {
 
 	public void setModoPago(ModoPago modoPago) {
 		this.modoPago = modoPago;
+	}
+
+	public Integer getId_ticket() {
+		return id_ticket;
+	}
+
+	public void setId_ticket(Integer id_ticket) {
+		this.id_ticket = id_ticket;
 	}	
 	
 	

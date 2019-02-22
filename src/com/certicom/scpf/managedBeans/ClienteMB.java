@@ -17,9 +17,11 @@ import org.primefaces.event.ToggleEvent;
 import com.certicom.scpf.domain.Cliente;
 import com.certicom.scpf.domain.Log;
 import com.certicom.scpf.domain.Menu;
+import com.certicom.scpf.domain.Paciente;
 import com.certicom.scpf.domain.TablaTablasDetalle;
 import com.certicom.scpf.services.ClienteService;
 import com.certicom.scpf.services.MenuServices;
+import com.certicom.scpf.services.PacienteService;
 import com.certicom.scpf.services.TablaTablasDetalleService;
 import com.pe.certicom.scpf.commons.Constante;
 import com.pe.certicom.scpf.commons.FacesUtils;
@@ -30,10 +32,12 @@ import com.pe.certicom.scpf.commons.GenericBeans;
 public class ClienteMB extends GenericBeans implements Serializable{
 
 	private Cliente clienteSelec;
+	private Paciente paciente;
 	private List<Cliente> listaClientes;
 	private Boolean editarCliente;
 	private MenuServices menuServices;
 	private ClienteService clienteService;
+	private PacienteService pacienteService;
 	private TablaTablasDetalleService tablaTablasDetalleService;
 	private List<TablaTablasDetalle> listTablaTablasDetalles;
 	
@@ -47,9 +51,11 @@ public class ClienteMB extends GenericBeans implements Serializable{
 	public void inicia(){
 		
 		this.clienteSelec = new Cliente();
+		this.paciente = new Paciente();
 		this.clienteService = new ClienteService();
 		this.tablaTablasDetalleService = new TablaTablasDetalleService();
 		this.menuServices=new MenuServices();
+		this.pacienteService = new PacienteService();
 		
 		this.editarCliente = Boolean.FALSE;
 
@@ -83,7 +89,24 @@ public class ClienteMB extends GenericBeans implements Serializable{
 	             logmb.insertarLog(log);
 				FacesUtils.showFacesMessage("El cliente ha sido actualizado", 3);
 			}else{
+				
 				this.clienteService.crearCliente(this.clienteSelec);
+				
+				Cliente c = new Cliente();
+				c = this.clienteService.findByFiltroNroDni(this.clienteSelec.getNumero_docu_iden_cab());
+				if(this.clienteSelec.getTipo_docu_iden_cab().equals(1)){
+					this.paciente = new Paciente();
+					this.paciente.setId_cliente(c.getId_cliente());
+					this.paciente.setNumero_documento(c.getNumero_docu_iden_cab());
+					this.paciente.setId_tipo_documento(c.getTipo_docu_iden_cab());
+					this.paciente.setNombre(c.getNombre_cab());
+					this.paciente.setDireccion(c.getDireccion());
+					this.paciente.setTelefono(c.getTelefono());
+					this.paciente.setEmail(c.getEmail());
+					
+					this.pacienteService.crearPaciente(this.paciente);
+				}			
+				
 				 log.setAccion("INSERT");
 	             log.setDescripcion("Se inserta el tabla maestra : " + this.clienteSelec.getNombre_cab());
 	             logmb.insertarLog(log);
@@ -171,6 +194,14 @@ public class ClienteMB extends GenericBeans implements Serializable{
 	public void setListTablaTablasDetalles(
 			List<TablaTablasDetalle> listTablaTablasDetalles) {
 		this.listTablaTablasDetalles = listTablaTablasDetalles;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 	

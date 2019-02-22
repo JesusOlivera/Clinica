@@ -25,6 +25,9 @@ public interface ClienteMapper {
 	@Select("select e.* from t_cliente e where e.nombre_cab like #{s_cliente}")
 	public Cliente findByFiltro(@Param("s_cliente") String filtro) throws Exception;
 	
+	@Select("select e.* from t_cliente e where e.numero_docu_iden_cab = #{nrodoc_cliente} limit 1")
+	public Cliente findByFiltroNroDni(@Param("nrodoc_cliente") String filtro) throws Exception;
+	
 	@Select("select e.* , (select d.descripcion_largo from t_tabla_tablas_detalle d where d.id_maestra = 6 and d.codigo_catalogo = cast(e.tipo_docu_iden_cab as varchar) ) as desTipoDocumento from t_cliente e order by e.id_cliente asc")
 	public List<Cliente> findAll() throws Exception;
 	

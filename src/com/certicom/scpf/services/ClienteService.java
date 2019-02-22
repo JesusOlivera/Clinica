@@ -47,5 +47,11 @@ public class ClienteService implements ClienteMapper{
 		// TODO Auto-generated method stub
 		return clienteMapper.findByFiltro(filtro);
 	}
+
+	@Override
+	public Cliente findByFiltroNroDni(String filtro) throws Exception {
+		// TODO Auto-generated method stub
+		return clienteMapper.findByFiltroNroDni(filtro);
+	}
 	
 }
