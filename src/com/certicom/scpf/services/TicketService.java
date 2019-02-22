@@ -1,6 +1,7 @@
 package com.certicom.scpf.services;
 
 import java.util.List;
+import java.util.Map;
 
 import com.certicom.scpf.domain.Ticket;
 import com.certicom.scpf.mapper.TicketMapper;
@@ -50,6 +51,21 @@ public class TicketService implements TicketMapper{
 	public Integer obtenerMaxEX() {
 		// TODO Auto-generated method stub
 		return ticketMapper.obtenerMaxEX();
+	}
+
+	@Override
+	public List<Ticket> findAllPAGINATOR(Integer first, Integer pageSize,
+			Map<String, Object> filters, String sortField, String sortOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return ticketMapper.findAllPAGINATOR(first, pageSize, filters, sortField, sortOrder);
+	}
+
+	@Override
+	public Integer countTicketPAGINATOR(Map<String, Object> filters)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return ticketMapper.countTicketPAGINATOR(filters);
 	}
 
 	

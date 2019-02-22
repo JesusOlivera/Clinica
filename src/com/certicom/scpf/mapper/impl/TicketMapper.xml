@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM t_tipo_servicio WHERE id_tipo_servicio=#{id_tipo_servicio}
 	</select>
 	
-		<select id="findAll" resultMap="ticketResult">
+	<select id="findAll" resultMap="ticketResult">
 				select t.*, pa.nombre as desPaciente, pr.descripcion_prod_det as desServicio, m.nombre_medico as desMedico, 
 				tts.descripcion_tipo as desTipoServicio 
 				from (((t_ticket t inner join t_paciente pa on pa.id_paciente = t.id_paciente) 
@@ -63,5 +63,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					inner join t_tipo_servicio tts on tts.id_tipo_servicio = t.id_tipo_servicio order by t.id_ticket desc 
 	</select>
 	
+	<select id="findAllPAGINATOR" resultMap="ticketResult">
+				select t.*, pa.nombre as desPaciente, pr.descripcion_prod_det as desServicio, m.nombre_medico as desMedico, 
+				tts.descripcion_tipo as desTipoServicio 
+				from (((t_ticket t inner join t_paciente pa on pa.id_paciente = t.id_paciente) 
+					inner join t_producto pr on pr.id_producto = t.id_producto) 
+					inner join t_medico m on m.id_medico = t.id_medico) 
+					inner join t_tipo_servicio tts on tts.id_tipo_servicio = t.id_tipo_servicio 
+					where 1 = 1
+					<if test="filters.entrySet() != null">
+				       <foreach item="item" collection="filters.entrySet()" >
+			         	  	<choose>
+							<when test="item.key == 'id_ticket'">
+								and ( t.id_ticket like ('%' || replace( #{item.value}, ' ', '%')  || '%') 		         	
+				         		) 
+							</when>
+							
+							<otherwise>
+							and  ${item.key} like ('%' || replace( #{item.value}, ' ', '%')  || '%') 
+							</otherwise>
+					  		</choose>
+			           </foreach> 
+            		</if>
+            
+            <if test="sortField != null">
+				order by ${sortField} ${sortOrder}    
+		    </if>
+		    
+		    
+		    
+			 OFFSET #{first} LIMIT #{pageSize} 
+	</select>
+	<select id="countTicketPAGINATOR"  resultType="java.lang.Integer">
+		select count(*)
+				from (((t_ticket t inner join t_paciente pa on pa.id_paciente = t.id_paciente) 
+					inner join t_producto pr on pr.id_producto = t.id_producto) 
+					inner join t_medico m on m.id_medico = t.id_medico) 
+					inner join t_tipo_servicio tts on tts.id_tipo_servicio = t.id_tipo_servicio
+	</select>
 		
 </mapper>	

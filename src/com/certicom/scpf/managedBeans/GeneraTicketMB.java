@@ -24,6 +24,8 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 import com.certicom.scpf.domain.Cliente;
 import com.certicom.scpf.domain.Comprobante;
@@ -75,7 +77,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private List<TipoServicio> listTipoServicios;
 	private List<Producto> listProductos;
 	private List<Medico> listMedicos;
-	private List<Ticket> listTickets;
+	//private List<Ticket> listTickets;
+	private LazyDataModel<Ticket> listTickets;
+	private List<Ticket> listFiltroTickets;
 	private List<String> listaSignosVitales;
 	private List<String> listaProblemas;
 	private List<ExamenAuxiliar> listaExamenAuxiliares;
@@ -130,6 +134,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private Emisor emisorSelec;
 	private EmisorService emisorService;
 	private boolean generarComprobante;
+	private Boolean disableBuscar;
+	private Boolean disableRespuesta;
 	
 	@PostConstruct
 	public void inicia(){
@@ -147,11 +153,11 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.signoVitalService = new SignoVitalService();
 		this.listTipoServicios = new ArrayList<TipoServicio>();
 		this.listMedicos = new ArrayList<Medico>();
-		this.listTickets = new ArrayList<Ticket>();
+		//this.listTickets = new ArrayList<Ticket>();
 		this.listProductos = new ArrayList<Producto>();
 		this.listMedicos = this.medicoService.findAll();
 		this.listTipoServicios = this.tipoServicioService.findAllForTicket();	
-		this.listTickets = this.ticketService.findAll();
+		//this.listTickets = this.ticketService.findAll();
 		
 		this.listaProblemas= new ArrayList<>();
 		
@@ -180,11 +186,72 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.emisorSelec = this.emisorService.findAll().get(0);
 			this.listaComprobanteDetalle = new ArrayList<ComprobanteDetalle>();
 			this.comprobanteSelec= new Comprobante();
-			
+			listarTicketFiltros();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void listarTicketFiltros(){
+		//System.out.println(" listarComprobantesFiltros --->tipo_comprobante "+this.tipo_comprobante);
+		
+		 this.disableBuscar = Boolean.FALSE; 
+		 this.disableRespuesta = Boolean.FALSE; 		
+		
+		this.listTickets = new LazyDataModel<Ticket>() {
+			private static final long serialVersionUID = 1L;
+			private List<Ticket> datasource; 
+			private Integer totalRow=0;
+			
+			
+			@Override  
+			public Ticket getRowData(String rowKey){
+				 for(Ticket e : datasource) {  
+                     if(e.getId_ticket().equals(rowKey))  
+                         return e;  
+                 }  
+
+                 return null;  
+			}
+			
+			 @Override
+             public void setRowIndex(int rowIndex){
+                 if (rowIndex == -1 || getPageSize() == 0) {
+                     super.setRowIndex(-1);
+                 }
+                 else
+                     super.setRowIndex(rowIndex % getPageSize());
+             }
+			 
+			 @Override  
+	            public Object getRowKey(Ticket e) {  
+	                return e.getId_ticket();  
+	            }  
+			 @Override  
+	            public List<Ticket> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {              
+					try {
+						totalRow = ticketService.countTicketPAGINATOR(filters);
+												
+						  datasource = ticketService.findAllPAGINATOR(first, pageSize, filters, "t.id_ticket", "DESC");
+						 return datasource;
+					} catch (Exception e) {
+						System.out.println("NULL ");
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return null;
+					}
+	            } 
+			 
+			 @Override  
+				public int getRowCount() {     
+					return totalRow;
+	            }
+			 
+		};
+		
+		
+		
 	}
 	
 	public void prepararComprobante(Ticket ticket){
@@ -266,7 +333,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 				logmb.insertarLog(log);
 				FacesUtils.showFacesMessage("Ticket ha sido eliminado", 3);
 				
-				this.listTickets = this.ticketService.findAll();
+				//this.listTickets = this.ticketService.findAll();
 			}else{
 				FacesUtils.showFacesMessage("No es posible eliminar este ticket, ya se envio a sunat", 1);
 			}
@@ -470,7 +537,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.ticketSelected = new Ticket();
 			this.editarTicket = Boolean.FALSE;
 			
-			this.listTickets = this.ticketService.findAll();
+			//this.listTickets = this.ticketService.findAll();
 			context.update("msgGeneral");
 			
 		} catch (Exception e) {
@@ -1069,16 +1136,24 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.producto = producto;
 	}
 
-	public List<Ticket> getListTickets() {
+	/*public List<Ticket> getListTickets() {
 		return listTickets;
 	}
 
 	public void setListTickets(List<Ticket> listTickets) {
 		this.listTickets = listTickets;
-	}
+	}*/
 
 	public String getCod_perfil() {
 		return cod_perfil;
+	}
+
+	public LazyDataModel<Ticket> getListTickets() {
+		return listTickets;
+	}
+
+	public void setListTickets(LazyDataModel<Ticket> listTickets) {
+		this.listTickets = listTickets;
 	}
 
 	public void setCod_perfil(String cod_perfil) {
@@ -1435,6 +1510,30 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setNombrePacienteCliente(String nombrePacienteCliente) {
 		this.nombrePacienteCliente = nombrePacienteCliente;
+	}
+
+	public Boolean getDisableBuscar() {
+		return disableBuscar;
+	}
+
+	public void setDisableBuscar(Boolean disableBuscar) {
+		this.disableBuscar = disableBuscar;
+	}
+
+	public Boolean getDisableRespuesta() {
+		return disableRespuesta;
+	}
+
+	public void setDisableRespuesta(Boolean disableRespuesta) {
+		this.disableRespuesta = disableRespuesta;
+	}
+
+	public List<Ticket> getListFiltroTickets() {
+		return listFiltroTickets;
+	}
+
+	public void setListFiltroTickets(List<Ticket> listFiltroTickets) {
+		this.listFiltroTickets = listFiltroTickets;
 	}	
 
 }

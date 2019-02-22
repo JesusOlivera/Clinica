@@ -39,6 +39,9 @@
 			<h:form id="formLista">
 				<p:dataTable id="dataTicket" var="p" value="#{generaTicketMB.listTickets}" widgetVar="dtTicket" 
 					emptyMessage="No hay Tickets Disponibles." rowIndexVar="nro" 
+					lazy="true" paginator="true" filteredValue="#{generaTicketMB.listFiltroTickets}" 
+						rows="10" paginatorPosition="bottom"  rowsPerPageTemplate="10,100,200,500"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" sortField="#{p.id_ticket}" sortOrder="DESCENDING"
 					 style="FONT-SIZE: 10px; width: 1200px">
 					<f:facet name="header">Lista Tickets</f:facet>
 										
