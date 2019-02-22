@@ -2,6 +2,7 @@ package com.certicom.scpf.managedBeans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -267,8 +268,12 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			comprobanteDetalle.setCant_unidades_item_det(new BigDecimal("1.00"));
 			
 			comprobanteDetalle.setPrecio_venta_unitario_det(producto.getValor_unitario_prod_det());
-			comprobanteDetalle.setValor_venta_item_det(producto.getValor_unitario_prod_det().divide(new BigDecimal("1.18")));
-			comprobanteDetalle.setSuma_tributos_det(producto.getValor_unitario_prod_det().multiply(new BigDecimal("0.18")));
+			comprobanteDetalle.setValor_venta_item_det(producto.getValor_unitario_prod_det().divide(new BigDecimal("1.18"), 2, RoundingMode.CEILING));
+			comprobanteDetalle.setSuma_tributos_det(comprobanteDetalle.getPrecio_venta_unitario_det().subtract(comprobanteDetalle.getValor_venta_item_det()));
+			
+			this.comprobanteSelec.setSuma_tributos_cab(comprobanteDetalle.getSuma_tributos_det());
+			this.comprobanteSelec.setTotal_valor_venta_cab(comprobanteDetalle.getValor_venta_item_det());
+			this.comprobanteSelec.setImporte_total_venta_cab(comprobanteDetalle.getPrecio_venta_unitario_det());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -64,17 +64,17 @@
 					
 					
 			        
-			        <p:column headerText="Editar" style="width:15%;text-align: center">
+			        <p:column headerText="Agregar Resultado" style="width:15%;text-align: center">
 					
-						<p:commandButton title="Editar"  update=":dlgDetNuevoExamen" actionListener="#{examenAuxiliarMB.editarExamen(p)}"
-										 oncomplete="PF('dlgNuevoExamen').show();" icon="icon-edit">
+						<p:commandButton title="Agregar Resultado"  update=":dlgDetNuevoExamen" actionListener="#{examenAuxiliarMB.editarExamen(p)}"
+										 oncomplete="PF('dlgNuevoExamen').show();" icon="icon-report">
 						</p:commandButton> 								
 					</p:column>
 					
 					  <p:column headerText="Ticket" style="width:15%;text-align: center">
 					
 						<p:commandButton title="Generar Ticket"  update=":dlgDetNuevoTicket" actionListener="#{examenAuxiliarMB.nuevoTicket(p)}"
-										 oncomplete="PF('dlgNuevoTicket').show();" icon="icon-edit">
+										 oncomplete="PF('dlgNuevoTicket').show();" icon="icon-prepare">
 						</p:commandButton> 								
 					</p:column>
 
