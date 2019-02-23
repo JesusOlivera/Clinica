@@ -28,6 +28,15 @@ public class MedicoMB extends GenericBeans implements Serializable{
 
 	private Medico medicoSelec;
 	private Boolean editarmedico;
+	private List<Medico>listamedicosFilter;
+	public List<Medico> getListamedicosFilter() {
+		return listamedicosFilter;
+	}
+
+	public void setListamedicosFilter(List<Medico> listamedicosFilter) {
+		this.listamedicosFilter = listamedicosFilter;
+	}
+
 	private List<Medico>listamedicos;
 	private MedicoService medicoService;
     private Log log;

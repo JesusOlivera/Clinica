@@ -36,8 +36,11 @@
 			
 				<!-- listado de Planes -->
 			<h:form id="formLista">
-				<p:dataTable id="dataTablaTablas" var="p" value="#{tablaMaestraMB.listaTablaTablas}" widgetVar="dtTablaTablas" 
-					emptyMessage="No hay Tablas Maestras Disponibles." rowIndexVar="nro" 
+				<p:dataTable id="dataTablaTablas" var="p" value="#{tablaMaestraMB.listaTablaTablas}" 
+					widgetVar="dtTablaTablas" paginator="true" filteredValue="#{tablaMaestraMB.listaTablaTablasFilter}"
+					emptyMessage="No hay Tablas Maestras Disponibles." rowIndexVar="nro" rows="10" paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30"
 					 style="FONT-SIZE: 10px; ">
 					<f:facet name="header">Lista Tablas Maestras</f:facet>
 					

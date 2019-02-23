@@ -24,6 +24,7 @@ public class EspecialidadMB extends GenericBeans implements Serializable {
 	private Especialidad especialidadSelec;
 	private Boolean editarEspecialidad;
 	private List<Especialidad>listaEspecialidades;
+	private List<Especialidad> listaEspecialidadesFilter;
 	private EspecialidadService especialidadService;
     private Log log;
 	private LogMB logmb;
@@ -178,6 +179,15 @@ public class EspecialidadMB extends GenericBeans implements Serializable {
 	public void setLogmb(LogMB logmb) {
 		this.logmb = logmb;
 	}
+
+	public List<Especialidad> getListaEspecialidadesFilter() {
+		return listaEspecialidadesFilter;
+	}
+
+	public void setListaEspecialidadesFilter(List<Especialidad> listaEspecialidadesFilter) {
+		this.listaEspecialidadesFilter = listaEspecialidadesFilter;
+	}
+
 	
 	
 
