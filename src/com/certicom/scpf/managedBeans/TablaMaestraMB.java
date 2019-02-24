@@ -32,6 +32,55 @@ public class TablaMaestraMB extends GenericBeans implements Serializable{
 	private TablaTablas tablaTablasSelec;
 	private TablaTablasDetalle tablaTablasDetalleSelec;
 	private List<TablaTablas> listaTablaTablas;
+	private List<TablaTablas> listaTablaTablasFilter;
+	public List<TablaTablas> getListaTablaTablasFilter() {
+		return listaTablaTablasFilter;
+	}
+
+	public void setListaTablaTablasFilter(List<TablaTablas> listaTablaTablasFilter) {
+		this.listaTablaTablasFilter = listaTablaTablasFilter;
+	}
+
+	public MenuServices getMenuServices() {
+		return menuServices;
+	}
+
+	public void setMenuServices(MenuServices menuServices) {
+		this.menuServices = menuServices;
+	}
+
+	public TablaTablasService getTablaTablasService() {
+		return tablaTablasService;
+	}
+
+	public void setTablaTablasService(TablaTablasService tablaTablasService) {
+		this.tablaTablasService = tablaTablasService;
+	}
+
+	public TablaTablasDetalleService getTablaTablasDetalleService() {
+		return tablaTablasDetalleService;
+	}
+
+	public void setTablaTablasDetalleService(TablaTablasDetalleService tablaTablasDetalleService) {
+		this.tablaTablasDetalleService = tablaTablasDetalleService;
+	}
+
+	public Log getLog() {
+		return log;
+	}
+
+	public void setLog(Log log) {
+		this.log = log;
+	}
+
+	public LogMB getLogmb() {
+		return logmb;
+	}
+
+	public void setLogmb(LogMB logmb) {
+		this.logmb = logmb;
+	}
+
 	private List<TablaTablasDetalle> listaTablaTablasDetalle;
 	private Boolean editarTablaTablas;
 	private Boolean editarTablaTablasDetalle;

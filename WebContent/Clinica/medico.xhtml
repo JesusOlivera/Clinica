@@ -37,7 +37,11 @@
 				<!-- listado de Planes -->
 			<h:form id="formLista">
 				<p:dataTable id="dataMedico" var="p" value="#{medicoMB.listamedicos}" widgetVar="dtMedico" 
-					emptyMessage="No hay Medicos Disponibles." rowIndexVar="nro" 
+					emptyMessage="No hay Medicos Disponibles." 
+					 paginator="true" filteredValue="#{medicoMB.listamedicosFilter}"
+					 rowIndexVar="nro" rows="10" paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30"
 					 style="FONT-SIZE: 10px; ">
 					<f:facet name="header">Lista Medicos</f:facet>
 										
@@ -49,7 +53,7 @@
 						<h:outputText value="#{p.tipo_documento}"/>
 					</p:column>
 					
-					<p:column style="width:50px" headerText="Número de Documento">
+					<p:column style="width:50px" headerText="Número de Documento" filterBy="#{p.numero_documento}"  filterStyle="width:95%;" filterMatchMode="contains">
 						<h:outputText value="#{p.numero_documento}"/>
 					</p:column>
 					
@@ -57,7 +61,7 @@
 							<h:outputText value="#{p.especialidad.descripcion_especialidad}" />
 					</p:column>
 				
-					<p:column style="width:200px" headerText="Médico">
+					<p:column style="width:200px" headerText="Médico" filterBy="#{p.nombre_medico}"  filterStyle="width:95%;" filterMatchMode="contains">
 						<h:outputText value="#{p.nombre_medico}"/>
 					</p:column>
 					

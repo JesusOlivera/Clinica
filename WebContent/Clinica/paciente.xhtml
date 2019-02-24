@@ -38,6 +38,10 @@
 			<h:form id="formLista">
 				<p:dataTable id="dataPaciente" var="p" value="#{pacienteMB.listaPacientes}" widgetVar="dtPaciente" 
 					emptyMessage="No hay Pacientes Disponibles." rowIndexVar="nro" 
+					paginator="true" filteredValue="#{pacienteMB.listaPacientesFilter}"
+					paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30"
 					 style="FONT-SIZE: 10px; ">
 					<f:facet name="header">Lista Pacientes</f:facet>
 										
@@ -45,7 +49,7 @@
 						#{nro+1}
 					</p:column>			
 					
-					<p:column width="70" headerText="Cliente" >
+					<p:column width="70" headerText="Cliente" filterBy="#{p.cliente.nombre_cab}"  filterStyle="width:95%;" filterMatchMode="contains">
 							<h:outputText value="#{p.cliente.nombre_cab}" />
 					</p:column>		
 			        
@@ -53,11 +57,11 @@
 						<h:outputText value="#{p.id_tipo_documento}"/>
 					</p:column>
 					
-					<p:column style="width:50px" headerText="Número de Documento">
+					<p:column style="width:50px" headerText="Número de Documento" filterBy="#{p.numero_documento}"  filterStyle="width:95%;" filterMatchMode="contains">
 						<h:outputText value="#{p.numero_documento}"/>
 					</p:column>
 													
-					<p:column style="width:200px" headerText="Nombres">
+					<p:column style="width:200px" headerText="Nombres" filterBy="#{p.nombre}"  filterStyle="width:95%;" filterMatchMode="contains">
 						<h:outputText value="#{p.nombre}"/>
 					</p:column>
 					

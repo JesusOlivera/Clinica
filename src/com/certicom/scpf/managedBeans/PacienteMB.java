@@ -30,6 +30,7 @@ public class PacienteMB extends GenericBeans implements Serializable {
 	private Paciente pacienteSelec;
 	private Boolean editarPaciente;
 	private List<Paciente>listaPacientes;
+	private List<Paciente> listaPacientesFilter;
 	private PacienteService pacienteService;
     private Log log;
 	private LogMB logmb;
@@ -223,6 +224,14 @@ public class PacienteMB extends GenericBeans implements Serializable {
 
 	public void setClienteService(ClienteService clienteService) {
 		this.clienteService = clienteService;
+	}
+
+	public List<Paciente> getListaPacientesFilter() {
+		return listaPacientesFilter;
+	}
+
+	public void setListaPacientesFilter(List<Paciente> listaPacientesFilter) {
+		this.listaPacientesFilter = listaPacientesFilter;
 	}
 	
 	
