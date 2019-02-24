@@ -93,6 +93,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private String problema;
 	private String cp;
 	private String nombrePacienteCliente;
+	private String numeroDocPacienteCliente;
 	private ConsultaMedica consultaMedica;
 	private ExamenAuxiliar examenAuxiliar;
 	private Receta receta;
@@ -110,6 +111,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private Boolean editarReceta;
     private Log log;
 	private LogMB logmb;
+	private Date fechaActual;
+	private List<Object> listCampos;
 	
 	private Integer id_tipo_servicio_EX;
 	private Integer id_producto_EX;
@@ -158,6 +161,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.listProductos = new ArrayList<Producto>();
 		this.listMedicos = this.medicoService.findAll();
 		this.listTipoServicios = this.tipoServicioService.findAllForTicket();	
+		this.listCampos = new ArrayList<Object>();
 		//this.listTickets = this.ticketService.findAll();
 		
 		this.listaProblemas= new ArrayList<>();
@@ -171,6 +175,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.editarConsulta=Boolean.FALSE;
 		this.ingresarCliente = Boolean.TRUE;
 		this.generarComprobante=  Boolean.TRUE;
+		
+		this.fechaActual = new Date();
 		
 		try {
 			this.tablaTablasDetalleService = new TablaTablasDetalleService();
@@ -259,6 +265,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.comprobanteSelec= new Comprobante();
 		this.ticketSelected=ticket;
 		this.listaComprobanteDetalle= new ArrayList<>();
+		this.comprobanteSelec.setFecha_emision_cab(new Date());
+		this.comprobanteSelec.setHora_emision_cab(new Date());
+		this.comprobanteSelec.setFecha_vencimiento_cab(new Date());
 		ComprobanteDetalle comprobanteDetalle= new ComprobanteDetalle();
 		try {
 			Producto producto=this.ticketSelected.getProducto();
@@ -271,9 +280,27 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			comprobanteDetalle.setValor_venta_item_det(producto.getValor_unitario_prod_det().divide(new BigDecimal("1.18"), 2, RoundingMode.CEILING));
 			comprobanteDetalle.setSuma_tributos_det(comprobanteDetalle.getPrecio_venta_unitario_det().subtract(comprobanteDetalle.getValor_venta_item_det()));
 			
+			this.ingresarCliente = Boolean.FALSE;
+			
 			this.comprobanteSelec.setSuma_tributos_cab(comprobanteDetalle.getSuma_tributos_det());
 			this.comprobanteSelec.setTotal_valor_venta_cab(comprobanteDetalle.getValor_venta_item_det());
 			this.comprobanteSelec.setImporte_total_venta_cab(comprobanteDetalle.getPrecio_venta_unitario_det());
+			this.comprobanteSelec.setTipo_operacion_cab("0101");
+			this.comprobanteSelec.setId_modo_pago(4);
+			this.comprobanteSelec.setTipo_moneda_cab("PEN");
+			
+			this.listCampos = new ArrayList<Object>();
+			
+			this.listCampos.add(this.comprobanteSelec.getTipo_comprobante());
+			this.listCampos.add(this.comprobanteSelec.getNumero_serie_documento_cab());
+			this.listCampos.add(this.comprobanteSelec.getFecha_emision_cab());
+			this.listCampos.add(this.comprobanteSelec.getId_modo_pago());
+			this.listCampos.add(this.comprobanteSelec.getTipo_operacion_cab());
+			this.listCampos.add(this.comprobanteSelec.getHora_emision_cab());
+			this.listCampos.add(this.comprobanteSelec.getId_vendedor());
+			this.listCampos.add(this.comprobanteSelec.getTipo_moneda_cab());
+			this.listCampos.add(this.comprobanteSelec.getFecha_vencimiento_cab());
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -287,13 +314,19 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		System.out.println("CP: "+this.cp);
 		if(this.cp.equals("CLIENTE")){
 			this.nombrePacienteCliente = this.ticketSelected.getCliente().getNombre_cab();
+			this.comprobanteSelec.setNumero_serie_documento_cab(this.ticketSelected.getCliente().getNumero_docu_iden_cab());
 		}else{
 			this.nombrePacienteCliente = this.ticketSelected.getPaciente().getNombre();
+			this.comprobanteSelec.setNumero_serie_documento_cab(this.ticketSelected.getPaciente().getNumero_documento());
 		}
+		
+		validarCampos(1, this.comprobanteSelec.getNumero_serie_documento_cab());
 	}
 	
 	public void mostrarDatosCliente(){
 		this.comprobanteSelec.setCliente(this.ticketSelected.getCliente());
+		
+		validarCampos(0, this.comprobanteSelec.getTipo_comprobante());
 	}
 	
 	public void editarTicket(Ticket ticket){
@@ -409,9 +442,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+		
 	public void nuevoTicket(){
 		
 		Integer cifras=6;		
@@ -741,10 +772,45 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 	}
 	
+	public void validarCampos(int indice, Object obj){
+		
+		int resultado = 1;
+		
+		System.out.println("INDICE : "+indice);
+		
+		System.out.println("OBJETO : "+obj.toString());
+		
+		this.listCampos.set(indice, obj);
+		
+		int nro = 0;
+		
+		for (Object object : listCampos) {
+			
+			
+			
+			if(!(object == null)){
+				System.out.println("Objeto " + nro + " : " + object.toString());
+				resultado = resultado*1;
+			}else{
+				System.out.println("Objeto " + nro + " : " + " es nulo ");
+				resultado = resultado*0;
+			}
+			
+			nro++;
+		}
+		
+		if(resultado==1){
+			this.generarComprobante = Boolean.FALSE;
+		}
+		
+		System.out.println("VALOR DEL RESULTADO : "+resultado);
+		System.out.println("VALOR DEL BOOLEAN : "+this.generarComprobante);
+		
+	}
+	
 	public void generarComprobante(){
 		RequestContext context = RequestContext.getCurrentInstance(); 
 		try {
-			
 			
 			
 			System.out.println("  id_comprobante :"+this.comprobanteSelec.getId_comprobante());
@@ -753,7 +819,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.comprobanteSelec.setCorrelativo(this.comprobanteService.getCorrelativoComprobante(this.comprobanteSelec.getTipo_comprobante()));
 			this.comprobanteSelec.setEstado_sunat(Constante.ESTADO_PENDIENTE);
 			this.comprobanteSelec.setId_ticket(this.ticketSelected.getId_ticket());
-			this.comprobanteService.crearComprobanteSec(this.comprobanteSelec);
+			this.comprobanteService.crearComprobanteSec(this.comprobanteSelec);			
 			
 			int id = this.comprobanteService.getSecIdComprobante();
 			System.out.println("ID: "+id);
@@ -779,14 +845,14 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.emisorSelec = this.emisorService.findAll().get(0);
 			this.comprobanteSelec.setId_emisor(this.emisorSelec.getId_emisor());
 			
-			this.comprobanteSelec.setFecha_emision_cab(new Date()); 
+			/*this.comprobanteSelec.setFecha_emision_cab(new Date()); 
 			this.comprobanteSelec.setFecha_vencimiento_cab(new Date());
 			this.comprobanteSelec.setHora_emision_cab(new Date());
 			this.comprobanteSelec.setId_modo_pago(4); 
 			this.comprobanteSelec.setTipo_operacion_cab("0101");
-			this.comprobanteSelec.setTipo_moneda_cab("PEN"); 
+			this.comprobanteSelec.setTipo_moneda_cab("PEN"); */
 			this.ingresarCliente = Boolean.TRUE;
-			
+			this.generarComprobante = Boolean.TRUE;
 			
 			
 		} catch (Exception e) {
@@ -1539,6 +1605,30 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setListFiltroTickets(List<Ticket> listFiltroTickets) {
 		this.listFiltroTickets = listFiltroTickets;
+	}
+
+	public String getNumeroDocPacienteCliente() {
+		return numeroDocPacienteCliente;
+	}
+
+	public void setNumeroDocPacienteCliente(String numeroDocPacienteCliente) {
+		this.numeroDocPacienteCliente = numeroDocPacienteCliente;
+	}
+
+	public Date getFechaActual() {
+		return fechaActual;
+	}
+
+	public void setFechaActual(Date fechaActual) {
+		this.fechaActual = fechaActual;
+	}
+
+	public List<Object> getListCampos() {
+		return listCampos;
+	}
+
+	public void setListCampos(List<Object> listCampos) {
+		this.listCampos = listCampos;
 	}	
 
 }

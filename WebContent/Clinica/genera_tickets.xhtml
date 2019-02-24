@@ -132,7 +132,7 @@
 							<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
 							<f:selectItems value="#{generaTicketMB.listTablaTablasDetallesComprobante}" var="p" itemLabel="#{p.descripcion_largo}" 
 								itemValue="#{p.codigo_catalogo}" />
-							<p:ajax event="itemSelect" listener="#{generaTicketMB.mostrarDatosCliente()}" update="idValoresCabecera formAccion"/>
+							<p:ajax event="itemSelect" listener="#{generaTicketMB.mostrarDatosCliente()}" update="idValoresCabecera :formAccion"/>
 						</p:selectOneMenu>
 					</h:panelGrid>
 					<h:panelGrid id="idValoresCabecera">
@@ -141,7 +141,7 @@
 								<p:selectOneRadio id="cp" value="#{generaTicketMB.cp}" unselectable="true">
 						            <f:selectItem itemLabel="CLIENTE" itemValue="CLIENTE" />
 						            <f:selectItem itemLabel="PACIENTE" itemValue="PACIENTE" />
-						            <p:ajax event="change" listener="#{generaTicketMB.cambioPacienteCliente()}" update=":formPN"></p:ajax>
+						            <p:ajax event="change" listener="#{generaTicketMB.cambioPacienteCliente()}" update=":formPN :formAccion"></p:ajax>
 						        </p:selectOneRadio>	
 						        <p:spacer></p:spacer>						
 								<p:spacer></p:spacer>
@@ -157,27 +157,27 @@
 						</h:panelGrid>
 						
 						<h:panelGrid columns="6" id="pnFields">
-						
+							
 							#{"Numero del Documento:"} 
 							<p:outputLabel value="#{generaTicketMB.comprobanteSelec.numero_serie_documento_cab}" id="numero_documento"
 								required="true" label="numero_documento" requiredMessage="Se necesita un numero de documento"
-								style="width:200px ;font-size:25px; " disabled="#{generaTicketMB.ingresarCliente}"/>
+								style="width:200px ;font-size:25px; " disabled="#{generaTicketMB.ingresarCliente}" update=":formPN :formAccion"/>
 							
 							#{"Fecha de Emisión:"} 
 							<p:calendar style="width:200px" readonlyInput="true" value="#{generaTicketMB.comprobanteSelec.fecha_emision_cab}" 
-									pattern="dd/MM/yyyy" locale="es" maxdate="#{cicloMB.fechaActual}"
+									pattern="dd/MM/yyyy" locale="es" maxdate="#{generaTicketMB.fechaActual}"
 								  navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio" 
 								  disabled="#{generaTicketMB.ingresarCliente}">
-								  <p:ajax event="dateSelect" />
+								  <p:ajax event="dateSelect" listener="#{generaTicketMB.validarCampos(2,generaTicketMB.comprobanteSelec.fecha_emision_cab)}" update=":formPN :formAccion"/>
 							</p:calendar>
 							
 							#{"Modo Pago:"}						        
-							<p:selectOneMenu style="width:200px" 
+							<p:selectOneMenu style="width:200px" value="#{generaTicketMB.comprobanteSelec.id_modo_pago}"
 								required="true" requiredMessage="Se necesita un modo de pago" disabled="#{generaTicketMB.ingresarCliente}">
 								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
 								<f:selectItems value="#{generaTicketMB.listModoPagos}" var="p" itemLabel="#{p.descripcion_modo_pago}" 
 								itemValue="#{p.id_modo_pago}" />
-								<p:ajax event="change" />
+								<p:ajax event="change" listener="#{generaTicketMB.validarCampos(3,generaTicketMB.comprobanteSelec.id_modo_pago)}" update=":formPN :formAccion"/>
 							</p:selectOneMenu>
 							
 							#{"Tipo Operación:"}						        
@@ -186,15 +186,15 @@
 								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
 								<f:selectItems value="#{generaTicketMB.listTablaTablasDetallesOperacion}" var="p" 
 									itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
-								<p:ajax event="change"/>
+								<p:ajax event="change" listener="#{generaTicketMB.validarCampos(4,generaTicketMB.comprobanteSelec.tipo_operacion_cab)}" update=":formPN :formAccion"/>
 							</p:selectOneMenu>
 							
 							#{"Hora de Emisión:"} 
 							<p:calendar style="width:200px" readonlyInput="true"  value="#{generaTicketMB.comprobanteSelec.hora_emision_cab}" 
-									pattern="hh:mm:ss" timeOnly="true" locale="es" maxdate="#{cicloMB.fechaActual}" 
+									pattern="hh:mm:ss" timeOnly="true" locale="es"
 									disabled="#{generaTicketMB.ingresarCliente}"
 								  navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio">
-								  <p:ajax event="dateSelect"/>
+								  <p:ajax event="dateSelect" listener="#{generaTicketMB.validarCampos(5,generaTicketMB.comprobanteSelec.hora_emision_cab)}" update=":formPN :formAccion"/>
 							</p:calendar>
 							
 							#{"Vendedor:"}						        
@@ -203,7 +203,7 @@
 								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
 								<f:selectItems value="#{generaTicketMB.listaVendedores}" var="p" 
 									itemLabel="#{p.descripcion_vendedor}" itemValue="#{p.id_vendedor}" />
-								<p:ajax event="change"/>
+								<p:ajax event="change" listener="#{generaTicketMB.validarCampos(6,generaTicketMB.comprobanteSelec.id_vendedor)}" update=":formPN :formAccion"/>
 							</p:selectOneMenu>
 							
 							
@@ -213,15 +213,15 @@
 								<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
 								<f:selectItems value="#{generaTicketMB.listTablaTablasDetallesMoneda}" var="p" 
 									itemLabel="#{p.descripcion_largo}" itemValue="#{p.codigo_catalogo}" />
-								<p:ajax event="change"/>
+								<p:ajax event="change" listener="#{generaTicketMB.validarCampos(7,generaTicketMB.comprobanteSelec.tipo_moneda_cab)}" update=":formPN :formAccion"/>
 							</p:selectOneMenu>
 							
 							#{"Fecha de Vencimiento:"} 
 							<p:calendar style="width:200px" readonlyInput="true" value="#{generaTicketMB.comprobanteSelec.fecha_vencimiento_cab}" 
-									pattern="dd/MM/yyyy" locale="es" maxdate="#{cicloMB.fechaActual}"
+									pattern="dd/MM/yyyy" locale="es" maxdate="#{generaTicketMB.fechaActual}"
 								  	navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio" 
 								  	disabled="#{generaTicketMB.ingresarCliente}">
-								  <p:ajax event="dateSelect"/>
+								  <p:ajax event="dateSelect" listener="#{generaTicketMB.validarCampos(8,generaTicketMB.comprobanteSelec.fecha_vencimiento_cab)}" update=":formPN :formAccion"/>
 							</p:calendar>
 						
 						</h:panelGrid>
