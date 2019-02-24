@@ -29,11 +29,16 @@ public class Ticket {
 	private Integer id_examen;
 	
 	/* transitorios */
-	private String desServicio;
-	private String desMedico;
-	private String desPaciente;
-	private String desTipoServicio;
+	private String des_servicio;
+	private String des_medico;
+	private String des_paciente;
+	private String des_tipo_servicio;
 	
+	
+	
+	public Ticket() {
+	}
+
 	public Integer getId_ticket() {
 		return id_ticket;
 	}
@@ -138,30 +143,6 @@ public class Ticket {
 		this.nro_ticket = nro_ticket;
 	}
 
-	public String getDesServicio() {
-		return desServicio;
-	}
-
-	public void setDesServicio(String desServicio) {
-		this.desServicio = desServicio;
-	}
-
-	public String getDesMedico() {
-		return desMedico;
-	}
-
-	public void setDesMedico(String desMedico) {
-		this.desMedico = desMedico;
-	}
-
-	public String getDesPaciente() {
-		return desPaciente;
-	}
-
-	public void setDesPaciente(String desPaciente) {
-		this.desPaciente = desPaciente;
-	}
-
 	public boolean isIntegrado_sunat() {
 		return integrado_sunat;
 	}
@@ -194,14 +175,6 @@ public class Ticket {
 		this.producto = producto;
 	}
 
-	public String getDesTipoServicio() {
-		return desTipoServicio;
-	}
-
-	public void setDesTipoServicio(String desTipoServicio) {
-		this.desTipoServicio = desTipoServicio;
-	}
-
 	public TipoServicio getTipoServicio() {
 		return tipoServicio;
 	}
@@ -232,6 +205,38 @@ public class Ticket {
 
 	public void setTipo_ticket(String tipo_ticket) {
 		this.tipo_ticket = tipo_ticket;
+	}
+
+	public String getDes_servicio() {
+		return des_servicio;
+	}
+
+	public void setDes_servicio(String des_servicio) {
+		this.des_servicio = des_servicio;
+	}
+
+	public String getDes_medico() {
+		return des_medico;
+	}
+
+	public void setDes_medico(String des_medico) {
+		this.des_medico = des_medico;
+	}
+
+	public String getDes_paciente() {
+		return des_paciente;
+	}
+
+	public void setDes_paciente(String des_paciente) {
+		this.des_paciente = des_paciente;
+	}
+
+	public String getDes_tipo_servicio() {
+		return des_tipo_servicio;
+	}
+
+	public void setDes_tipo_servicio(String des_tipo_servicio) {
+		this.des_tipo_servicio = des_tipo_servicio;
 	}	
 	
 }

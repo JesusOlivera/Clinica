@@ -49,24 +49,24 @@
 								#{nro+1}
 							</p:column>					
 					        
-							<p:column style="width:70px" headerText="Ticket">
+							<p:column style="width:70px" headerText="Ticket" filterBy="#{p.nro_ticket}" filterMatchMode="contains" filterStyle="width: 95%">
 								<h:outputText value="#{p.nro_ticket}"/>
 							</p:column>
 							
-							<p:column style="width:100px" headerText="Servicio">
-								<h:outputText value="#{p.desServicio}"/>
+							<p:column style="width:100px" headerText="Servicio" filterBy="#{p.producto.descripcion_prod_det}" filterMatchMode="contains" filterStyle="width: 95%">
+								<h:outputText value="#{p.producto.descripcion_prod_det}"/>
 							</p:column>
 							
 							<p:column width="80px" headerText="Controles">
 								<p:commandButton value="Ver Controles" rendered="#{p.id_tipo_servicio eq '1'}"/>
 							</p:column>
 							
-							<p:column width="150px" headerText="Medico" >
-								<h:outputText value="#{p.desMedico}" />
+							<p:column width="150px" headerText="Medico" filterBy="#{p.des_medico}" filterMatchMode="contains" filterStyle="width: 95%">
+								<h:outputText value="#{p.des_medico}" />
 							</p:column>
 						
-							<p:column style="width:150px" headerText="Paciente">
-								<h:outputText value="#{p.desPaciente}"/>
+							<p:column style="width:150px" headerText="Paciente" filterBy="#{p.des_paciente}" filterMatchMode="contains" filterStyle="width: 95%">
+								<h:outputText value="#{p.des_paciente}"/>
 							</p:column>
 							
 							<p:column style="width:70px" headerText="Fecha Emisión" >
@@ -77,7 +77,7 @@
 								<h:outputText value="#{p.hora_ticket}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
 							</p:column>
 							
-							<p:column style="width:50px" headerText="Estado">
+							<p:column style="width:50px" headerText="Estado" filterBy="#{p.estado}" filterMatchMode="contains" filterStyle="width: 95%">
 								<h:outputText value="#{p.estado}"/>
 							</p:column>
 							
@@ -405,7 +405,7 @@
 								<h:outputLabel value="#{generaTicketMB.ticketSelected.nro_ticket}"/>
 								<p:spacer/>
 								#{"Paciente:"}
-								<h:outputLabel value="#{generaTicketMB.ticketSelected.desPaciente}"/>
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_paciente}"/>
 								<p:commandButton value="Historia Clínica"/>
 							</h:panelGrid>
 					
@@ -418,19 +418,19 @@
 								<h:outputText value="#{generaTicketMB.consultaMedica.fecha_consulta}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
 								
 								#{"Tipo Servicio: "}
-								<h:outputLabel value="#{generaTicketMB.ticketSelected.desTipoServicio}"/>
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_tipo_servicio}"/>
 								
 								#{"Hora: "}
 								<h:outputText value="#{generaTicketMB.consultaMedica.hora_consulta}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
 								
 								#{"Servicio: "}
-								<h:outputLabel value="#{generaTicketMB.ticketSelected.desServicio}"/>
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_servicio}"/>
 								
 								#{"Fecha Ticket: "}
 								<h:outputText value="#{generaTicketMB.ticketSelected.fecha_ticket}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
 								
 								#{"Médico: "}
-								<h:outputLabel value="#{generaTicketMB.ticketSelected.desMedico}"/>
+								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_medico}"/>
 								
 								#{"Hora Ticket: "}
 								<h:outputText value="#{generaTicketMB.ticketSelected.hora_ticket}"><f:convertDateTime pattern="HH:mm" /></h:outputText>

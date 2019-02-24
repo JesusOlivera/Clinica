@@ -55,8 +55,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findAll" resultMap="ticketResult">
-				select t.*, pa.nombre as desPaciente, pr.descripcion_prod_det as desServicio, m.nombre_medico as desMedico, 
-				tts.descripcion_tipo as desTipoServicio 
+				select t.*, pa.nombre as des_paciente, pr.descripcion_prod_det as des_servicio, m.nombre_medico as des_medico, 
+				tts.descripcion_tipo as des_tipo_servicio, pr.*, m.*, pa.*, tts.*
 				from (((t_ticket t inner join t_paciente pa on pa.id_paciente = t.id_paciente) 
 					inner join t_producto pr on pr.id_producto = t.id_producto) 
 					inner join t_medico m on m.id_medico = t.id_medico) 
@@ -64,8 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findAllPAGINATOR" resultMap="ticketResult">
-				select t.*, pa.nombre as desPaciente, pr.descripcion_prod_det as desServicio, m.nombre_medico as desMedico, 
-				tts.descripcion_tipo as desTipoServicio 
+				select t.*, pa.nombre as des_paciente, pr.descripcion_prod_det as des_servicio, m.nombre_medico as des_medico, 
+				tts.descripcion_tipo as des_tipo_servicio, pr.*, m.*, pa.*, tts.*
 				from (((t_ticket t inner join t_paciente pa on pa.id_paciente = t.id_paciente) 
 					inner join t_producto pr on pr.id_producto = t.id_producto) 
 					inner join t_medico m on m.id_medico = t.id_medico) 
