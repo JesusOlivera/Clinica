@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					inner join t_producto pr on pr.id_producto = t.id_producto) 
 					inner join t_medico m on m.id_medico = t.id_medico) 
 					inner join t_tipo_servicio tts on tts.id_tipo_servicio = t.id_tipo_servicio 
-					where 1 = 1
+					where m.id_medico=#{id_medico} and extract(month from t.fecha_ticket)= #{mes} and  extract(year from t.fecha_ticket)=#{anio}
 					<if test="filters.entrySet() != null">
 				       <foreach item="item" collection="filters.entrySet()" >
 			         	  	<choose>
@@ -100,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					inner join t_producto pr on pr.id_producto = t.id_producto) 
 					inner join t_medico m on m.id_medico = t.id_medico) 
 					inner join t_tipo_servicio tts on tts.id_tipo_servicio = t.id_tipo_servicio
+					where m.id_medico=#{id_medico} and extract(month from t.fecha_ticket)= #{mes} and  extract(year from t.fecha_ticket)=#{anio}
 	</select>
 		
 </mapper>	

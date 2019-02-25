@@ -119,9 +119,7 @@ public class ExamenAuxiliarMB extends GenericBeans implements Serializable{
 		}
 	
 		
-	}
-	
-	
+	}	
 	
 	public void guardarTicket(){
 		RequestContext context = RequestContext.getCurrentInstance();

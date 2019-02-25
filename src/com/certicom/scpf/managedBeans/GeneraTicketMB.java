@@ -26,6 +26,7 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -119,6 +120,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private LogMB logmb;
 	private Date fechaActual;
 	private List<Object> listCampos;
+	private String anio;
+	private String mes;
+	private Integer id_medico;
 	
 	private Integer id_tipo_servicio_EX;
 	private Integer id_producto_EX;
@@ -185,6 +189,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 		this.fechaActual = new Date();
 		
+		Format formatoAnio = new SimpleDateFormat("yyyy");
+		Format formatoMes= new SimpleDateFormat("MM");
+		
 		try {
 			this.tablaTablasDetalleService = new TablaTablasDetalleService();
 			this.modoPagoService= new ModoPagoService();
@@ -200,6 +207,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.emisorSelec = this.emisorService.findAll().get(0);
 			this.listaComprobanteDetalle = new ArrayList<ComprobanteDetalle>();
 			this.comprobanteSelec= new Comprobante();
+			this.anio=formatoAnio.format(new Date());
+			this.mes=formatoMes.format(new Date());
 			listarTicketFiltros();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -207,11 +216,17 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		}
 	}
 	
+	public void onItemDocumento(SelectEvent event)  throws Exception{
+		
+		
+		 this.disableBuscar = Boolean.FALSE; 
+		
+	}
+	
 	public void listarTicketFiltros(){
 		//System.out.println(" listarComprobantesFiltros --->tipo_comprobante "+this.tipo_comprobante);
 		
-		 this.disableBuscar = Boolean.FALSE; 
-		 this.disableRespuesta = Boolean.FALSE; 		
+		 this.disableBuscar = Boolean.FALSE; 		
 		
 		this.listTickets = new LazyDataModel<Ticket>() {
 			private static final long serialVersionUID = 1L;
@@ -245,9 +260,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			 @Override  
 	            public List<Ticket> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {              
 					try {
-						totalRow = ticketService.countTicketPAGINATOR(filters);
+						totalRow = ticketService.countTicketPAGINATOR(Integer.parseInt(anio),Integer.parseInt(mes),id_medico,filters);
 												
-						  datasource = ticketService.findAllPAGINATOR(first, pageSize, filters, "t.id_ticket", "DESC");
+						  datasource = ticketService.findAllPAGINATOR(Integer.parseInt(anio),Integer.parseInt(mes),id_medico,first, pageSize, filters, "t.id_ticket", "DESC");
 						 return datasource;
 					} catch (Exception e) {
 						System.out.println("NULL ");
@@ -1740,6 +1755,30 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	public void setTablaTablasDetalleTipoComprobante(
 			TablaTablasDetalle tablaTablasDetalleTipoComprobante) {
 		this.tablaTablasDetalleTipoComprobante = tablaTablasDetalleTipoComprobante;
+	}
+
+	public String getAnio() {
+		return anio;
+	}
+
+	public void setAnio(String anio) {
+		this.anio = anio;
+	}
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public Integer getId_medico() {
+		return id_medico;
+	}
+
+	public void setId_medico(Integer id_medico) {
+		this.id_medico = id_medico;
 	}	
 
 }
