@@ -132,7 +132,7 @@
 							<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
 							<f:selectItems value="#{generaTicketMB.listTablaTablasDetallesComprobante}" var="p" itemLabel="#{p.descripcion_largo}" 
 								itemValue="#{p.codigo_catalogo}" />
-							<p:ajax event="itemSelect" listener="#{generaTicketMB.mostrarDatosCliente()}" update="idValoresCabecera :formAccion"/>
+							<p:ajax event="itemSelect" listener="#{generaTicketMB.obtenerAbreviatura()}" update="idValoresCabecera :formAccion"/>
 						</p:selectOneMenu>
 					</h:panelGrid>
 					<h:panelGrid id="idValoresCabecera">
