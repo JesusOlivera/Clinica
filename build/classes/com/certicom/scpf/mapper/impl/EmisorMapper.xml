@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.EmisorMapper">
+
+<resultMap id="emisorResult" type="com.certicom.scpf.domain.Emisor">
+	<id column="id_emisor" property="id_emisor"/>
+	<result column="id_domicilio_fiscal_cab" property="id_domicilio_fiscal_cab"/>
+	<result column="ruc" property="ruc"/>
+	<result column="razon_social" property="razon_social"/>
+	<result column="nombre_comercial" property="nombre_comercial"/>
+	<result column="direccion" property="direccion"/>
+	<result column="telefono" property="telefono"/>
+	<result column="slogan" property="slogan"/>
+	<result column="ruta_logo" property="ruta_logo"/>
+	<result column="ruta_descarga_archivos_planos" property="ruta_descarga_archivos_planos"/>
+
+</resultMap>
+
+
+</mapper>	

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.ConsultaMedicaMapper">
+
+
+<resultMap id="consultaMedicaResult" type="com.certicom.scpf.domain.ConsultaMedica">
+	<id column="id_consulta_medica" property="id_consulta_medica" />
+	<result column="id_producto" property="id_producto" />
+	<result column="id_tipo_servicio" property="id_tipo_servicio"/>
+	<result column="id_medico" property="id_medico"/>
+	<result column="id_especialidad" property="id_especialidad"/>
+	<result column="id_paciente" property="id_paciente"/>
+	<result column="id_cliente" property="id_cliente"/>
+	<result column="fecha_consulta" property="fecha_consulta"/>
+	<result column="hora_consulta" property="hora_consulta"/>
+	<result column="estado" property="estado"/>
+	<result column="anamesis" property="anamesis"/>
+	<result column="listado_problemas" property="listado_problemas"/>
+	<result column="impresion_diagnostica" property="impresion_diagnostica"/>
+	<result column="diagnostico" property="diagnostico"/>
+	<result column="resumen_hospitalizacion" property="resumen_hospitalizacion"/>
+	
+	<association property="producto" column="id_producto" select="selectProducto"/>
+
+</resultMap>
+
+	<select id="selectProducto" parameterType="int" resultType="com.certicom.scpf.domain.Producto">
+		SELECT * FROM t_producto WHERE id_producto=#{id_producto}
+	</select>
+	
+	<select id="findByTicket" resultMap="consultaMedicaResult" parameterType="int" >
+		select con.*, pro.* from t_consulta_medica con inner join t_producto pro on pro.id_producto=con.id_producto
+		where con.id_ticket=#{id_ticket}
+	</select>
+		
+</mapper>	

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.ComprobanteDetalleMapper">
+
+<resultMap id="comprobanteDetalleResult" type="com.certicom.scpf.domain.ComprobanteDetalle">
+	<id column="id_comprobante" property="id_comprobante"/>
+	<result column="tipo_comprobante" property="tipo_comprobante"/>
+	<result column="id_cliente" property="id_cliente"/>
+	<result column="id_producto" property="id_producto"/>
+	<result column="id_emisor" property="id_emisor"/>
+	<result column="id_domicilio_fiscal_cab" property="id_domicilio_fiscal_cab"/>
+	<result column="tipo_unidad_medida_det" property="tipo_unidad_medida_det"/>
+	<result column="cant_unidades_item_det" property="cant_unidades_item_det"/>
+	<result column="suma_tributos_det" property="suma_tributos_det"/>
+	<result column="precio_venta_unitario_det" property="precio_venta_unitario_det"/>
+	<result column="valor_venta_item_det" property="valor_venta_item_det"/>
+	<result column="valor_referencial_unit_det" property="valor_referencial_unit_det"/>
+	<result column="archivo_plano_nombre" property="archivo_plano_nombre"/>
+	<result column="archivo_plano_contenido" property="archivo_plano_contenido"/>
+
+	<association property="producto" column="id_producto" select="selectProducto"/>
+	
+</resultMap>
+
+	<select id="selectProducto" parameterType="int" resultType="com.certicom.scpf.domain.Producto">
+		 SELECT p.*, (select ttd.descripcion_largo from t_tabla_tablas_detalle ttd where ttd.codigo_catalogo = p.unidad_medida_det ) as desUnidadMedida
+		 FROM t_producto p WHERE p.id_producto=#{id_producto}
+	</select>
+	
+	<select id="findByIdComprobante" resultMap="comprobanteDetalleResult">
+		select e.*, p.* 
+		from t_detalle_comprobante e 
+		inner join t_producto p on p.id_producto=e.id_producto 
+		where e.id_comprobante = #{id_comprobante}
+	</select>
+
+
+</mapper>	

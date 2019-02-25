@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.ModoPagoMapper">
+
+<resultMap id="domicilioFiscalResult" type="com.certicom.scpf.domain.ModoPago">
+	<id column="id_modo_pago" property="id_modo_pago"/>
+	<result column="descripcion_modo_pago" property="descripcion_modo_pago"/>
+	<result column="numero_dias" property="numero_dias"/>
+
+</resultMap>
+
+
+</mapper>	

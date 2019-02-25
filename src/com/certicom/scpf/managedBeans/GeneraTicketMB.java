@@ -288,8 +288,14 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.comprobanteSelec.setTipo_operacion_cab("0101");
 			this.comprobanteSelec.setId_modo_pago(4);
 			this.comprobanteSelec.setTipo_moneda_cab("PEN");
+			this.listaVendedores=this.vendedorService.findAll();
+			if(!this.listaVendedores.isEmpty()){
+				this.comprobanteSelec.setId_vendedor(this.listaVendedores.get(0).getId_vendedor());
+			}
+			
 			
 			this.listCampos = new ArrayList<Object>();
+			
 			
 			this.listCampos.add(this.comprobanteSelec.getTipo_comprobante());
 			this.listCampos.add(this.comprobanteSelec.getNumero_serie_documento_cab());

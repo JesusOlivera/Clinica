@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.SignoVitalMapper">
+
+
+<resultMap id="signoVitalResult" type="com.certicom.scpf.domain.SignoVital">
+	<id column="id_signo_vital" property="id_signo_vital" />
+	<result column="id_consulta_medica" property="id_consulta_medica" />
+	<result column="id_producto" property="id_producto"/>
+	<result column="id_tipo_servicio" property="id_tipo_servicio" />
+	<result column="id_medico" property="id_medico"/>
+	<result column="id_especialidad" property="id_especialidad" />
+	<result column="id_paciente" property="id_paciente"/>
+	<result column="id_cliente" property="id_cliente" />
+	<result column="talla" property="talla"/>
+	<result column="peso" property="peso" />
+	<result column="ocupacion" property="ocupacion"/>
+	<result column="temperatura" property="temperatura" />
+	<result column="alergia" property="alergia"/>
+	<result column="frecuencia_cardiaca" property="frecuencia_cardiaca" />
+	<result column="frecuencia_respiratoria" property="frecuencia_respiratoria"/>
+	<result column="presion_arterial" property="presion_arterial" />
+	<result column="embarazo" property="embarazo"/>
+	<result column="sat_oxigeno" property="sat_oxigeno" />
+	<result column="otros1" property="otros1"/>
+	<result column="otros2" property="otros2" />
+	<result column="otros3" property="otros3"/>
+	
+
+</resultMap>
+
+		
+</mapper>	

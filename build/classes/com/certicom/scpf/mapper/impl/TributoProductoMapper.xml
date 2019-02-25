@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.TributoProductoMapper">
+
+<resultMap id="tributoProductoResult" type="com.certicom.scpf.domain.TributoProducto">
+	<id column="id_producto" property="id_producto"/>
+	<result column="tipo_tributo_det" property="tipo_tributo_det"/>
+	<result column="monto_tributo_det" property="monto_tributo_det"/>
+	<result column="base_imponible_det" property="base_imponible_det"/>
+	<result column="afectacion_det" property="afectacion_det"/>
+	<result column="afectacion_igv_det" property="afectacion_igv_det"/>
+	<result column="tipo_sistema_isc_det" property="tipo_sistema_isc_det"/>
+	<result column="porcentaje_det" property="porcentaje_det"/>
+	<result column="tipo_tributo_inter_det" property="tipo_tributo_inter_det"/>
+	<result column="asignado" property="asignado"/>
+	<result column="tipo_tributo_nombre_det" property="tipo_tributo_nombre_det"/>
+	<result column="tipo_tributo_codigo_det" property="tipo_tributo_codigo_det"/>
+
+</resultMap>
+
+
+</mapper>	

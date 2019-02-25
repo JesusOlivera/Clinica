@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.ClienteMapper">
+
+<resultMap id="clienteResult" type="com.certicom.scpf.domain.Cliente">
+	<id column="id_cliente" property="id_cliente"/>
+	<result column="tipo_docu_iden_cab" property="tipo_docu_iden_cab"/>
+	<result column="numero_docu_iden_cab" property="numero_docu_iden_cab"/>
+	<result column="nombre_cab" property="nombre_cab"/>
+	<result column="direccion" property="direccion"/>
+	<result column="telefono" property="telefono"/>
+	<result column="email" property="email"/>
+	<result column="contacto" property="contacto"/>
+
+</resultMap>
+
+
+</mapper>	

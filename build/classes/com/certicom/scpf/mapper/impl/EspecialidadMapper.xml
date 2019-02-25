@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.EspecialidadMapper">
+
+
+<resultMap id="especialidadResult" type="com.certicom.scpf.domain.Especialidad">
+	<id column="id_especialidad" property="id_especialidad" />
+	<result column="descripcion_especialidad" property="descripcion_especialidad" />
+	<result column="estado_especialidad" property="estado_especialidad"/>
+	
+
+</resultMap>
+
+		
+</mapper>	

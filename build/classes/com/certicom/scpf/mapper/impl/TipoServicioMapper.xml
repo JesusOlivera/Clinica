@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.TipoServicioMapper">
+
+
+<resultMap id="tipoServicioResult" type="com.certicom.scpf.domain.TipoServicio">
+	<id column="id_tipo_servicio" property="id_tipo_servicio" />
+	<result column="descripcion_tipo" property="descripcion_tipo" />
+	<result column="genera_ticket" property="genera_ticket" />
+	
+
+</resultMap>
+
+		
+</mapper>	

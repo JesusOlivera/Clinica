@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.MedicoMapper">
+
+
+	<resultMap id="medicoResult" type="com.certicom.scpf.domain.Medico">
+		<id column="id_medico" property="id_medico" />
+		<result column="id_especialidad" property="id_especialidad" />
+		<result column="tipo_documento" property="tipo_documento" />
+		<result column="numero_documento" property="numero_documento" />
+		<result column="nombre_medico" property="nombre_medico" />
+		<result column="estado" property="estado" />
+		<result column="fecha_nacimiento" property="fecha_nacimiento" />
+		<result column="direccion" property="direccion" />
+		<result column="telefono" property="telefono" />
+		<result column="email" property="email" />
+
+		<association property="especialidad" column="id_especialidad"
+			select="selectEspecialidad" />
+	</resultMap>
+
+	<select id="selectEspecialidad" parameterType="int"
+		resultType="com.certicom.scpf.domain.Especialidad">
+		SELECT * FROM t_especialidad WHERE
+		id_especialidad=#{id_especialidad}
+	</select>
+	
+	<select id="findAll" resultMap="medicoResult">
+			select med.*, esp.* from t_medico med 
+			inner join t_especialidad esp on med.id_especialidad=esp.id_especialidad
+			order by med.id_medico asc
+	</select>
+
+</mapper>	

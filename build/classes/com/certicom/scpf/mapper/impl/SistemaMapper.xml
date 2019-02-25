@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.certicom.scpf.mapper.SistemaMapper">
+
+	<resultMap id="sistemaResult" type="com.certicom.scpf.domain.Sistema">
+		<id column="cod_sistema" property="cod_sistema" />
+		<result column="nombre_sistema" property="nombre_sistema" />
+		<result column="descripcion" property="descripcion" />
+		<result column="ind_activo" property="ind_activo" />
+		<result column="fecha_registro" property="fecha_registro" />
+		<result column="fecha_modif" property="fecha_modif" />
+	</resultMap>
+
+	<select id="listSistema" resultType="com.certicom.scpf.domain.Sistema">
+		Select * from
+		public.t_sistema order by nombre_sistema asc
+	</select>
+
+
+	<delete id="deleteSistema" parameterType="Long">
+		DELETE FROM t_sistema
+		WHERE cod_sistema = #{cod_sistema}
+	</delete>
+
+	<insert id="insertSistema" parameterType="com.certicom.scpf.domain.Sistema">
+	   INSERT INTO
+        t_sistema(nombre_sistema,descripcion,ind_activo)
+        values
+        (#{nombre_sistema},#{descripcion},#{ind_activo})
+	</insert>
+	
+	<select id="findSistema" resultType="com.certicom.scpf.domain.Sistema"
+		parameterType="com.certicom.scpf.domain.Sistema">
+	</select>
+
+	<select id="findSistemaPorCodigo" resultMap="sistemaResult"
+		parameterType="int">
+		SELECT cod_sistema,nombre_sistema,descripcion,
+		ind_activo,fecha_registro,fecha_modif, usuario_registro,usuario_modif
+		from t_sistema
+		where cod_sistema =#{cod_sistema}
+	</select>
+
+	<update id="updateSistema" parameterType="com.certicom.scpf.domain.Sistema">
+		update t_sistema
+		SET
+		nombre_sistema = #{nombre_sistema},
+		descripcion = #{descripcion},
+		ind_activo  = #{ind_activo}
+		WHERE cod_sistema = #{cod_sistema}
+	</update>
+	
+	
+	<select id="listSistemaxPerfil" parameterType="com.certicom.scpf.domain.Perfil" resultMap="sistemaResult">
+		select distinct s.cod_sistema,s.nombre_sistema
+		from t_perfil p inner join t_opcion_menuxperfil o on p.cod_perfil=o.cod_perfil
+		inner join t_opcion_menu m on o.cod_menu=m.cod_menu 
+		inner join t_sistema s on s.cod_sistema=m.cod_sistema
+		where p.cod_perfil=#{cod_perfil}
+		order by  s.cod_sistema asc;
+	</select>
+	
+	
+	
+	
+	
+	
+
+</mapper>	

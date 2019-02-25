@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.certicom.scpf.mapper.UsuarioMapper">
+
+	<resultMap type="com.certicom.scpf.domain.Usuario"
+		id="usuarioResult">
+		<result column="idusuario" property="idusuario" />
+		<result column="nombre" property="nombre" />
+		<result column="apellido_paterno" property="apellido_paterno" />
+		<result column="apellido_materno" property="apellido_materno" />
+		<result column="dni" property="dni" />
+		<result column="login" property="login" />
+		<result column="password" property="password" />
+		<result column="estado" property="estado" />
+		<result column="email" property="email" />
+		<result column="desEmpresa" property="desEmpresa" />
+		<result column="desNegocio" property="desNegocio" />
+		
+		<result column="fecha_registro" property="fecha_registro" />
+		<result column="fecha_acceso" property="fecha_acceso" />
+		<result column="cod_perfil" property="cod_perfil" />
+		<result column="id_centro_atencion" property="id_centro_atencion" />
+		<result column="fecha_cambio_password" property="fecha_cambio_password" />
+		<result column="es_nuevo" property="es_nuevo" javaType="boolean" jdbcType="BOOLEAN"  />
+		<!-- Ejecutivo -->
+		<result column="desTipoPlanilla" property="desTipoPlanilla" />
+		<result column="desCargo" property="desCargo" />
+		<result column="imagen" property="imagen" /> 	
+		<result column="fecha_ingreso" property="fecha_ingreso" /> 
+		<result column="departamento" property="departamento" /> 
+		<result column="provincia" property="provincia" /> 
+		<result column="distrito" property="distrito" /> 
+		<result column="id_oficina" property="id_oficina" /> 
+		<result column="id_planilla" property="id_planilla" /> 
+		<result column="id_cargo" property="id_cargo" /> 
+		<result column="sid_ubigeo" property="sid_ubigeo" /> 
+		<result column="id_empresa" property="id_empresa" />
+		<result column="id_negocio" property="id_negocio" />
+		<result column="fecha_cese" property="fecha_cese" />
+		<result column="motivo_cese" property="motivo_cese" />
+		
+		<result column="funcion" property="funcion" />
+		<result column="rpm" property="rpm" />
+		<result column="rpc" property="rpc" />
+		<result column="telefono" property="telefono" />
+		<result column="codigo_banco" property="codigoBanco" />
+		<result column="codigo_banco_supervisor" property="codigoBancoSupervisor" />
+		 
+	</resultMap>
+
+
+	<select id="buscarPorLoginClave" parameterType="com.certicom.scpf.domain.Usuario"
+		resultMap="usuarioResult">
+		SELECT
+		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,fecha_acceso,es_nuevo,id_centro_atencion,id_negocio, codigo_banco as codigoBanco  
+		from t_usuario
+		where login =#{login} And password=#{password}
+	</select>
+
+	<select id="buscarPorDNI" parameterType="String" resultMap="usuarioResult">
+		SELECT
+		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo 
+		from t_usuario
+		where dni =#{dni}
+	</select>
+
+	<select id="buscarPorNombre" parameterType="String" resultMap="usuarioResult">
+		SELECT
+		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod
+		from t_usuario
+		where nombre =#{nombre}
+	</select>
+
+	<select id="buscarPorApellido" parameterType="String" resultMap="usuarioResult">
+		SELECT
+		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod
+		from t_usuario
+		where apellido_paterno =#{apellido_paterno}
+	</select>
+
+	<select id="buscarPorId" parameterType="int" resultMap="usuarioResult">
+		SELECT
+		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo,id_centro_atencion,
+		id_cargo,id_planilla,imagen,id_negocio,id_empresa   
+		from t_usuario
+		where idusuario =#{idusuario}
+	</select>
+
+
+	<insert id="insertUsuario" parameterType="com.certicom.scpf.domain.Usuario">
+		INSERT INTO t_usuario(dni,nombre, apellido_paterno,apellido_materno,email,login,password,
+		direccion,estado,es_nuevo,id_centro_atencion,id_empresa,id_negocio,estado_planilla)
+		values
+		(#{dni},#{nombre},#{apellido_paterno},#{apellido_materno},#{email},#{login},#{password},
+		#{direccion},#{estado},#{es_nuevo},#{id_centro_atencion},#{id_empresa},#{id_negocio},#{estado_planilla})
+	</insert>
+
+	<select id="getlistaUsuario" resultMap="usuarioResult">
+		SELECT a.idusuario,a.dni, a.nombre, a.apellido_paterno, a.apellido_materno, a.email, a.direccion, a.fecha_registro, a.login,a.login,a.password,
+		a.fecha_acceso, a.estado, a.es_nuevo, a.id_centro_atencion, b.nombre as nombre_centro_atencion
+		FROM
+		t_usuario a, t_centros_atencion b
+		WHERE a.id_centro_atencion = b.id_centro_atencion  
+		order by idusuario asc
+	</select>
+	
+	<select id="getlistaEjecutivo" resultMap="usuarioResult">
+		SELECT a.idusuario,a.dni, a.nombre, a.apellido_paterno, a.apellido_materno, a.email, a.direccion, a.fecha_registro, a.login,a.login,a.password, a.codigo_banco as codigoBanco, 
+		a.codigo_banco_supervisor as codigoBancoSupervisor,
+		a.fecha_acceso, a.estado, a.es_nuevo, a.id_centro_atencion, b.nombre as nombre_centro_atencion,a.id_negocio,a.departamento, 
+		a.provincia,a.distrito,a.fecha_ingreso,a.id_oficina,a.sid_ubigeo,a.id_supervisor,a.id_coordinador,a.estado_planilla, a.fecha_cese,
+		a.motivo_cese, a.funcion, a.rpm, a.rpc, a.telefono
+		FROM (t_usuario a inner join  t_centros_atencion b on a.id_centro_atencion = b.id_centro_atencion)
+		order by a.apellido_paterno, a.apellido_materno, a.nombre
+	</select>	
+
+	<select id="getlistaEjecutivoByNegocio" resultMap="usuarioResult">
+		SELECT a.idusuario,a.dni, a.nombre, a.apellido_paterno, a.apellido_materno, a.email, a.direccion, a.fecha_registro, a.login,a.login,a.password, a.codigo_banco as codigoBanco,
+		a.codigo_banco_supervisor as codigoBancoSupervisor, 
+		a.fecha_acceso, a.estado, a.es_nuevo, a.id_centro_atencion, b.nombre as nombre_centro_atencion,a.id_negocio,
+		a.departamento, a.provincia,a.distrito,a.fecha_ingreso,a.id_oficina,a.sid_ubigeo,a.id_supervisor,a.id_coordinador,
+		a.estado_planilla, a.fecha_cese,a.motivo_cese, a.funcion, a.rpm, a.rpc, a.telefono
+		FROM (t_usuario a inner join  t_centros_atencion b on a.id_centro_atencion = b.id_centro_atencion)
+		order by a.apellido_paterno, a.apellido_materno, a.nombre
+	</select>	
+	
+	<update id="actualizarEstado" parameterType="com.certicom.scpf.domain.Usuario">
+		UPDATE t_usuario
+		SET estado = #{estado}
+		WHERE idusuario = #{idusuario}
+	</update>
+
+	<update id="actualizar" parameterType="com.certicom.scpf.domain.Usuario">
+		update t_usuario
+		SET dni =
+		#{dni},
+		nombre = #{nombre},
+		apellido_paterno = #{apellido_paterno},
+		apellido_materno = #{apellido_materno},
+		email = #{email},
+		direccion = #{direccion},
+		estado = #{estado},
+		fecha_acceso = #{fecha_acceso},
+		es_nuevo = #{es_nuevo},
+		password = #{password},
+		login = #{login},
+		id_centro_atencion = #{id_centro_atencion},
+		id_empresa =  #{id_empresa},
+		id_negocio = #{id_negocio}
+		WHERE idusuario = #{idusuario}
+	</update>
+	
+	<update id="actualizarLogin" parameterType="com.certicom.scpf.domain.Usuario">
+		update t_usuario
+		SET 
+		login = #{login},
+		password = #{password}
+		WHERE idusuario = #{idusuario}
+	</update>
+	
+	
+	<update id="actualizarPassword" parameterType="com.certicom.scpf.domain.Usuario">
+		update t_usuario
+		SET 
+		password = #{password},
+		fecha_cambio_password = #{fecha_cambio_password},
+		es_nuevo = #{es_nuevo}
+		WHERE idusuario = #{idusuario}
+	</update>
+	
+	
+	<update id="actualizarFechaAcceso" parameterType="com.certicom.scpf.domain.Usuario">
+		update t_usuario SET fecha_acceso = #{fecha_acceso}
+		WHERE idusuario = #{idusuario}
+	</update>
+	
+	<select id="getlistaUsuario_Preparador" parameterType="com.certicom.scpf.domain.Usuario" resultMap="usuarioResult">
+		SELECT		c.idusuario, dni,	c.nombre,	apellido_paterno, apellido_materno,
+		email, direccion, login
+		FROM 	t_perfil a, t_usuarioxperfil b, t_usuario c
+		where 
+		a.cod_perfil  	 	=  b.cod_perfil
+		AND b.idusuario	 	=  c.idusuario
+		AND a.ind_activo 	=  #{estado}
+		AND b.ind_activo 	=  #{estado}
+		AND c.estado     	=  #{estado}
+		AND a.nombre	 	=  'PREPARADOR'
+	</select>
+	
+	
+	<select id="getlistaUsuario_byCentroAtencion" parameterType="Integer" resultMap="usuarioResult">
+		select * from t_usuario where id_centro_atencion = #{id_centro_atencion}
+	</select>
+	
+	<select id="getlistaUsuario_Digitalizador" parameterType="com.certicom.scpf.domain.Usuario" resultMap="usuarioResult">
+		SELECT		c.idusuario, dni,	c.nombre,	apellido_paterno, apellido_materno,
+		email, direccion, login
+		FROM 	t_perfil a, t_usuarioxperfil b, t_usuario c
+		where 
+		a.cod_perfil  	 	=  b.cod_perfil
+		AND b.idusuario	 	=  c.idusuario
+		AND a.ind_activo 	=  #{estado}
+		AND b.ind_activo 	=  #{estado}
+		AND c.estado     	=  #{estado}
+		AND a.nombre	 	=  'DIGITALIZADOR'
+	</select>
+	
+	<select id="getlistaUsuario_Perfil" parameterType="com.certicom.scpf.domain.Usuario" resultMap="usuarioResult">
+		SELECT		c.idusuario, dni,	c.nombre,	apellido_paterno, apellido_materno,
+		email, direccion, login
+		FROM 	t_perfil a, t_usuarioxperfil b, t_usuario c
+		where 
+		a.cod_perfil  	 	=  b.cod_perfil
+		AND b.idusuario	 	=  c.idusuario
+		AND a.ind_activo 	=  #{estado}
+		AND b.ind_activo 	=  #{estado}
+		AND c.estado     	=  #{estado}
+		AND a.cod_perfil	 	=  #{cod_perfil}
+	</select>
+	
+	<select id="buscarPorLogin" parameterType="String"
+		resultMap="usuarioResult">
+		SELECT
+		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo,id_centro_atencion
+		from t_usuario
+		where login =#{login} 
+	</select>
+	
+	<!-- eliminar usuario: will -->
+	<delete id="deleteUsuario" parameterType="int">
+		Delete from t_usuario
+		where idusuario=#{idusuario}
+	</delete>
+	
+	
+	<!--listar usarios por proceso  -->
+	<select id="listarUsuariosXPerfilProceso" parameterType="String" resultMap="usuarioResult">
+		select us.idusuario,us.nombre,us.login,us.apellido_paterno, us.apellido_materno,pr.cod_perfil 
+		from t_usuario us, t_usuarioxperfil pu, t_perfil pr
+		where pu.idusuario = us.idusuario
+		and pu.cod_perfil = pr.cod_perfil
+		and pr.proceso=#{proceso}
+	</select>
+	
+	<select id="obtenerUsuariosxOficina" parameterType="Integer" resultMap="usuarioResult">
+		SELECT
+		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,estado,fecha_registro,fecha_mod
+		from t_usuario
+		where id_centro_atencion =#{idoficina} and estado = 'true'
+	</select>
+	
+	
+</mapper>
+
