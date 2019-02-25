@@ -26,9 +26,9 @@ public interface TicketMapper {
 	@Select("select count(*) from t_ticket where tipo_ticket = 'EX'")
 	Integer obtenerMaxEX();
 	
-	public List<Ticket> findAllPAGINATOR(@Param("first") Integer  first, @Param("pageSize") Integer pageSize,  @Param("filters") Map<String,Object> filters, @Param("sortField") String sortField, @Param("sortOrder") String sortOrder) throws Exception;
+	public List<Ticket> findAllPAGINATOR(@Param("anio") Integer anio, @Param("mes") Integer mes, @Param("id_medico") Integer id_medico,@Param("first") Integer  first, @Param("pageSize") Integer pageSize,  @Param("filters") Map<String,Object> filters, @Param("sortField") String sortField, @Param("sortOrder") String sortOrder) throws Exception;
 
-	public Integer countTicketPAGINATOR(@Param("filters") Map<String,Object> filters)throws Exception;
+	public Integer countTicketPAGINATOR(@Param("anio") Integer anio, @Param("mes") Integer mes, @Param("id_medico") Integer id_medico,@Param("filters") Map<String,Object> filters)throws Exception;
 	
 	@Update("update t_ticket set id_producto = #{id_producto}, id_tipo_servicio = #{id_tipo_servicio}, id_medico = #{id_medico}, id_especialidad = #{id_especialidad}, id_paciente = #{id_paciente}, id_cliente = #{id_cliente}, fecha_ticket = #{fecha_ticket}, hora_ticket = #{hora_ticket}, estado = #{estado}, integrado_sunat = #{integrado_sunat}, encolado = #{encolado}, flag_externo = #{flag_externo}, nro_ticket = #{nro_ticket}, tipo_ticket = #{tipo_ticket} "			
 			+ "where id_ticket= #{id_ticket}")

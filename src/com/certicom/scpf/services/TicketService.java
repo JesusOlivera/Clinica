@@ -54,18 +54,18 @@ public class TicketService implements TicketMapper{
 	}
 
 	@Override
-	public List<Ticket> findAllPAGINATOR(Integer first, Integer pageSize,
+	public List<Ticket> findAllPAGINATOR(Integer anio, Integer mes, Integer id_medico,Integer first, Integer pageSize,
 			Map<String, Object> filters, String sortField, String sortOrder)
 			throws Exception {
 		// TODO Auto-generated method stub
-		return ticketMapper.findAllPAGINATOR(first, pageSize, filters, sortField, sortOrder);
+		return ticketMapper.findAllPAGINATOR(anio,mes, id_medico,first, pageSize, filters, sortField, sortOrder);
 	}
 
 	@Override
-	public Integer countTicketPAGINATOR(Map<String, Object> filters)
+	public Integer countTicketPAGINATOR(Integer anio, Integer mes, Integer id_medico,Map<String, Object> filters)
 			throws Exception {
 		// TODO Auto-generated method stub
-		return ticketMapper.countTicketPAGINATOR(filters);
+		return ticketMapper.countTicketPAGINATOR(anio,mes, id_medico, filters);
 	}
 
 	

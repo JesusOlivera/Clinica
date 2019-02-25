@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -25,6 +26,7 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -33,6 +35,7 @@ import com.certicom.scpf.domain.Comprobante;
 import com.certicom.scpf.domain.ComprobanteDetalle;
 import com.certicom.scpf.domain.ConsultaMedica;
 import com.certicom.scpf.domain.DetalleComprobanteRep;
+import com.certicom.scpf.domain.DomicilioFiscal;
 import com.certicom.scpf.domain.Emisor;
 import com.certicom.scpf.domain.ExamenAuxiliar;
 import com.certicom.scpf.domain.Log;
@@ -49,6 +52,7 @@ import com.certicom.scpf.domain.Vendedor;
 import com.certicom.scpf.services.ComprobanteDetalleService;
 import com.certicom.scpf.services.ComprobanteService;
 import com.certicom.scpf.services.ConsultaMedicaService;
+import com.certicom.scpf.services.DomicilioFiscalService;
 import com.certicom.scpf.services.EmisorService;
 import com.certicom.scpf.services.ExamenAuxiliarService;
 import com.certicom.scpf.services.MedicoService;
@@ -78,6 +82,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private List<TipoServicio> listTipoServicios;
 	private List<Producto> listProductos;
 	private List<Medico> listMedicos;
+	private DomicilioFiscal domicilioFiscalSelec;
+	private TablaTablasDetalle tablaTablasDetalleTipoComprobante;
 	//private List<Ticket> listTickets;
 	private LazyDataModel<Ticket> listTickets;
 	private List<Ticket> listFiltroTickets;
@@ -99,6 +105,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private Receta receta;
 	private PacienteService pacienteService;
 	private TipoServicioService tipoServicioService;
+	private DomicilioFiscalService domicilioFiscalService;
 	private ProductoService productoService;
 	private MedicoService medicoService;
 	private TicketService ticketService;
@@ -113,6 +120,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private LogMB logmb;
 	private Date fechaActual;
 	private List<Object> listCampos;
+	private String anio;
+	private String mes;
+	private Integer id_medico;
 	
 	private Integer id_tipo_servicio_EX;
 	private Integer id_producto_EX;
@@ -151,6 +161,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.producto = new Producto();
 		this.productoService = new ProductoService();
 		this.tipoServicioService = new TipoServicioService();
+		this.domicilioFiscalService = new DomicilioFiscalService();
 		this.ticketService = new TicketService();		
 		this.medicoService = new MedicoService();
 		this.pacienteService = new PacienteService();
@@ -178,6 +189,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 		this.fechaActual = new Date();
 		
+		Format formatoAnio = new SimpleDateFormat("yyyy");
+		Format formatoMes= new SimpleDateFormat("MM");
+		
 		try {
 			this.tablaTablasDetalleService = new TablaTablasDetalleService();
 			this.modoPagoService= new ModoPagoService();
@@ -193,6 +207,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.emisorSelec = this.emisorService.findAll().get(0);
 			this.listaComprobanteDetalle = new ArrayList<ComprobanteDetalle>();
 			this.comprobanteSelec= new Comprobante();
+			this.anio=formatoAnio.format(new Date());
+			this.mes=formatoMes.format(new Date());
 			listarTicketFiltros();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -200,11 +216,17 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		}
 	}
 	
+	public void onItemDocumento(SelectEvent event)  throws Exception{
+		
+		
+		 this.disableBuscar = Boolean.FALSE; 
+		
+	}
+	
 	public void listarTicketFiltros(){
 		//System.out.println(" listarComprobantesFiltros --->tipo_comprobante "+this.tipo_comprobante);
 		
-		 this.disableBuscar = Boolean.FALSE; 
-		 this.disableRespuesta = Boolean.FALSE; 		
+		 this.disableBuscar = Boolean.FALSE; 		
 		
 		this.listTickets = new LazyDataModel<Ticket>() {
 			private static final long serialVersionUID = 1L;
@@ -238,9 +260,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			 @Override  
 	            public List<Ticket> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {              
 					try {
-						totalRow = ticketService.countTicketPAGINATOR(filters);
+						totalRow = ticketService.countTicketPAGINATOR(Integer.parseInt(anio),Integer.parseInt(mes),id_medico,filters);
 												
-						  datasource = ticketService.findAllPAGINATOR(first, pageSize, filters, "t.id_ticket", "DESC");
+						  datasource = ticketService.findAllPAGINATOR(Integer.parseInt(anio),Integer.parseInt(mes),id_medico,first, pageSize, filters, "t.id_ticket", "DESC");
 						 return datasource;
 					} catch (Exception e) {
 						System.out.println("NULL ");
@@ -255,9 +277,96 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 					return totalRow;
 	            }
 			 
-		};
+		};		
+		
+	}
+	
+	public void obtenerAbreviatura() throws Exception{
+		
+		System.out.println("Estoy aqui");
+		
+		String sTexto = "";
+		
+		System.out.println(sTexto);
+		
+		String sValor = "";
+		
+		for (TablaTablasDetalle tablaTablasDetalle : listTablaTablasDetallesComprobante) {
+			System.out.println("codigo_catalogo : "+tablaTablasDetalle.getCodigo_catalogo());
+			System.out.println("tipo_comprobante "+this.comprobanteSelec.getTipo_comprobante());
+			if(tablaTablasDetalle.getCodigo_catalogo().equals(this.comprobanteSelec.getTipo_comprobante())){
+				sTexto = tablaTablasDetalle.getDescripcion_largo();
+				sValor = tablaTablasDetalle.getCodigo_catalogo();
+				this.tablaTablasDetalleTipoComprobante = tablaTablasDetalle;
+			}
+			
+		}
+		System.out.println("sTexto " + sTexto);
+		System.out.println("sValor " + sValor);
+		
+		StringTokenizer stPalabras = new StringTokenizer(sTexto);
 		
 		
+		
+		
+		String sPalabra = "";
+		switch(sValor){
+		case "01": sPalabra="F";
+		break;
+		case "03": sPalabra="B";
+			break;
+		case "07": sPalabra="F";
+			break;
+		case "08": sPalabra="F";
+			break;
+		
+		}
+
+//		while (stPalabras.hasMoreTokens()) {
+//			  sPalabra = sPalabra + stPalabras.nextToken().substring(0,1);
+//			  
+//			  System.out.println(sPalabra);
+//		}
+//		
+		this.domicilioFiscalSelec = this.domicilioFiscalService.findById(this.emisorSelec.getId_domicilio_fiscal_cab());
+		
+		int cantDom = 3;
+		
+		String dom="";
+		
+		for (int i = 0; i < (cantDom - this.domicilioFiscalSelec.getDomicilio().length()); i++) {
+			
+			dom = dom + "0";
+			
+		}
+		
+		dom = dom + this.domicilioFiscalSelec.getDomicilio();
+		
+		int cantComprobante = 8;
+		
+		String com = "";
+		
+		Integer valor = Integer.parseInt(sValor);
+		valor = valor + 1;
+		
+//		String sValue = String.valueOf(valor);
+		String sValue = String.valueOf(this.comprobanteService.getCorrelativoComprobante(this.comprobanteSelec.getTipo_comprobante()));
+		System.out.println("sValue ===> "+sValue);
+		for (int i = 0; i < (cantComprobante - sValue.length()); i++) {
+			
+			com = com + "0";
+			
+		}	
+		
+		com = com + sValue;
+		
+		this.comprobanteSelec.setNumero_serie_documento_cab(sPalabra+dom+"-"+com);
+		
+		//this.comprobanteSelec.setCliente(this.ticketSelected.getCliente());
+		
+		validarCampos(0, this.comprobanteSelec.getTipo_comprobante());
+		
+		validarCampos(1, this.comprobanteSelec.getNumero_serie_documento_cab());
 		
 	}
 	
@@ -320,13 +429,13 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		System.out.println("CP: "+this.cp);
 		if(this.cp.equals("CLIENTE")){
 			this.nombrePacienteCliente = this.ticketSelected.getCliente().getNombre_cab();
-			this.comprobanteSelec.setNumero_serie_documento_cab(this.ticketSelected.getCliente().getNumero_docu_iden_cab());
+			//this.comprobanteSelec.setNumero_serie_documento_cab(this.ticketSelected.getCliente().getNumero_docu_iden_cab());
 		}else{
 			this.nombrePacienteCliente = this.ticketSelected.getPaciente().getNombre();
-			this.comprobanteSelec.setNumero_serie_documento_cab(this.ticketSelected.getPaciente().getNumero_documento());
+			//this.comprobanteSelec.setNumero_serie_documento_cab(this.ticketSelected.getPaciente().getNumero_documento());
 		}
 		
-		validarCampos(1, this.comprobanteSelec.getNumero_serie_documento_cab());
+		//validarCampos(1, this.comprobanteSelec.getNumero_serie_documento_cab());
 	}
 	
 	public void mostrarDatosCliente(){
@@ -1635,6 +1744,47 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setListCampos(List<Object> listCampos) {
 		this.listCampos = listCampos;
+	}
+
+	public DomicilioFiscal getDomicilioFiscalSelec() {
+		return domicilioFiscalSelec;
+	}
+
+	public void setDomicilioFiscalSelec(DomicilioFiscal domicilioFiscalSelec) {
+		this.domicilioFiscalSelec = domicilioFiscalSelec;
+	}
+
+	public TablaTablasDetalle getTablaTablasDetalleTipoComprobante() {
+		return tablaTablasDetalleTipoComprobante;
+	}
+
+	public void setTablaTablasDetalleTipoComprobante(
+			TablaTablasDetalle tablaTablasDetalleTipoComprobante) {
+		this.tablaTablasDetalleTipoComprobante = tablaTablasDetalleTipoComprobante;
+	}
+
+	public String getAnio() {
+		return anio;
+	}
+
+	public void setAnio(String anio) {
+		this.anio = anio;
+	}
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public Integer getId_medico() {
+		return id_medico;
+	}
+
+	public void setId_medico(Integer id_medico) {
+		this.id_medico = id_medico;
 	}	
 
 }
