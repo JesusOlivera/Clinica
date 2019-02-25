@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<association property="especialidad" column="id_especialidad" select="selectEspecialidad"/>
 	<association property="paciente" column="id_paciente" select="selectPaciente"/>
 	<association property="cliente" column="id_cliente" select="selectCliente"/>
+	<association property="consultaMedica" column="id_consulta_medica" select="selectConsultaMedica"/>
 	
 </resultMap>
 
@@ -37,6 +38,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		inner join t_paciente pac on pac.id_paciente=con.id_paciente
 		inner join t_cliente cl on cl.id_cliente=con.id_cliente
 	
+	</select>
+	
+	<select id="selectConsultaMedica" parameterType="int" resultType="com.certicom.scpf.domain.ConsultaMedica">
+		SELECT * FROM t_consulta_medica WHERE id_consulta_medica=#{id_consulta_medica}
 	</select>
 
 	<select id="selectProducto" parameterType="int" resultType="com.certicom.scpf.domain.Producto">

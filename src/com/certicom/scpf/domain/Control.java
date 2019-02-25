@@ -21,6 +21,7 @@ public class Control {
 	  private Especialidad especialidad;
 	  private Paciente paciente;
 	  private Cliente cliente;
+	  private ConsultaMedica consultaMedica;
 	  
 	public Integer getId_control() {
 		return id_control;
@@ -117,6 +118,12 @@ public class Control {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	public ConsultaMedica getConsultaMedica() {
+		return consultaMedica;
+	}
+	public void setConsultaMedica(ConsultaMedica consultaMedica) {
+		this.consultaMedica = consultaMedica;
 	}
 	  
 	  

@@ -43,9 +43,27 @@
 										
 					<p:column headerText="Orden" width="25" style="width:3%" >
 						#{nro+1}
+					</p:column>
+					
+					<p:column width="150px" headerText="Tipo" >
+						<h:outputText value="#{p.producto.descripcion_prod_det}" />
 					</p:column>					
 			        
+					<p:column width="150px" headerText="Medico" >
+						<h:outputText value="#{p.medico.nombre_medico}" />
+					</p:column>
+						
+					<p:column style="width:150px" headerText="Paciente">
+						<h:outputText value="#{p.paciente.nombre}"/>
+					</p:column>
 					
+					<p:column style="width:150px" headerText="Fech. Inicio">
+						<h:outputText value="#{p.fecha_inicio}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+					</p:column>
+					
+					<p:column style="width:150px" headerText="Fech. Fin">
+						<h:outputText value="#{p.fecha_fin}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+					</p:column>
 
 					
 			        
