@@ -74,7 +74,7 @@
 					  <p:column headerText="Ticket" style="width:15%;text-align: center">
 					
 						<p:commandButton title="Generar Ticket"  update=":dlgDetNuevoTicket" actionListener="#{examenAuxiliarMB.nuevoTicket(p)}"
-										 oncomplete="PF('dlgNuevoTicket').show();" icon="icon-prepare">
+										  icon="icon-prepare">
 						</p:commandButton> 								
 					</p:column>
 
@@ -181,6 +181,12 @@
 					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoExamen').hide()" icon="icon-cancel" />
 					</h:form>	
 			</p:dialog>
+			
+			<p:confirmDialog id="dlgDetAlerta" appendTo="@(body)"
+					message="Ya se genero un ticket desde este examen" header="Alerta"
+					severity="alert" widgetVar="dlgAlerta">
+		        <p:commandButton value="Aceptar" oncomplete="PF('dlgAlerta').hide()"/>
+		    </p:confirmDialog>
 
 
 		</p:panel>

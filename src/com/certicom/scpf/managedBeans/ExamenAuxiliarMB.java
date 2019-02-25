@@ -22,6 +22,7 @@ import com.certicom.scpf.services.TipoServicioService;
 import com.pe.certicom.scpf.commons.Constante;
 import com.pe.certicom.scpf.commons.FacesUtils;
 import com.pe.certicom.scpf.commons.GenericBeans;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean(name="examenAuxiliarMB")
 @ViewScoped
@@ -82,7 +83,7 @@ public class ExamenAuxiliarMB extends GenericBeans implements Serializable{
 	}
 	
 	public void nuevoTicket(ExamenAuxiliar examenAuxiliar){
-		
+		RequestContext context = RequestContext.getCurrentInstance();  
 		if(!examenAuxiliar.getTicket_generado()){
 			Integer cifras=6;		
 			Integer max = this.ticketService.obtenerMaxEX();	
@@ -110,8 +111,11 @@ public class ExamenAuxiliarMB extends GenericBeans implements Serializable{
 			
 			this.listaMedicos=this.medicoService.findAll();
 			
+			context.execute("PF('dlgNuevoTicket').show()");
+			
 		}else{
-			FacesUtils.showFacesMessage("Ya se genero un ticket desde este examen", 3);
+			//FacesUtils.showFacesMessage("Ya se genero un ticket desde este examen", 3);
+			context.execute("PF('dlgAlerta').show()");
 		}
 	
 		
@@ -120,12 +124,16 @@ public class ExamenAuxiliarMB extends GenericBeans implements Serializable{
 	
 	
 	public void guardarTicket(){
-		
+		RequestContext context = RequestContext.getCurrentInstance();
 		
 		this.ticketService.crearTicket(this.ticketSelected);
 		this.examenAuxiliar.setTicket_generado(Boolean.TRUE);
 		this.examenAuxiliarService.actualizarExamenAuxiliar(this.examenAuxiliar);
 		this.listaExamenAuxiliares=this.examenAuxiliarService.findAll();
+		
+		FacesUtils.showFacesMessage("Se genero un ticket para este examen", 3);
+		
+		context.update("msgGeneral");
 	}
 		
 	public String generarNroTicket(Integer max, Integer cifras){
