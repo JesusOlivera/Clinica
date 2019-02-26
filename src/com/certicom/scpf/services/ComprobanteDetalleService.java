@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.certicom.scpf.domain.Cliente;
+import com.certicom.scpf.domain.Comprobante;
 import com.certicom.scpf.domain.ComprobanteDetalle;
 import com.certicom.scpf.mapper.ComprobanteDetalleMapper;
 import com.pe.certicom.scpf.commons.ServiceFinder;
@@ -63,28 +64,30 @@ public class ComprobanteDetalleService implements ComprobanteDetalleMapper{
 			
 		}
 		sqlSession.close();
-//		
-//		try{
-//		
-//			//sqlSession.commit(true);
-//			for (ComprobanteDetalle fpd:cDetalle) {
-//				fpd.setId_comprobante(id_comprobante);
-//				daoObj.crearComprobanteDetalle(fpd);
-//				
-//			}
-//			resultado=Boolean.TRUE;
-//			//sqlSession.commit();
-//			
-//		}catch (Exception e) {
-//			// TODO: handle exception
-//			resultado=Boolean.FALSE;
-//		}finally{
-//			sqlSession.close();
-//		}
-		
-		//return resultado;
-		//facturacionPlanillaDetalleMapper.eliminarFacturacionPlanillaDetalle(codFacturacionPlanillaDetalle);
 	}
+	
+	public void insertBatchComprobanteDetalle(List<ComprobanteDetalle> cDetalle, Integer id_comprobante, Comprobante comprobante) throws Exception {
+		// TODO Auto-generated method stub
+		Boolean resultado=Boolean.FALSE;
+		SqlSessionFactory sqlSessionFactory =  (SqlSessionFactory)ServiceFinder.findBean("sqlSessionFactory");
+		SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+		ComprobanteDetalleMapper daoObj= (ComprobanteDetalleMapper)sqlSession.getMapper(ComprobanteDetalleMapper.class);
+		
+		System.out.println("id_comprobante==> "+id_comprobante+" Longitud: "+cDetalle.size());
+		for (ComprobanteDetalle fpd:cDetalle) {
+			fpd.setId_comprobante(id_comprobante);
+			System.out.println("MODO PGO :"+fpd.getId_modo_pago());
+			fpd.setTipo_comprobante(comprobante.getTipo_comprobante());
+			fpd.setId_cliente(comprobante.getId_cliente());
+			fpd.setId_domicilio_fiscal_cab(comprobante.getId_domicilio_fiscal_cab());
+			fpd.setId_emisor(comprobante.getId_emisor());
+			fpd.setId_modo_pago(comprobante.getId_modo_pago());
+			this.comprobanteDetalleMapper.crearComprobanteDetalle(fpd);
+			
+		}
+		sqlSession.close();
+	}
+	
 
 	@Override
 	public List<ComprobanteDetalle> findByIdComprobante(Integer id_comprobante) throws Exception {

@@ -34,6 +34,7 @@ public class ClienteMB extends GenericBeans implements Serializable{
 	private Cliente clienteSelec;
 	private Paciente paciente;
 	private List<Cliente> listaClientes;
+	private List<Cliente> listaClientesFilter;
 	private Boolean editarCliente;
 	private MenuServices menuServices;
 	private ClienteService clienteService;
@@ -202,6 +203,62 @@ public class ClienteMB extends GenericBeans implements Serializable{
 
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+
+	public List<Cliente> getListaClientesFilter() {
+		return listaClientesFilter;
+	}
+
+	public void setListaClientesFilter(List<Cliente> listaClientesFilter) {
+		this.listaClientesFilter = listaClientesFilter;
+	}
+
+	public MenuServices getMenuServices() {
+		return menuServices;
+	}
+
+	public void setMenuServices(MenuServices menuServices) {
+		this.menuServices = menuServices;
+	}
+
+	public ClienteService getClienteService() {
+		return clienteService;
+	}
+
+	public void setClienteService(ClienteService clienteService) {
+		this.clienteService = clienteService;
+	}
+
+	public PacienteService getPacienteService() {
+		return pacienteService;
+	}
+
+	public void setPacienteService(PacienteService pacienteService) {
+		this.pacienteService = pacienteService;
+	}
+
+	public TablaTablasDetalleService getTablaTablasDetalleService() {
+		return tablaTablasDetalleService;
+	}
+
+	public void setTablaTablasDetalleService(TablaTablasDetalleService tablaTablasDetalleService) {
+		this.tablaTablasDetalleService = tablaTablasDetalleService;
+	}
+
+	public Log getLog() {
+		return log;
+	}
+
+	public void setLog(Log log) {
+		this.log = log;
+	}
+
+	public LogMB getLogmb() {
+		return logmb;
+	}
+
+	public void setLogmb(LogMB logmb) {
+		this.logmb = logmb;
 	}
 
 	

@@ -157,8 +157,8 @@
 						</p:commandButton>	
 					</p:column>
 					
-					<p:column headerText="Comprobante." style="width:80px;text-align: center">					
-						<p:commandButton title="Generar Comprobante"  update=":dlgDetNuevoComprobante" 
+					<p:column headerText="Comprobante." style="width:80px;text-align: center" >					
+						<p:commandButton title="Generar Comprobante"  update=":dlgDetNuevoComprobante" disabled="#{p.estado eq 'FACTURADO' }"
 											actionListener="#{generaTicketMB.prepararComprobante(p)}"
 										 	oncomplete="PF('dlgNuevoComprobante').show();" 
 										 	icon="icon-facturacion">
@@ -345,7 +345,7 @@
 						
 						<h:panelGrid>
 					         <p:commandButton value="Generar Comprobante" actionListener="#{generaTicketMB.generarComprobante()}" 
-					         	update=":formAccion: :formPN" disabled="#{generaTicketMB.generarComprobante}">
+					         	update=":formAccion: :formPN" disabled="#{generaTicketMB.generarComprobante}" oncomplete="PF('dlgNuevoComprobante').hide();" >
 							 </p:commandButton>
 						 </h:panelGrid>
 					

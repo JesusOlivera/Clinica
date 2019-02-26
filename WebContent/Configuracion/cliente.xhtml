@@ -38,7 +38,10 @@
 			<h:form id="formLista">
 				<p:dataTable id="dataCliente" var="p" value="#{clienteMB.listaClientes}" widgetVar="dtCliente" 
 					emptyMessage="No hay Clientes Disponibles." rowIndexVar="nro" 
-					 style="FONT-SIZE: 10px; ">
+					 style="FONT-SIZE: 10px; " paginator="true" filteredValue="#{clienteMB.listaClientesFilter}"
+							rows="10" paginatorPosition="bottom" 
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30" >
 					<f:facet name="header">Lista Cliente</f:facet>
 										
 					<p:column headerText="Orden" width="25" style="width:3%" >
@@ -49,11 +52,13 @@
 						<h:outputText value="#{p.desTipoDocumento}"/>
 					</p:column>
 					
-					<p:column style="width:50px" headerText="Número de Documento">
+					<p:column style="width:50px" headerText="Número de Documento" filterBy="#{p.numero_docu_iden_cab}"  
+							filterStyle="width:95%;" filterMatchMode="contains">
 						<h:outputText value="#{p.numero_docu_iden_cab}"/>
 					</p:column>
 					
-					<p:column style="width:100px" headerText="Nombre">
+					<p:column style="width:100px" headerText="Nombre" filterBy="#{p.nombre_cab}"  
+							filterStyle="width:95%;" filterMatchMode="contains">
 						<h:outputText value="#{p.nombre_cab}"/>
 					</p:column>
 					

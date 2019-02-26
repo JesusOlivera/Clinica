@@ -49,6 +49,7 @@ import com.certicom.scpf.domain.TablaTablasDetalle;
 import com.certicom.scpf.domain.Ticket;
 import com.certicom.scpf.domain.TipoServicio;
 import com.certicom.scpf.domain.Vendedor;
+import com.certicom.scpf.services.ClienteService;
 import com.certicom.scpf.services.ComprobanteDetalleService;
 import com.certicom.scpf.services.ComprobanteService;
 import com.certicom.scpf.services.ConsultaMedicaService;
@@ -150,6 +151,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private boolean generarComprobante;
 	private Boolean disableBuscar;
 	private Boolean disableRespuesta;
+	private ClienteService clienteService;
 	
 	@PostConstruct
 	public void inicia(){
@@ -162,6 +164,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.productoService = new ProductoService();
 		this.tipoServicioService = new TipoServicioService();
 		this.domicilioFiscalService = new DomicilioFiscalService();
+		this.comprobanteDetalleService=new ComprobanteDetalleService();
 		this.ticketService = new TicketService();		
 		this.medicoService = new MedicoService();
 		this.pacienteService = new PacienteService();
@@ -198,6 +201,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.comprobanteService = new ComprobanteService();
 			this.vendedorService = new VendedorService();
 			this.emisorService = new EmisorService();
+			this.clienteService=new ClienteService();
 			this.listTablaTablasDetallesComprobante = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPOS_DOCUMENTOS);
 			this.listTablaTablasDetallesOperacion = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPO_OPERACION);
 			this.listTablaTablasDetallesMoneda = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPO_DE_MONEDA);
@@ -381,7 +385,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		try {
 			Producto producto=this.ticketSelected.getProducto();
 			producto.setPrecio_final_editado_cliente(producto.getValor_unitario_prod_det());
-			
+			comprobanteDetalle.setId_producto(producto.getId_producto());
 			comprobanteDetalle.setProducto(producto);
 			comprobanteDetalle.setCant_unidades_item_det(new BigDecimal("1.00"));
 			
@@ -389,6 +393,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			comprobanteDetalle.setValor_venta_item_det(producto.getValor_unitario_prod_det().divide(new BigDecimal("1.18"), 2, RoundingMode.CEILING));
 			comprobanteDetalle.setSuma_tributos_det(comprobanteDetalle.getPrecio_venta_unitario_det().subtract(comprobanteDetalle.getValor_venta_item_det()));
 			
+			comprobanteDetalle.setMontoIGV(comprobanteDetalle.getSuma_tributos_det());
 			this.ingresarCliente = Boolean.FALSE;
 			
 			this.comprobanteSelec.setSuma_tributos_cab(comprobanteDetalle.getSuma_tributos_det());
@@ -690,6 +695,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			
 			//this.listTickets = this.ticketService.findAll();
 			context.update("msgGeneral");
+			listarTicketFiltros();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -928,37 +934,56 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		try {
 			
 			
+			if(this.cp.equals("CLIENTE")){
+				this.nombrePacienteCliente = this.ticketSelected.getCliente().getNombre_cab();					
+					this.comprobanteSelec.setId_cliente(this.ticketSelected.getCliente().getId_cliente());
+					this.comprobanteSelec.setTipo_docu_iden_cab(this.ticketSelected.getCliente().getTipo_docu_iden_cab());
+			}else{
+				this.nombrePacienteCliente = this.ticketSelected.getPaciente().getNombre();
+				Cliente cl=this.clienteService.findByFiltroNroDni(this.ticketSelected.getPaciente().getNumero_documento());
+				this.comprobanteSelec.setId_cliente(cl.getId_cliente());
+				this.comprobanteSelec.setTipo_docu_iden_cab(cl.getTipo_docu_iden_cab());
+			}
+			
 			System.out.println("  id_comprobante :"+this.comprobanteSelec.getId_comprobante());
+			this.comprobanteSelec.setId_domicilio_fiscal_cab(this.domicilioFiscalSelec.getId_domicilio_fiscal_cab());
+			this.comprobanteSelec.setId_emisor(this.emisorSelec.getId_emisor());
 			this.comprobanteSelec.setVersion_ubl(Constante.VERSION_UBL_SUNAT);
 			this.comprobanteSelec.setEstado_comunicacion_baja(Boolean.FALSE);
 			this.comprobanteSelec.setCorrelativo(this.comprobanteService.getCorrelativoComprobante(this.comprobanteSelec.getTipo_comprobante()));
 			this.comprobanteSelec.setEstado_sunat(Constante.ESTADO_PENDIENTE);
 			this.comprobanteSelec.setId_ticket(this.ticketSelected.getId_ticket());
-			this.comprobanteService.crearComprobanteSec(this.comprobanteSelec);			
+			this.comprobanteService.crearComprobanteSec(this.comprobanteSelec);	
 			
-			int id = this.comprobanteService.getSecIdComprobante();
-			System.out.println("ID: "+id);
 			
-			this.comprobanteDetalleService.insertBatchComprobanteDetalle(this.listaComprobanteDetalle, id-1);
+			int id = this.comprobanteService.getSecIdComprobante();			
+			System.out.println("ID: "+id);			
+			this.comprobanteDetalleService.insertBatchComprobanteDetalle(this.listaComprobanteDetalle, id-1, this.comprobanteSelec);
 			imprimirComprobante();
 			
 			context.update("msgGeneral");
 			context.update("formAction");
 			FacesUtils.showFacesMessage("Se registro el comprobante " + this.comprobanteSelec.getNumero_serie_documento_cab(), 3);
 			
+			this.ticketSelected.setEstado(Constante.TICKET_ESTADO_FACTURADO);
+			this.ticketService.actualizarTicket(this.ticketSelected);
+			
 			
 			this.comprobanteSelec= new Comprobante();
 			this.listaComprobanteDetalle= new ArrayList<ComprobanteDetalle>();
-			
-			
+			listarTicketFiltros();
+			this.ticketSelected=new Ticket();
+			this.nombrePacienteCliente="";
+			this.cp="";
+			this.paciente=new Paciente();
 			this.listTablaTablasDetallesComprobante = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPOS_DOCUMENTOS);
 			this.listTablaTablasDetallesOperacion = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPO_OPERACION);
 			this.listTablaTablasDetallesMoneda = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPO_DE_MONEDA);
 			this.listTablaTablasDetallesProducto = this.tablaTablasDetalleService.findByIdMaestra(Constante.COD_TIPOS_PRODUCTO);
 			this.listModoPagos = this.modoPagoService.findAll();
 			this.listaVendedores = this.vendedorService.findAll(); /*Vega.com*/
-			this.emisorSelec = this.emisorService.findAll().get(0);
-			this.comprobanteSelec.setId_emisor(this.emisorSelec.getId_emisor());
+			
+			
 			
 			/*this.comprobanteSelec.setFecha_emision_cab(new Date()); 
 			this.comprobanteSelec.setFecha_vencimiento_cab(new Date());
@@ -994,11 +1019,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			BigDecimal igv = new BigDecimal("0.00");
 			BigDecimal dg = new BigDecimal("0.00");
 			
-			for (ComprobanteDetalle cd : this.listaComprobanteDetalle) {
-				
-				igv = igv.add(cd.getMontoIGV());
-				
-				
+			for (ComprobanteDetalle cd : this.listaComprobanteDetalle) {				
+				igv = igv.add(cd.getMontoIGV());								
 			}
 			
 			Map<String, Object> input = new HashMap<String, Object>();

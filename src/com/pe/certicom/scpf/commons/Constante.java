@@ -68,6 +68,7 @@ public class Constante {
 	
 	public static final String  TICKET_ESTADO_PENDIENTE = "PENDIENTE";
 	public static final String  TICKET_ESTADO_TERMINADO = "TERMINADO";
+	public static final String  TICKET_ESTADO_FACTURADO = "FACTURADO";
 	
 	
 	/*CODIGOS DE PERFIL*/
