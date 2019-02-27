@@ -484,8 +484,11 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	public void confirmaEliminarTicket(){
 		try {
 			if(!this.ticketSelected.isIntegrado_sunat()){
-				if(this.ticketSelected.getId_examen()>0){
-					this.examenAuxiliarService.actualizarEstadoExamen(this.ticketSelected.getId_examen());
+				if(this.ticketSelected.getId_examen()!=null){
+					if(this.ticketSelected.getId_examen()>0){
+						this.examenAuxiliarService.actualizarEstadoExamen(this.ticketSelected.getId_examen());
+					}
+					
 				}
 				
 				this.ticketService.eliminarTicket(this.ticketSelected.getId_ticket());
@@ -528,10 +531,21 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.control.setId_especialidad(this.consultaMedica.getId_especialidad());
 			this.control.setId_medico(this.consultaMedica.getId_medico());
 			this.control.setId_paciente(this.consultaMedica.getId_paciente());
-			this.control.setId_producto(this.consultaMedica.getId_producto());
-			this.control.setId_tipo_servicio(this.consultaMedica.getId_tipo_servicio());
 			this.control.setId_consulta_medica(this.consultaMedica.getId_consulta_medica());
-			this.controlService.crearControl(this.control);													   									  
+			if(this.consultaMedica.getTipo_control().equalsIgnoreCase(Constante.TIPO_CONTROL)){
+				Producto p=this.productoService.findByDescripcionControl(Constante.TIPO_CONTROL);
+				this.control.setId_producto(p.getId_producto());
+				this.control.setId_tipo_servicio(p.getId_tipo_servicio());
+				this.controlService.crearControl(this.control);		
+			}else{
+				if(this.consultaMedica.getTipo_control().equalsIgnoreCase(Constante.TIPO_HOSPITALIZACION)){
+					Producto p=this.productoService.findByDescripcionControl(Constante.TIPO_HOSPITALIZACION);
+					this.control.setId_producto(p.getId_producto());
+					this.control.setId_tipo_servicio(p.getId_tipo_servicio());
+					this.controlService.crearControl(this.control);		
+				}
+			}
+												   									  
 			this.listaExamenAuxiliares=new ArrayList<>();
 			this.listaRecetas= new ArrayList<>(); 
 			this.listaProblemas= new ArrayList<>(); 

@@ -54,6 +54,12 @@ public class ProductoService implements ProductoMapper{
 		return productoMapper.findByIdTipoServicioEX(id_tipo_servicio);
 	}
 
+	@Override
+	public Producto findByDescripcionControl(String descripcion_prod_det) throws Exception {
+		// TODO Auto-generated method stub
+		return productoMapper.findByDescripcionControl(descripcion_prod_det);
+	}
+
 	
 	
 }

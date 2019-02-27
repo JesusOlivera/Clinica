@@ -70,6 +70,9 @@ public class Constante {
 	public static final String  TICKET_ESTADO_TERMINADO = "TERMINADO";
 	public static final String  TICKET_ESTADO_FACTURADO = "FACTURADO";
 	
+	public static final String  TIPO_CONTROL = "CONTROL";
+	public static final String  TIPO_HOSPITALIZACION = "CONTROL";
+	
 	
 	/*CODIGOS DE PERFIL*/
 	public static final Integer  PERFIL_COD_GERENTE_PROYECTO = 1;

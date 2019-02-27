@@ -20,7 +20,7 @@ public interface ProductoMapper {
 	 * @return : retorna un objeto Cliente
 	 * @throws Exception
 	 */
-	@Select("select e.*, ttd1.descripcion_largo desProductoSunat, ttd2.descripcion_largo desUnidadMedida from (t_producto e left join t_tabla_tablas_detalle ttd1 on ttd1.id_codigo = e.tipo_prod_sunat_det) left join t_tabla_tablas_detalle ttd2 on ttd2.id_codigo  = ttd1.id_maestra  where e.id_producto = #{p_producto}")
+	@Select("select e.*,tp.*, ttd1.descripcion_largo desProductoSunat, ttd2.descripcion_largo desUnidadMedida from (t_producto e left join t_tipo_servicio tp on tp.id_tipo_servicio=e.id_tipo_servicio left join t_tabla_tablas_detalle ttd1 on ttd1.id_codigo = e.tipo_prod_sunat_det) left join t_tabla_tablas_detalle ttd2 on ttd2.id_codigo  = ttd1.id_maestra  where e.id_producto = #{p_producto}")
 	public Producto findById(@Param("p_producto") Integer codigoProducto) throws Exception;
 	
 	@Select("select e.* from t_producto e where e.id_tipo_servicio = #{p_id_tipo_servicio} and e.es_servicio='TRUE'")
@@ -56,6 +56,10 @@ public interface ProductoMapper {
 	@Options(flushCache=true)
 	public void eliminarProducto(@Param("id_producto") Integer id_producto) throws Exception;
 	
-
+	@Select("select e.*,tp.*, ttd1.descripcion_largo desProductoSunat, ttd2.descripcion_largo desUnidadMedida "
+			+ "from (t_producto e left join t_tipo_servicio tp on tp.id_tipo_servicio=e.id_tipo_servicio "
+			+ "left join t_tabla_tablas_detalle ttd1 on ttd1.id_codigo = e.tipo_prod_sunat_det) "
+			+ "left join t_tabla_tablas_detalle ttd2 on ttd2.id_codigo  = ttd1.id_maestra  where e.descripcion_prod_det = #{descripcion_prod_det}")
+	public Producto findByDescripcionControl(@Param("descripcion_prod_det") String descripcion_prod_det) throws Exception;
 	
 }

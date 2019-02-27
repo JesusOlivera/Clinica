@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="id_consulta_medica" property="id_consulta_medica"/> 
 	<result column="id_tipo_servicio" property="id_tipo_servicio"/> 
 	<result column="id_medico" property="id_medico"/> 
-	<result column="id_especialidad" property="id_especcialidad"/> 
+	<result column="id_especialidad" property="id_especialidad"/> 
 	<result column="id_paciente" property="id_paciente"/> 
 	<result column="id_cliente" property="id_cliente"/> 
 	<result column="fecha_inicio" property="fecha_inicio"/>
