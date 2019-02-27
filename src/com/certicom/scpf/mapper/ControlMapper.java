@@ -20,15 +20,17 @@ public interface ControlMapper {
 	
 	public List<Control> findAll() throws Exception;
 	
+	@Select("select * from t_control e where e.id_consulta_medica = #{id_consulta_medica}")
+	public List<Control> findByIdConsultaMedica(@Param("id_consulta_medica") Integer id_consulta_medica) throws Exception;
 
-	@Insert("insert into t_control (id_producto,id_consulta_medica,id_tipo_servicio,id_medico,id_especialidad,id_paciente, id_cliente,fecha_inicio,fecha_fin) "
-	 + " values ( #{id_producto},#{id_consulta_medica}, #{id_tipo_servicio}, #{id_medico}, #{id_especialidad}, #{id_paciente}, #{id_cliente}, #{fecha_inicio}, #{fecha_fin})")
+	@Insert("insert into t_control (id_producto,id_consulta_medica,id_tipo_servicio,id_medico,id_especialidad,id_paciente, id_cliente,fecha_inicio,fecha_fin,fecha_control) "
+	 	 + " values ( #{id_producto},#{id_consulta_medica}, #{id_tipo_servicio}, #{id_medico}, #{id_especialidad}, #{id_paciente}, #{id_cliente}, #{fecha_inicio}, #{fecha_fin}, #{fecha_control})")
 	public void crearControl(Control Control) throws Exception;
 	
 
 	@Update("update t_control set  id_producto = #{id_producto},id_consulta_medica = #{id_consulta_medica}, "
 			+ "id_tipo_servicio = #{id_tipo_servicio}, id_medico = #{id_medico}, id_especialidad = #{id_especialidad},"
-			+ " id_paciente = #{id_paciente}, id_cliente = #{id_cliente}, fecha_inicio = #{fecha_inicio}"
+			+ " id_paciente = #{id_paciente}, id_cliente = #{id_cliente}, fecha_inicio = #{fecha_inicio}, fecha_control = #{fecha_control}"
 			+ " fecha_fin = #{fecha_fin}"
 			+ " where id_control= #{id_control}")
 	@Options(flushCache=true,useCache=true)

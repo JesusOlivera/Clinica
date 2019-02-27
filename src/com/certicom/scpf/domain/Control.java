@@ -14,6 +14,7 @@ public class Control {
 	  private Integer id_cliente;
 	  private Date fecha_inicio;
 	  private Date fecha_fin;
+	  private Date fecha_control;
 	  
 	  private Producto producto;
 	  private TipoServicio tipoServicio;
@@ -126,6 +127,12 @@ public class Control {
 		this.consultaMedica = consultaMedica;
 	}
 	  
-	  
+	public Date getFecha_control() {
+		return fecha_control;
+	}
+	
+	public void setFecha_control(Date fecha_control) {
+		this.fecha_control = fecha_control;
+	}  
 	  
 }

@@ -34,6 +34,7 @@ import com.certicom.scpf.domain.Cliente;
 import com.certicom.scpf.domain.Comprobante;
 import com.certicom.scpf.domain.ComprobanteDetalle;
 import com.certicom.scpf.domain.ConsultaMedica;
+import com.certicom.scpf.domain.Control;
 import com.certicom.scpf.domain.DetalleComprobanteRep;
 import com.certicom.scpf.domain.DomicilioFiscal;
 import com.certicom.scpf.domain.Emisor;
@@ -53,6 +54,7 @@ import com.certicom.scpf.services.ClienteService;
 import com.certicom.scpf.services.ComprobanteDetalleService;
 import com.certicom.scpf.services.ComprobanteService;
 import com.certicom.scpf.services.ConsultaMedicaService;
+import com.certicom.scpf.services.ControlService;												 
 import com.certicom.scpf.services.DomicilioFiscalService;
 import com.certicom.scpf.services.EmisorService;
 import com.certicom.scpf.services.ExamenAuxiliarService;
@@ -124,12 +126,17 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private String anio;
 	private String mes;
 	private Integer id_medico;
+	private Control control;
+	private Boolean bControl;
+	private Boolean bHospitalizacion;
+	private List<Control> listaControles;					 
 	
 	private Integer id_tipo_servicio_EX;
 	private Integer id_producto_EX;
 	private ExamenAuxiliarService examenAuxiliarService;
 	private Boolean editarConsulta;
 	private RecetaService recetaService;
+	private ControlService controlService;								   
 	
 	
 	private Comprobante comprobanteSelec;
@@ -177,6 +184,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.listTipoServicios = this.tipoServicioService.findAllForTicket();	
 		this.listCampos = new ArrayList<Object>();
 		//this.listTickets = this.ticketService.findAll();
+		this.bControl = Boolean.FALSE;
+		this.bHospitalizacion = Boolean.FALSE;						
 		
 		this.listaProblemas= new ArrayList<>();
 		
@@ -189,6 +198,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		this.editarConsulta=Boolean.FALSE;
 		this.ingresarCliente = Boolean.TRUE;
 		this.generarComprobante=  Boolean.TRUE;
+		this.controlService = new ControlService();									 
 		
 		this.fechaActual = new Date();
 		
@@ -213,6 +223,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.comprobanteSelec= new Comprobante();
 			this.anio=formatoAnio.format(new Date());
 			this.mes=formatoMes.format(new Date());
+			this.id_medico = 0;		  
 			listarTicketFiltros();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -513,6 +524,14 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.signoVital.setId_consulta_medica(this.consultaMedica.getId_consulta_medica());
 			this.signoVitalService.crearSignoVital(this.signoVital);
 			this.recetaService.insertBatchRecetas(this.listaRecetas, consultaMedica.getId_consulta_medica());
+			this.control.setId_cliente(this.consultaMedica.getId_cliente());
+			this.control.setId_especialidad(this.consultaMedica.getId_especialidad());
+			this.control.setId_medico(this.consultaMedica.getId_medico());
+			this.control.setId_paciente(this.consultaMedica.getId_paciente());
+			this.control.setId_producto(this.consultaMedica.getId_producto());
+			this.control.setId_tipo_servicio(this.consultaMedica.getId_tipo_servicio());
+			this.control.setId_consulta_medica(this.consultaMedica.getId_consulta_medica());
+			this.controlService.crearControl(this.control);													   									  
 			this.listaExamenAuxiliares=new ArrayList<>();
 			this.listaRecetas= new ArrayList<>(); 
 			this.listaProblemas= new ArrayList<>(); 
@@ -595,6 +614,19 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		}
 	}
 	
+	public void verControles(Integer id_ticket){
+		try {
+		this.listaControles = new ArrayList<Control>();
+		
+		ConsultaMedica cm = this.consultaMedicaService.findByTicket(id_ticket);
+		
+		
+			this.listaControles = this.controlService.findByIdConsultaMedica(cm.getId_consulta_medica());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}										 
 	public String generarNroTicket(Integer max, Integer cifras){
 		
 		String smax = "", nroTicket="CF";
@@ -705,6 +737,19 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 	}
 	
+	public void cambiarTipoControl(){
+		if(this.consultaMedica.getTipo_control().equals("CONTROL")){
+			this.bControl = Boolean.TRUE;
+			this.bHospitalizacion = Boolean.FALSE;
+		}else if(this.consultaMedica.getTipo_control().equals("HOSPITALIZACION")){
+			this.bHospitalizacion = Boolean.TRUE;
+			this.bControl = Boolean.FALSE;
+		}else{
+			this.bHospitalizacion = Boolean.FALSE;
+			this.bControl = Boolean.FALSE;
+		}
+	}
+	
 	public void nuevaConsultaMedica(Ticket ticket){
 		
 		this.ticketSelected = ticket;
@@ -729,6 +774,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.listaProblemas = new ArrayList<String>();
 			this.listaExamenAuxiliares = new ArrayList<ExamenAuxiliar>();
 			this.listaRecetas = new ArrayList<Receta>();
+			this.control = new Control();
+			this.bControl = Boolean.FALSE;
+			this.bHospitalizacion = Boolean.FALSE;						 
 
 			this.editarConsulta=Boolean.FALSE;
 			this.signoVital= new SignoVital();
@@ -1808,5 +1856,36 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	public void setId_medico(Integer id_medico) {
 		this.id_medico = id_medico;
 	}	
+	
+	public Control getControl() {
+		return control;
+	}
 
+	public void setControl(Control control) {
+		this.control = control;
+	}
+
+	public Boolean getbControl() {
+		return bControl;
+	}
+
+	public void setbControl(Boolean bControl) {
+		this.bControl = bControl;
+	}
+
+	public Boolean getbHospitalizacion() {
+		return bHospitalizacion;
+	}
+
+	public void setbHospitalizacion(Boolean bHospitalizacion) {
+		this.bHospitalizacion = bHospitalizacion;
+	}
+
+	public List<Control> getListaControles() {
+		return listaControles;
+	}
+
+	public void setListaControles(List<Control> listaControles) {
+		this.listaControles = listaControles;
+	}	
 }

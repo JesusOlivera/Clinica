@@ -61,7 +61,7 @@
 								
 								#{"Médico:"}					        
 								<p:selectOneMenu style="width:400px" value="#{generaTicketMB.id_medico}"  >
-									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItem itemValue="0" itemLabel="--Seleccione--"></f:selectItem>
 									<f:selectItems value="#{generaTicketMB.listMedicos}" 
 									var="p" itemLabel="#{p.nombre_medico}" itemValue="#{p.id_medico}" />
 									
@@ -112,7 +112,7 @@
 							</p:column>
 							
 							<p:column width="80px" headerText="Controles">
-								<p:commandButton value="Ver Controles" rendered="#{p.id_tipo_servicio eq '1'}"/>
+								<p:commandButton value="Ver Controles" rendered="#{p.id_tipo_servicio eq '1'}" actionListener="#{generaTicketMB.verControles(p.id_ticket)}" oncomplete="PF('dlgControles').show();" update=":dlgDetControles"/>
 							</p:column>
 							
 							<p:column width="150px" headerText="Medico" filterBy="#{p.des_medico}" filterMatchMode="contains" filterStyle="width: 95%">
@@ -175,6 +175,52 @@
 			<!-- #############    TABLA MAESTRA      ################ -->
 			
 			<!-- dialogo -->
+			
+			<p:dialog header="Listado de Controles" widgetVar="dlgControles" appendTo="@(body)"
+					resizable="false" id="dlgDetControles" modal="true">
+					
+					<h:form id="formControl">
+						<h:panelGrid>
+							<p:dataTable id="dataControl" var="p" value="#{generaTicketMB.listaControles}" widgetVar="dtControl" 
+								emptyMessage="No hay Controles Disponibles." rowIndexVar="nro" 
+								 style="FONT-SIZE: 10px; ">
+								<f:facet name="header">Lista Controles</f:facet>
+													
+								<p:column headerText="Orden" width="25" style="width:3%" >
+									#{nro+1}
+								</p:column>
+								
+								<p:column width="150px" headerText="Tipo" >
+									<h:outputText value="#{p.producto.descripcion_prod_det}" />
+								</p:column>					
+						        
+								<p:column width="150px" headerText="Medico" >
+									<h:outputText value="#{p.medico.nombre_medico}" />
+								</p:column>
+									
+								<p:column style="width:150px" headerText="Paciente">
+									<h:outputText value="#{p.paciente.nombre}"/>
+								</p:column>
+								
+								<p:column style="width:150px" headerText="Fech. Inicio">
+									<h:outputText value="#{p.fecha_inicio}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+								</p:column>
+								
+								<p:column style="width:150px" headerText="Fech. Fin">
+									<h:outputText value="#{p.fecha_fin}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+								</p:column>
+								
+								<p:column style="width:150px" headerText="Fech. Control">
+									<h:outputText value="#{p.fecha_control}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+								</p:column>
+			
+							</p:dataTable>
+							
+							<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoTicket').hide()" icon="icon-cancel" />
+						</h:panelGrid>
+					</h:form>
+					
+			</p:dialog>
 			
 			<p:dialog header="Registrar Comprobante" widgetVar="dlgNuevoComprobante" appendTo="@(body)"
 					resizable="false" id="dlgDetNuevoComprobante" modal="true">
@@ -622,9 +668,9 @@
 						        #{"Estado: "}
 								<p:selectOneMenu id="cmbEstado" value="#{generaTicketMB.consultaMedica.estado}" style="width:200px;">
 									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
-									<f:selectItem itemValue="" itemLabel="PENDIENTE"></f:selectItem>
-									<f:selectItem itemValue="" itemLabel="CANCELADO"></f:selectItem>
-									<f:selectItem itemValue="" itemLabel="TERMINADO"></f:selectItem>
+									<f:selectItem itemValue="PENDIENTE" itemLabel="PENDIENTE"></f:selectItem>
+									<f:selectItem itemValue="CANCELADO" itemLabel="CANCELADO"></f:selectItem>
+									<f:selectItem itemValue="TERMINADO" itemLabel="TERMINADO"></f:selectItem>
 									<p:ajax event="change"></p:ajax>
 								</p:selectOneMenu>
 					        </h:panelGrid>	
@@ -633,8 +679,27 @@
 						            <f:selectItem itemLabel="CONTROL" itemValue="CONTROL" />
 						            <f:selectItem itemLabel="HOSPITALIZACION" itemValue="HOSPITALIZACION" />
 						            <f:selectItem itemLabel="NINGUNO" itemValue="NINGUNO" />
-						            <p:ajax event="change"></p:ajax>
+									<p:ajax event="change" listener="#{generaTicketMB.cambiarTipoControl()}" update=":formConsultaMedica"></p:ajax>
 						        </p:selectOneRadio>
+					        </h:panelGrid>
+                            <h:panelGrid columns="4" rendered="#{generaTicketMB.bHospitalizacion}">
+					        	#{"Fecha Inicio: "}
+								<p:calendar style="width:200px" readonlyInput="true" value="#{generaTicketMB.control.fecha_inicio}" pattern="dd/MM/yyyy" locale="es" 
+										navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio">
+								</p:calendar>
+								#{"Fecha Fin: "}
+								<p:calendar style="width:200px" readonlyInput="true" value="#{generaTicketMB.control.fecha_fin}" pattern="dd/MM/yyyy" locale="es" 
+										navigator="true"  required="true" requiredMessage="Seleccione una fecha de fin">
+								</p:calendar>
+								#{"Resumen de Hospitalización: "}
+								<p:inputTextarea value="#{generaTicketMB.consultaMedica.resumen_hospitalizacion}"></p:inputTextarea>
+					        </h:panelGrid>
+					        
+					        <h:panelGrid columns="2" rendered="#{generaTicketMB.bControl}">
+					        	#{"Fecha de Control: "}
+								<p:calendar style="width:200px" readonlyInput="true" value="#{generaTicketMB.control.fecha_control}" pattern="dd/MM/yyyy" locale="es" 
+										navigator="true"  required="true" requiredMessage="Seleccione una fecha de control">
+								</p:calendar>
 					        </h:panelGrid>
 					        	
 							<br/> 

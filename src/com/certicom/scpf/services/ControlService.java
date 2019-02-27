@@ -41,4 +41,11 @@ public class ControlService implements ControlMapper{
 		controlMapper.eliminarControl(id_control);
 	}
 
+	@Override
+	public List<Control> findByIdConsultaMedica(Integer id_consulta_medica)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return controlMapper.findByIdConsultaMedica(id_consulta_medica);
+	}
+
 }
