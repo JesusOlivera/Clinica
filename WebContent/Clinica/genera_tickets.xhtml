@@ -176,6 +176,56 @@
 			
 			<!-- dialogo -->
 			
+			<p:dialog header="Historia Clinica" widgetVar="dlgHistoriaClinica" appendTo="@(body)"
+					resizable="false" id="dlgDetHistoriaClinica" modal="true">
+					<h:form id="frmHistoCli">
+						<h:panelGrid columns="2">
+							#{"Historia Clínica: "}
+							<h:outputLabel style="font-weight:bold" value="#{generaTicketMB.ticketSelected.paciente.nombre}"/>
+						</h:panelGrid>	
+						<h:panelGrid>
+							<p:dataTable id="dataTicketPaciente" var="p" value="#{generaTicketMB.listTicketsPaciente}" widgetVar="dtTicketPaciente" 
+								emptyMessage="No hay Historias Disponibles." rowIndexVar="nro" 
+								lazy="true" paginator="true" filteredValue="#{generaTicketMB.listFiltroTickets}" 
+									rows="10" paginatorPosition="bottom"  rowsPerPageTemplate="10,100,200,500"
+									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" sortField="#{p.id_consulta_medica}" sortOrder="DESCENDING"
+								 style="FONT-SIZE: 10px; width: 1000px">
+								<f:facet name="header">Lista Consultas</f:facet>
+													
+										<p:column headerText="Orden" style="width:15px" >
+											#{nro+1}
+										</p:column>					
+								        
+										<p:column style="width:70px" headerText="Ticket">
+											<h:outputText value="#{p.nro_ticket}"/>
+										</p:column>
+										
+										<p:column style="width:70px" headerText="Fecha" >
+											<h:outputText value="#{p.fecha_consulta}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+										</p:column>
+										
+										<p:column style="width:70px" headerText="Hora">
+											<h:outputText value="#{p.hora_consulta}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+										</p:column>
+										
+										<p:column style="width:100px" headerText="Servicio">
+											<h:outputText value="#{p.des_servicio}"/>
+										</p:column>
+										
+										<p:column width="150px" headerText="Medico">
+											<h:outputText value="#{p.nombre_medico}" />
+										</p:column>
+										
+										<p:column style="width:50px" headerText="Estado">
+											<h:outputText value="#{p.estado}"/>
+										</p:column>
+			
+							</p:dataTable>
+						
+						</h:panelGrid>				
+					</h:form>
+			</p:dialog>
+			
 			<p:dialog header="Listado de Controles" widgetVar="dlgControles" appendTo="@(body)"
 					resizable="false" id="dlgDetControles" modal="true">
 					
@@ -506,7 +556,7 @@
 								<p:spacer/>
 								#{"Paciente:"}
 								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_paciente}"/>
-								<p:commandButton value="Historia Clínica"/>
+								<p:commandButton value="Historia Clínica" actionListener="#{generaTicketMB.consultarHistoriaClinica()}" oncomplete="PF('dlgHistoriaClinica').show();" update=":dlgDetHistoriaClinica"/>
 							</h:panelGrid>
 					
 							<h:panelGrid columns="4">

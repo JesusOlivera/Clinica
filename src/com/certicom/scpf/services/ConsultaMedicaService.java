@@ -1,6 +1,7 @@
 package com.certicom.scpf.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -46,6 +47,20 @@ public class ConsultaMedicaService implements ConsultaMedicaMapper{
 	public ConsultaMedica findByTicket(Integer id_ticket) {
 		// TODO Auto-generated method stub
 		return consultaMedicaMapper.findByTicket(id_ticket);
+	}
+
+	@Override
+	public List<ConsultaMedica> findByPaciente(Integer id_paciente, Integer first,
+			Integer pageSize, Map<String, Object> filters, String sortField,
+			String sortOrder) {
+		// TODO Auto-generated method stub
+		return consultaMedicaMapper.findByPaciente(id_paciente, first, pageSize, filters, sortField, sortOrder);
+	}
+
+	@Override
+	public Integer countByPaciente(Integer id_paciente) {
+		// TODO Auto-generated method stub
+		return consultaMedicaMapper.countByPaciente(id_paciente);
 	}
 	
 	

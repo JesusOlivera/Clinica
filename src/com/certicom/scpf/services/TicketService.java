@@ -68,5 +68,19 @@ public class TicketService implements TicketMapper{
 		return ticketMapper.countTicketPAGINATOR(anio,mes, id_medico, filters);
 	}
 
+	@Override
+	public List<Ticket> findByPaciente(Integer id_paciente, Integer first,
+			Integer pageSize, Map<String, Object> filters, String sortField,
+			String sortOrder) {
+		// TODO Auto-generated method stub
+		return ticketMapper.findByPaciente(id_paciente, first, pageSize, filters, sortField, sortOrder);
+	}
+
+	@Override
+	public Integer countByPaciente(Integer id_paciente) {
+		// TODO Auto-generated method stub
+		return ticketMapper.countByPaciente(id_paciente);
+	}
+
 	
 }

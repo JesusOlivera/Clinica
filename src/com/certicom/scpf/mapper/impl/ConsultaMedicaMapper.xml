@@ -35,5 +35,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select con.*, pro.* from t_consulta_medica con inner join t_producto pro on pro.id_producto=con.id_producto
 		where con.id_ticket=#{id_ticket}
 	</select>
+	
+	<select id="findByPaciente" resultMap="consultaMedicaResult" parameterType="int" >
+		select cm.*, t.nro_ticket as nro_ticket, ts.descripcion_tipo as des_servicio, m.nombre_medico as nombre_medico
+		from t_consulta_medica cm inner join t_ticket t on t.id_ticket = cm.id_ticket  
+		inner join t_tipo_servicio ts on ts.id_tipo_servicio = cm.id_tipo_servicio 
+		inner join t_medico m on m.id_medico = cm.id_medico
+		where cm.id_paciente=#{id_paciente}
+            
+            <if test="sortField != null">
+				order by ${sortField} ${sortOrder}    
+		    </if>		    
+		    
+			 OFFSET #{first} LIMIT #{pageSize}
+	</select>
 		
+		
+	<select id="countByPaciente"  resultType="java.lang.Integer">
+		select count(*)
+		from t_consulta_medica cm inner join t_ticket t on t.id_ticket = cm.id_ticket  
+		inner join t_tipo_servicio ts on ts.id_tipo_servicio = cm.id_tipo_servicio 
+		inner join t_medico m on m.id_medico = cm.id_medico
+		where cm.id_paciente=#{id_paciente}
+            
+						
+	</select>
 </mapper>	

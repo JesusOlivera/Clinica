@@ -21,6 +21,10 @@ public class ConsultaMedica {
 	private String diagnostico;
 	private String resumen_hospitalizacion;
 	
+	private String nro_ticket;
+	private String des_servicio;
+	private String nombre_medico;
+	
 	private Producto producto;
 	
 	private String tipo_control;
@@ -167,6 +171,30 @@ public class ConsultaMedica {
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+	public String getNro_ticket() {
+		return nro_ticket;
+	}
+
+	public void setNro_ticket(String nro_ticket) {
+		this.nro_ticket = nro_ticket;
+	}
+
+	public String getDes_servicio() {
+		return des_servicio;
+	}
+
+	public void setDes_servicio(String des_servicio) {
+		this.des_servicio = des_servicio;
+	}
+
+	public String getNombre_medico() {
+		return nombre_medico;
+	}
+
+	public void setNombre_medico(String nombre_medico) {
+		this.nombre_medico = nombre_medico;
 	}	
 	
 }

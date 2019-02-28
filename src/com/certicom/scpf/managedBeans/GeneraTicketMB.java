@@ -89,7 +89,9 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private TablaTablasDetalle tablaTablasDetalleTipoComprobante;
 	//private List<Ticket> listTickets;
 	private LazyDataModel<Ticket> listTickets;
+	private LazyDataModel<Ticket> listTicketsPaciente;
 	private List<Ticket> listFiltroTickets;
+	private List<ConsultaMedica> listFiltroConsultasMedicas;
 	private List<String> listaSignosVitales;
 	private List<String> listaProblemas;
 	private List<ExamenAuxiliar> listaExamenAuxiliares;
@@ -231,6 +233,10 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		}
 	}
 	
+	public void consultarHistoriaClinica(){
+		listarTicketFiltroPaciente();
+	}
+	
 	public void onItemDocumento(SelectEvent event)  throws Exception{
 		
 		
@@ -278,6 +284,63 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 						totalRow = ticketService.countTicketPAGINATOR(Integer.parseInt(anio),Integer.parseInt(mes),id_medico,filters);
 												
 						  datasource = ticketService.findAllPAGINATOR(Integer.parseInt(anio),Integer.parseInt(mes),id_medico,first, pageSize, filters, "t.id_ticket", "DESC");
+						 return datasource;
+					} catch (Exception e) {
+						System.out.println("NULL ");
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return null;
+					}
+	            } 
+			 
+			 @Override  
+				public int getRowCount() {     
+					return totalRow;
+	            }
+			 
+		};		
+		
+	}
+	
+	public void listarTicketFiltroPaciente(){
+		//System.out.println(" listarComprobantesFiltros --->tipo_comprobante "+this.tipo_comprobante);
+		
+		
+		this.listTicketsPaciente = new LazyDataModel<Ticket>() {
+			private static final long serialVersionUID = 1L;
+			private List<Ticket> datasource; 
+			private Integer totalRow=0;
+			
+			
+			@Override  
+			public Ticket getRowData(String rowKey){
+				 for(Ticket e : datasource) {  
+                     if(e.getId_ticket().equals(rowKey))  
+                         return e;  
+                 }  
+
+                 return null;  
+			}
+			
+			 @Override
+             public void setRowIndex(int rowIndex){
+                 if (rowIndex == -1 || getPageSize() == 0) {
+                     super.setRowIndex(-1);
+                 }
+                 else
+                     super.setRowIndex(rowIndex % getPageSize());
+             }
+			 
+			 @Override  
+	            public Object getRowKey(Ticket e) {  
+	                return e.getId_ticket();  
+	            }  
+			 @Override  
+	            public List<Ticket> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {              
+					try {
+						totalRow = ticketService.countByPaciente(ticketSelected.getPaciente().getId_paciente());
+												
+						  datasource = ticketService.findByPaciente(ticketSelected.getPaciente().getId_paciente(), first, pageSize, filters, "cm.id_consulta_medica", "DESC");
 						 return datasource;
 					} catch (Exception e) {
 						System.out.println("NULL ");
@@ -1901,5 +1964,24 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setListaControles(List<Control> listaControles) {
 		this.listaControles = listaControles;
-	}	
+	}
+
+	public List<ConsultaMedica> getListFiltroConsultasMedicas() {
+		return listFiltroConsultasMedicas;
+	}
+
+	public void setListFiltroConsultasMedicas(
+			List<ConsultaMedica> listFiltroConsultasMedicas) {
+		this.listFiltroConsultasMedicas = listFiltroConsultasMedicas;
+	}
+
+	public LazyDataModel<Ticket> getListTicketsPaciente() {
+		return listTicketsPaciente;
+	}
+
+	public void setListTicketsPaciente(LazyDataModel<Ticket> listTicketsPaciente) {
+		this.listTicketsPaciente = listTicketsPaciente;
+	}
+
+	
 }

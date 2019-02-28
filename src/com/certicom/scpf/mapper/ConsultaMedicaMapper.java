@@ -1,6 +1,7 @@
 package com.certicom.scpf.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -41,5 +42,7 @@ public interface ConsultaMedicaMapper {
 	
 	
 	public ConsultaMedica findByTicket(@Param("id_ticket")Integer id_ticket);
+	public List<ConsultaMedica> findByPaciente(@Param("id_paciente")Integer id_paciente,@Param("first") Integer  first, @Param("pageSize") Integer pageSize,  @Param("filters") Map<String,Object> filters, @Param("sortField") String sortField, @Param("sortOrder") String sortOrder);
+	public Integer countByPaciente(@Param("id_paciente")Integer id_paciente);
 
 }

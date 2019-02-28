@@ -33,6 +33,10 @@ public class Ticket {
 	private String des_medico;
 	private String des_paciente;
 	private String des_tipo_servicio;
+	private Date fecha_consulta;
+	private Date hora_consulta;
+	private Boolean estado_cm;
+	private String nombre_medico;
 	
 	
 	
@@ -237,6 +241,38 @@ public class Ticket {
 
 	public void setDes_tipo_servicio(String des_tipo_servicio) {
 		this.des_tipo_servicio = des_tipo_servicio;
+	}
+
+	public Date getFecha_consulta() {
+		return fecha_consulta;
+	}
+
+	public void setFecha_consulta(Date fecha_consulta) {
+		this.fecha_consulta = fecha_consulta;
+	}
+
+	public Date getHora_consulta() {
+		return hora_consulta;
+	}
+
+	public void setHora_consulta(Date hora_consulta) {
+		this.hora_consulta = hora_consulta;
+	}
+
+	public Boolean getEstado_cm() {
+		return estado_cm;
+	}
+
+	public void setEstado_cm(Boolean estado_cm) {
+		this.estado_cm = estado_cm;
+	}
+
+	public String getNombre_medico() {
+		return nombre_medico;
+	}
+
+	public void setNombre_medico(String nombre_medico) {
+		this.nombre_medico = nombre_medico;
 	}	
 	
 }
