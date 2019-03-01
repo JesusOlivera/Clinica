@@ -113,5 +113,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					</if>
 						
 	</select>
+	
+	<select id="findByPaciente" resultMap="ticketResult">
+				select t.*, cm.fecha_consulta as fecha_consulta, cm.fecha_consulta as fecha_consulta, cm.estado as estado_cm, ts.descripcion_tipo as des_servicio, m.nombre_medico as nombre_medico
+				from t_ticket t 
+				inner join t_tipo_servicio ts on ts.id_tipo_servicio = t.id_tipo_servicio
+				inner join t_medico m on m.id_medico = t.id_medico 
+				left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
+				where t.id_paciente = 4				
+            
+            <if test="sortField != null">
+				order by ${sortField} ${sortOrder}    
+		    </if>
+		    
+		    
+		    
+			 OFFSET #{first} LIMIT #{pageSize} 
+	</select>
+	<select id="countByPaciente"  resultType="java.lang.Integer">
+		select count(*)
+		from t_ticket t 
+		inner join t_tipo_servicio ts on ts.id_tipo_servicio = t.id_tipo_servicio
+		inner join t_medico m on m.id_medico = t.id_medico 
+		left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
+		left join t_examen_auxiliar ex on ex.id_consulta_medica = cm.id_consulta_medica
+		left join t_control c on cm.id_consulta_medica= c.id_consulta_medica
+		where t.id_paciente = 4
+						
+	</select>
 		
 </mapper>	
