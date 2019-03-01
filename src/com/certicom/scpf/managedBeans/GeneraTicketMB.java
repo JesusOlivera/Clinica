@@ -94,10 +94,15 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private List<ConsultaMedica> listFiltroConsultasMedicas;
 	private List<String> listaSignosVitales;
 	private List<String> listaProblemas;
+	private List<String> listaProblemasHC;
 	private List<ExamenAuxiliar> listaExamenAuxiliares;
+	private List<ExamenAuxiliar> listaExamenAuxiliaresHC;
 	private List<Receta> listaRecetas;
+	private List<Receta> listaRecetasHC;
 	private SignoVital signoVital;
+	private SignoVital signoVitalHC;
 	private Ticket ticketSelected;
+	private Ticket ticketSelectedHC;
 	private Paciente paciente;
 	private Paciente pacienteParam;
 	private Producto producto;
@@ -106,6 +111,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private String nombrePacienteCliente;
 	private String numeroDocPacienteCliente;
 	private ConsultaMedica consultaMedica;
+	private ConsultaMedica consultaMedicaHC;
 	private ExamenAuxiliar examenAuxiliar;
 	private Receta receta;
 	private PacienteService pacienteService;
@@ -131,6 +137,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	private Control control;
 	private Boolean bControl;
 	private Boolean bHospitalizacion;
+	private Boolean bDetalleConsulta;
 	private List<Control> listaControles;					 
 	
 	private Integer id_tipo_servicio_EX;
@@ -234,6 +241,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 	}
 	
 	public void consultarHistoriaClinica(){
+		this.bDetalleConsulta=Boolean.FALSE;
 		listarTicketFiltroPaciente();
 	}
 	
@@ -867,6 +875,38 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			
 		}
 
+	}
+	
+	public void mostrarDetalle(Ticket ticket){
+		this.bDetalleConsulta = Boolean.TRUE;
+		this.ticketSelectedHC = ticket;
+		this.consultaMedicaHC = this.consultaMedicaService.findByTicket(ticket.getId_ticket());
+		
+		
+		if(this.consultaMedicaHC==null){
+			this.consultaMedicaHC= new ConsultaMedica();
+			this.consultaMedicaHC.setId_ticket(ticket.getId_ticket());
+			this.consultaMedicaHC.setFecha_consulta(new Date());
+			this.consultaMedicaHC.setHora_consulta(new Date());
+			this.consultaMedicaHC.setProducto(ticket.getProducto());
+			this.consultaMedicaHC.setId_producto(ticket.getProducto().getId_producto());
+			this.consultaMedicaHC.setId_tipo_servicio(ticket.getId_tipo_servicio());
+			this.consultaMedicaHC.setId_medico(ticket.getId_medico());
+			this.consultaMedicaHC.setId_paciente(ticket.getId_paciente());
+			this.consultaMedicaHC.setId_cliente(ticket.getId_cliente());
+			this.consultaMedicaHC.setId_especialidad(ticket.getId_especialidad());
+			this.listaProblemasHC = new ArrayList<String>();
+			this.listaExamenAuxiliaresHC = new ArrayList<ExamenAuxiliar>();
+			this.listaRecetasHC = new ArrayList<Receta>();					 
+
+			this.signoVitalHC= new SignoVital();
+		}else{
+			this.listaExamenAuxiliaresHC=this.examenAuxiliarService.findByConsulta(consultaMedica.getId_consulta_medica());
+			this.signoVitalHC=this.signoVitalService.findByConsulta(this.consultaMedica.getId_consulta_medica());
+			this.listaRecetasHC=this.recetaService.findByConsulta(consultaMedica.getId_consulta_medica());
+			this.listaProblemasHC=getListadoProblemas(consultaMedica.getListado_problemas());
+			
+		}
 	}
 	
 	public ArrayList<String> getListadoProblemas(String problemas){
@@ -1981,6 +2021,63 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 
 	public void setListTicketsPaciente(LazyDataModel<Ticket> listTicketsPaciente) {
 		this.listTicketsPaciente = listTicketsPaciente;
+	}
+
+	public Boolean getbDetalleConsulta() {
+		return bDetalleConsulta;
+	}
+
+	public void setbDetalleConsulta(Boolean bDetalleConsulta) {
+		this.bDetalleConsulta = bDetalleConsulta;
+	}
+
+	public List<String> getListaProblemasHC() {
+		return listaProblemasHC;
+	}
+
+	public void setListaProblemasHC(List<String> listaProblemasHC) {
+		this.listaProblemasHC = listaProblemasHC;
+	}
+
+	public List<ExamenAuxiliar> getListaExamenAuxiliaresHC() {
+		return listaExamenAuxiliaresHC;
+	}
+
+	public void setListaExamenAuxiliaresHC(
+			List<ExamenAuxiliar> listaExamenAuxiliaresHC) {
+		this.listaExamenAuxiliaresHC = listaExamenAuxiliaresHC;
+	}
+
+	public List<Receta> getListaRecetasHC() {
+		return listaRecetasHC;
+	}
+
+	public void setListaRecetasHC(List<Receta> listaRecetasHC) {
+		this.listaRecetasHC = listaRecetasHC;
+	}
+
+	public SignoVital getSignoVitalHC() {
+		return signoVitalHC;
+	}
+
+	public void setSignoVitalHC(SignoVital signoVitalHC) {
+		this.signoVitalHC = signoVitalHC;
+	}
+
+	public Ticket getTicketSelectedHC() {
+		return ticketSelectedHC;
+	}
+
+	public void setTicketSelectedHC(Ticket ticketSelectedHC) {
+		this.ticketSelectedHC = ticketSelectedHC;
+	}
+
+	public ConsultaMedica getConsultaMedicaHC() {
+		return consultaMedicaHC;
+	}
+
+	public void setConsultaMedicaHC(ConsultaMedica consultaMedicaHC) {
+		this.consultaMedicaHC = consultaMedicaHC;
 	}
 
 	

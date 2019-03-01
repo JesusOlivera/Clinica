@@ -112,7 +112,7 @@
 							</p:column>
 							
 							<p:column width="80px" headerText="Controles">
-								<p:commandButton value="Ver Controles" rendered="#{p.id_tipo_servicio eq '1'}" actionListener="#{generaTicketMB.verControles(p.id_ticket)}" oncomplete="PF('dlgControles').show();" update=":dlgDetControles"/>
+								<p:commandButton value="Ver Controles" rendered="#{p.id_tipo_servicio eq '10'}" actionListener="#{generaTicketMB.verControles(p.id_ticket)}" oncomplete="PF('dlgControles').show();" update=":dlgDetControles"/>
 							</p:column>
 							
 							<p:column width="150px" headerText="Medico" filterBy="#{p.des_medico}" filterMatchMode="contains" filterStyle="width: 95%">
@@ -177,7 +177,10 @@
 			<!-- dialogo -->
 			
 			<p:dialog header="Historia Clinica" widgetVar="dlgHistoriaClinica" appendTo="@(body)"
-					resizable="false" id="dlgDetHistoriaClinica" modal="true">
+					resizable="false" id="dlgDetHistoriaClinica" modal="true" position="left top">
+					
+					<p:scrollPanel style="width:1200px;height:600px" mode="native">
+					
 					<h:form id="frmHistoCli">
 						<h:panelGrid columns="2">
 							#{"Historia Clínica: "}
@@ -219,11 +222,162 @@
 										<p:column style="width:50px" headerText="Estado">
 											<h:outputText value="#{p.estado}"/>
 										</p:column>
+										
+										<p:column width="150px" headerText="Consulta Médica">
+											<p:commandButton value="Consulta Médica" update=":frmHistoCli" 
+											rendered="#{p.id_tipo_servicio eq '6'}"
+											actionListener="#{generaTicketMB.mostrarDetalle(p)}"/>
+										</p:column>
 			
 							</p:dataTable>
 						
-						</h:panelGrid>				
+						</h:panelGrid>	
+						
+						<h:panelGrid rendered="#{generaTicketMB.bDetalleConsulta}">
+								<h:panelGrid columns="3">
+									#{"Ticket: "}
+									<h:outputLabel value="#{generaTicketMB.ticketSelectedHC.nro_ticket}" style="font-weight:bold;color:blue"/>
+									<p:spacer/>
+									#{"Paciente:"}
+									<h:outputLabel value="#{generaTicketMB.ticketSelectedHC.paciente.nombre}" style="font-weight:bold;color:blue"/>
+								</h:panelGrid> 
+						
+								<h:panelGrid columns="4">
+									
+									<p:spacer></p:spacer>
+									<p:spacer></p:spacer>
+									
+									#{"Fecha: "}
+									<h:outputText value="#{generaTicketMB.consultaMedicaHC.fecha_consulta}" style="font-weight:bold;color:blue"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+									
+									#{"Tipo Servicio: "}
+									<h:outputLabel value="#{generaTicketMB.ticketSelectedHC.tipoServicio.descripcion_tipo}" style="font-weight:bold;color:blue"/>
+									
+									#{"Hora: "}
+									<h:outputText value="#{generaTicketMB.consultaMedicaHC.hora_consulta}" style="font-weight:bold;color:blue"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+									
+									#{"Servicio: "}
+									<h:outputLabel value="#{generaTicketMB.ticketSelectedHC.des_servicio}" style="font-weight:bold;color:blue"/>
+									
+									#{"Fecha Ticket: "}
+									<h:outputText value="#{generaTicketMB.ticketSelectedHC.fecha_ticket}" style="font-weight:bold;color:blue"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+									
+									#{"Médico: "}
+									<h:outputLabel value="#{generaTicketMB.ticketSelectedHC.medico.nombre_medico}" style="font-weight:bold;color:blue"/>
+									
+									#{"Hora Ticket: "}
+									<h:outputText value="#{generaTicketMB.ticketSelectedHC.hora_ticket}" style="font-weight:bold;color:blue"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+																	
+						        </h:panelGrid>	
+						        <br/>
+						        <p:panelGrid>
+						        	
+						        	
+							        	<p:row>
+							        	
+							        		<p:column style="font-weight: bold;"> SIGNOS VITALES  </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> ANAMNESIS </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> LISTADO DE PROBLEMAS </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> IMPRESIÓN DIAGNÓSTICA </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> EXAMENES AUXILIARES </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> DIAGNÓSTICO </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> RECETA </p:column>
+							        	
+							        	</p:row>
+						        	
+						        		<p:row>
+						        	
+						        		<p:column>
+						        			<h:panelGrid>
+							        			
+							        			<h:panelGrid columns="4">
+							        			#{"Talla: "}
+							        			<h:outputText value="#{generaTicketMB.signoVitalHC.talla}"></h:outputText>
+							        			#{"Peso: "}
+							        			<h:outputText value="#{generaTicketMB.signoVitalHC.peso}"></h:outputText>
+							        			#{"Ocupacion: "}
+							        			<h:outputText value="#{generaTicketMB.signoVitalHC.ocupacion}"></h:outputText>
+							        			#{"Temperatura: "}
+							        			<h:outputText value="#{generaTicketMB.signoVitalHC.temperatura}"></h:outputText>
+							        			#{"Alergia: "}
+							        			<h:outputText value="#{generaTicketMB.signoVitalHC.alergia}"></h:outputText>
+							        			#{"Frec. Cardiaca: "}
+							        			<h:outputText value="#{generaTicketMB.signoVitalHC.frecuencia_cardiaca}"></h:outputText>
+							        			#{"Frec. Respiratoria: "}
+							        			<h:outputText value="#{generaTicketMB.signoVitalHC.frecuencia_respiratoria}"></h:outputText>
+							        			#{"Presion Arterial:: "}
+							        			<h:outputText value="#{generaTicketMB.signoVitalHC.presion_arterial}"></h:outputText>
+							        			</h:panelGrid>
+						        			</h:panelGrid>
+						        		</p:column>
+						        		
+						        		<p:column>
+						        			<p:inputTextarea value="#{generaTicketMB.consultaMedicaHC.anamesis}" disabled="#{generaTicketMB.bDetalleConsulta}"></p:inputTextarea>
+						        		</p:column>
+						        		
+						        		<p:column style="width:250px">
+						        			
+						        				
+						        				<p:dataTable id="dataProblemaHC"  var="f" value="#{generaTicketMB.listaProblemasHC}"  widgetVar="dtProblemaHC" 
+															 style="FONT-SIZE: 10px; width: 240px">
+						        							
+						        							<p:column  style="width:200px">
+						        								#{f}
+						        							</p:column>
+						        				
+						        				</p:dataTable>					        				
+						        			
+						        			
+						        		</p:column>
+						        		
+						        		<p:column>
+						        			<p:inputTextarea value="#{generaTicketMB.consultaMedicaHC.impresion_diagnostica}" disabled="#{generaTicketMB.bDetalleConsulta}"></p:inputTextarea>
+						        		</p:column>
+						        		
+						        		<p:column style="width:250px">
+						        			<h:panelGrid>
+							        			
+												<p:dataTable id="dataExamenAuxiliarHC"  var="e" value="#{generaTicketMB.listaExamenAuxiliaresHC}"  widgetVar="dtExamenAuxiliarHC"
+													style="FONT-SIZE: 10px; width: 240px">
+													
+													<p:column  style="width:150px">
+						        						Examen :#{e.producto.descripcion_prod_det} --->Resultado #{e.resultado} : #{e.detalle}
+						        					</p:column>
+													
+												</p:dataTable>
+												
+											</h:panelGrid>
+						        		</p:column>
+						        		
+						        		<p:column>
+						        			<p:inputTextarea value="#{generaTicketMB.consultaMedicaHC.diagnostico}" disabled="#{generaTicketMB.bDetalleConsulta}"></p:inputTextarea>
+						        		</p:column>
+						        		
+						        		<p:column style="width:250px">
+						        			<h:panelGrid>							        			
+												<p:dataTable id="dataRecetaHC"  var="r" value="#{generaTicketMB.listaRecetasHC}"  widgetVar="dtRecetaHC"
+													style="FONT-SIZE: 10px; width: 240px">
+													
+													<p:column  style="width:150px">
+						        					  Medicamento: #{r.medicamento} -  Cantidad:#{r.cantidad} - Duracion:#{r.duracion}
+						        					</p:column>
+													
+												</p:dataTable>
+												
+											</h:panelGrid>
+						        		</p:column>
+						        	
+						        	</p:row>
+						        </p:panelGrid>
+						</h:panelGrid>			
 					</h:form>
+				 </p:scrollPanel>
 			</p:dialog>
 			
 			<p:dialog header="Listado de Controles" widgetVar="dlgControles" appendTo="@(body)"
