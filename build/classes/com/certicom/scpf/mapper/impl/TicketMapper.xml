@@ -117,10 +117,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				select t.*, cm.fecha_consulta as fecha_consulta, cm.fecha_consulta as fecha_consulta, cm.estado as estado_cm, ts.descripcion_tipo as des_servicio, m.nombre_medico as nombre_medico
 				from t_ticket t 
 				inner join t_tipo_servicio ts on ts.id_tipo_servicio = t.id_tipo_servicio
+				inner join t_producto pro on pro.id_producto = t.id_producto
 				inner join t_medico m on m.id_medico = t.id_medico 
 				left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
-				where t.id_paciente = 4				
-            
+				where pro.genera_historia_clinica='TRUE'			
+            	and t.id_paciente=#{id_paciente} 
             <if test="sortField != null">
 				order by ${sortField} ${sortOrder}    
 		    </if>
@@ -130,13 +131,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 OFFSET #{first} LIMIT #{pageSize} 
 	</select>
 	<select id="countByPaciente"  resultType="java.lang.Integer">
-		select count(*)
-		from t_ticket t 
+				select count(*)
+				from t_ticket t 
 				inner join t_tipo_servicio ts on ts.id_tipo_servicio = t.id_tipo_servicio
+				inner join t_producto pro on pro.id_producto = t.id_producto
 				inner join t_medico m on m.id_medico = t.id_medico 
 				left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
-		where t.id_paciente = 4
-						
+				where pro.genera_historia_clinica='TRUE'		
+				and t.id_paciente=#{id_paciente} 		
 	</select>
 	<select id="findByMedicoPAGINATOR" resultMap="ticketResult">
 				select t.*, cm.fecha_consulta as fecha_consulta, cm.fecha_consulta as fecha_consulta, cm.estado as estado_cm, ts.descripcion_tipo as des_servicio, m.nombre_medico as nombre_medico

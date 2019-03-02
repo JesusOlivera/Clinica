@@ -1148,7 +1148,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.listModoPagos = this.modoPagoService.findAll();
 			this.listaVendedores = this.vendedorService.findAll(); /*Vega.com*/
 			
-			
+			listarTicketFiltros();
+			inicia();
 			
 			/*this.comprobanteSelec.setFecha_emision_cab(new Date()); 
 			this.comprobanteSelec.setFecha_vencimiento_cab(new Date());
