@@ -1,6 +1,7 @@
 package com.certicom.scpf.managedBeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,17 +14,26 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.certicom.scpf.domain.ConsultaMedica;
+import com.certicom.scpf.domain.Control;
 import com.certicom.scpf.domain.Especialidad;
+import com.certicom.scpf.domain.ExamenAuxiliar;
 import com.certicom.scpf.domain.Log;
 import com.certicom.scpf.domain.Medico;
 import com.certicom.scpf.domain.Menu;
 import com.certicom.scpf.domain.Producto;
+import com.certicom.scpf.domain.Receta;
+import com.certicom.scpf.domain.SignoVital;
 import com.certicom.scpf.domain.TablaTablasDetalle;
 import com.certicom.scpf.domain.Ticket;
+import com.certicom.scpf.services.ConsultaMedicaService;
 import com.certicom.scpf.services.EspecialidadService;
+import com.certicom.scpf.services.ExamenAuxiliarService;
 import com.certicom.scpf.services.MedicoService;
 import com.certicom.scpf.services.MenuServices;
 import com.certicom.scpf.services.ProductoService;
+import com.certicom.scpf.services.RecetaService;
+import com.certicom.scpf.services.SignoVitalService;
 import com.certicom.scpf.services.TablaTablasDetalleService;
 import com.certicom.scpf.services.TicketService;
 import com.pe.certicom.scpf.commons.Constante;
@@ -35,25 +45,36 @@ import com.pe.certicom.scpf.commons.GenericBeans;
 public class MedicoMB extends GenericBeans implements Serializable{
 
 	private Medico medicoSelec;
+	private Ticket ticketSelected;
+	private ConsultaMedica consultaMedica;
+	private SignoVital signoVital;
 	private Integer id_producto;
 	private Integer id_productoSel;
 	private Boolean editarmedico;
 	private Boolean bBusqueda;
+	private Boolean bDetalleConsulta;
 	private Date fecIni;
 	private Date fecFin;
 	private Date fecInicio;
 	private Date fecFinal;
+	private Integer busquedaPorFecha;
 	private List<Medico>listamedicosFilter;
+	private List<String> listaProblemas;
+	private List<ExamenAuxiliar> listaExamenAuxiliares;
+	private List<Receta> listaRecetas;
 	
 
 	private List<Medico>listamedicos;
 	private LazyDataModel<Ticket> listTickets;
 	private List<Ticket> listFiltroTickets;
-	private List<Ticket> datasource;
 	private List<Producto> listProductos;
 	private MedicoService medicoService;
 	private ProductoService productoService;
 	private TicketService ticketService;
+	private ConsultaMedicaService consultaMedicaService;
+	private ExamenAuxiliarService examenAuxiliarService;
+	private SignoVitalService signoVitalService;
+	private RecetaService recetaService;
     private Log log;
 	private LogMB logmb;
 	
@@ -71,6 +92,10 @@ public class MedicoMB extends GenericBeans implements Serializable{
 		this.medicoService= new MedicoService();
 		this.productoService = new ProductoService();
 		this.ticketService = new TicketService();
+		this.consultaMedicaService = new ConsultaMedicaService();
+		this.examenAuxiliarService = new ExamenAuxiliarService();
+		this.signoVitalService = new SignoVitalService();
+		this.recetaService = new RecetaService();
 		this.fecIni = new Date();
 		this.fecFin = new Date();
 		
@@ -107,6 +132,7 @@ public class MedicoMB extends GenericBeans implements Serializable{
 			this.fecInicio = null;
 			this.fecFinal = null;
 			this.medicoSelec = medico;
+			this.busquedaPorFecha = 0;
 			listarTicketFiltros();
 			
 			this.bBusqueda = Boolean.TRUE;
@@ -124,7 +150,10 @@ public class MedicoMB extends GenericBeans implements Serializable{
 		System.out.println("ID PRODUCTO: "+this.id_producto);
 		System.out.println("FEC INI: "+this.fecIni);
 		System.out.println("FEC FIN: "+this.fecFin);
-		
+		this.fecInicio = this.fecIni;
+		this.fecFinal = this.fecFin;
+		this.busquedaPorFecha = 1;
+		this.id_productoSel = this.id_producto;
 		listarTicketFiltros();
 	}
 	
@@ -164,8 +193,8 @@ public class MedicoMB extends GenericBeans implements Serializable{
 			 @Override  
 	            public List<Ticket> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {              
 					try {
-						totalRow = ticketService.countByMedicoPAGINATOR(fecInicio,fecFinal,medicoSelec.getId_medico(),id_productoSel,filters);					
-						  datasource = ticketService.findByMedicoPAGINATOR(fecInicio,fecFinal,medicoSelec.getId_medico(),id_productoSel, first, pageSize, filters, "t.id_ticket", "DESC");
+						totalRow = ticketService.countByMedicoPAGINATOR(fecInicio,fecFinal,medicoSelec.getId_medico(),id_productoSel,busquedaPorFecha,filters);					
+						  datasource = ticketService.findByMedicoPAGINATOR(fecInicio,fecFinal,medicoSelec.getId_medico(),id_productoSel,busquedaPorFecha, first, pageSize, filters, "t.id_ticket", "DESC");
 						 return datasource;
 					} catch (Exception e) {
 						System.out.println("NULL ");
@@ -184,6 +213,34 @@ public class MedicoMB extends GenericBeans implements Serializable{
 		
 	}
 	
+	public void mostrarConsultaMedica(Ticket ticket){
+		
+		this.ticketSelected = ticket;
+		this.consultaMedica = this.consultaMedicaService.findByTicket(ticket.getId_ticket());
+
+		
+			this.listaExamenAuxiliares=this.examenAuxiliarService.findByConsulta(consultaMedica.getId_consulta_medica());
+			this.signoVital=this.signoVitalService.findByConsulta(this.consultaMedica.getId_consulta_medica());
+			this.listaRecetas=this.recetaService.findByConsulta(consultaMedica.getId_consulta_medica());
+			this.listaProblemas=getListadoProblemas(consultaMedica.getListado_problemas());
+			
+			this.bDetalleConsulta = Boolean.TRUE;
+			
+
+	}
+	
+	public ArrayList<String> getListadoProblemas(String problemas){
+		ArrayList<String> respuesta=new ArrayList<>();
+		if(problemas!=null){
+			String[] array = problemas.split("-");
+			for(String cadena: array){
+				if(!cadena.equals("-")){
+					respuesta.add(cadena);
+				}
+			}			
+		}
+		return respuesta;
+	}
 	
 	public void nuevomedico(){
 		this.medicoSelec = new Medico();
@@ -387,14 +444,6 @@ public class MedicoMB extends GenericBeans implements Serializable{
 		this.listTickets = listTickets;
 	}
 
-	public List<Ticket> getDatasource() {
-		return datasource;
-	}
-
-	public void setDatasource(List<Ticket> datasource) {
-		this.datasource = datasource;
-	}
-
 	public Date getFecInicio() {
 		return fecInicio;
 	}
@@ -433,6 +482,70 @@ public class MedicoMB extends GenericBeans implements Serializable{
 
 	public void setbBusqueda(Boolean bBusqueda) {
 		this.bBusqueda = bBusqueda;
+	}
+
+	public Integer getBusquedaPorFecha() {
+		return busquedaPorFecha;
+	}
+
+	public void setBusquedaPorFecha(Integer busquedaPorFecha) {
+		this.busquedaPorFecha = busquedaPorFecha;
+	}
+
+	public Ticket getTicketSelected() {
+		return ticketSelected;
+	}
+
+	public void setTicketSelected(Ticket ticketSelected) {
+		this.ticketSelected = ticketSelected;
+	}
+
+	public ConsultaMedica getConsultaMedica() {
+		return consultaMedica;
+	}
+
+	public void setConsultaMedica(ConsultaMedica consultaMedica) {
+		this.consultaMedica = consultaMedica;
+	}
+
+	public SignoVital getSignoVital() {
+		return signoVital;
+	}
+
+	public void setSignoVital(SignoVital signoVital) {
+		this.signoVital = signoVital;
+	}
+
+	public List<String> getListaProblemas() {
+		return listaProblemas;
+	}
+
+	public void setListaProblemas(List<String> listaProblemas) {
+		this.listaProblemas = listaProblemas;
+	}
+
+	public List<ExamenAuxiliar> getListaExamenAuxiliares() {
+		return listaExamenAuxiliares;
+	}
+
+	public void setListaExamenAuxiliares(List<ExamenAuxiliar> listaExamenAuxiliares) {
+		this.listaExamenAuxiliares = listaExamenAuxiliares;
+	}
+
+	public List<Receta> getListaRecetas() {
+		return listaRecetas;
+	}
+
+	public void setListaRecetas(List<Receta> listaRecetas) {
+		this.listaRecetas = listaRecetas;
+	}
+
+	public Boolean getbDetalleConsulta() {
+		return bDetalleConsulta;
+	}
+
+	public void setbDetalleConsulta(Boolean bDetalleConsulta) {
+		this.bDetalleConsulta = bDetalleConsulta;
 	}
 	
 }

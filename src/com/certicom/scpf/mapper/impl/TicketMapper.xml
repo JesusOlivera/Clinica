@@ -147,12 +147,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
 					where m.id_medico= #{id_medico}	
 						
-						<if test="fecInicio!=null and fecFinal!=null">						
+						<if test="busquedaPorFecha == 1">						
 							and cast(t.fecha_ticket as Date) &gt;= #{fecInicio} and cast(t.fecha_ticket as Date) &lt;= #{fecFinal}
-						</if>	
+						</if>
 						
 						<if test="id_producto!=0">
-							and id_producto = #{id_producto}						
+							and pr.id_producto = #{id_producto}						
 						</if>				 
 					
 					
@@ -188,12 +188,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
 					where m.id_medico= #{id_medico}	
 						
-						<if test="fecInicio!=null and fecFinal!=null">						
+						<if test="busquedaPorFecha == 1">						
 							and cast(t.fecha_ticket as Date) &gt;= #{fecInicio} and cast(t.fecha_ticket as Date) &lt;= #{fecFinal}
-						</if>	
+						</if>
 						
 						<if test="id_producto!=0">
-							and id_producto = #{id_producto}						
+							and pr.id_producto = #{id_producto}						
 						</if>
 						
 	</select>

@@ -85,19 +85,21 @@ public class TicketService implements TicketMapper{
 
 	@Override
 	public List<Ticket> findByMedicoPAGINATOR(Date fecInicio, Date fecFinal,
-			Integer id_medico, Integer id_producto, Integer first,
+			Integer id_medico, Integer id_producto, Integer busquedaPorFecha, Integer first,
 			Integer pageSize, Map<String, Object> filters, String sortField,
 			String sortOrder) throws Exception {
+		System.out.println("ID PRODUCTO EN EL SERVICE LIST: "+id_producto);
 		// TODO Auto-generated method stub
-		return ticketMapper.findByMedicoPAGINATOR(fecInicio, fecFinal, id_medico, id_producto, first, pageSize, filters, sortField, sortOrder);
+		return ticketMapper.findByMedicoPAGINATOR(fecInicio, fecFinal, id_medico, id_producto, busquedaPorFecha, first, pageSize, filters, sortField, sortOrder);
 	}
 
 	@Override
 	public Integer countByMedicoPAGINATOR(Date fecInicio, Date fecFinal,
-			Integer id_medico, Integer id_producto, Map<String, Object> filters)
+			Integer id_medico, Integer id_producto, Integer busquedaPorFecha, Map<String, Object> filters)
 			throws Exception {
+		System.out.println("ID PRODUCTO EN EL SERVICE COUNT: "+id_producto);
 		// TODO Auto-generated method stub
-		return ticketMapper.countByMedicoPAGINATOR(fecInicio, fecFinal, id_medico, id_producto, filters);
+		return ticketMapper.countByMedicoPAGINATOR(fecInicio, fecFinal, id_medico, id_producto,busquedaPorFecha, filters);
 	}
 
 	
