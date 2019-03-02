@@ -73,8 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					where  extract(month from t.fecha_ticket)= #{mes} and  extract(year from t.fecha_ticket)=#{anio}
 					
 					<if test="id_medico!=0">
-						and m.id_medico= #{id_medico}
-						 
+						and m.id_medico= #{id_medico}						 
 					</if>
 					
 					<if test="filters.entrySet() != null">
@@ -133,12 +132,69 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countByPaciente"  resultType="java.lang.Integer">
 		select count(*)
 		from t_ticket t 
-		inner join t_tipo_servicio ts on ts.id_tipo_servicio = t.id_tipo_servicio
-		inner join t_medico m on m.id_medico = t.id_medico 
-		left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
-		left join t_examen_auxiliar ex on ex.id_consulta_medica = cm.id_consulta_medica
-		left join t_control c on cm.id_consulta_medica= c.id_consulta_medica
+				inner join t_tipo_servicio ts on ts.id_tipo_servicio = t.id_tipo_servicio
+				inner join t_medico m on m.id_medico = t.id_medico 
+				left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
 		where t.id_paciente = 4
+						
+	</select>
+	<select id="findByMedicoPAGINATOR" resultMap="ticketResult">
+				select t.*, cm.fecha_consulta as fecha_consulta, cm.fecha_consulta as fecha_consulta, cm.estado as estado_cm, ts.descripcion_tipo as des_servicio, m.nombre_medico as nombre_medico
+				from t_ticket t 
+				inner join t_producto pr on pr.id_producto = t.id_producto
+				inner join t_tipo_servicio ts on ts.id_tipo_servicio = t.id_tipo_servicio
+				inner join t_medico m on m.id_medico = t.id_medico 
+				left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
+					where m.id_medico= #{id_medico}	
+						
+						<if test="fecInicio!=null and fecFinal!=null">						
+							and cast(t.fecha_ticket as Date) &gt;= #{fecInicio} and cast(t.fecha_ticket as Date) &lt;= #{fecFinal}
+						</if>	
+						
+						<if test="id_producto!=0">
+							and id_producto = #{id_producto}						
+						</if>				 
+					
+					
+					<if test="filters.entrySet() != null">
+				       <foreach item="item" collection="filters.entrySet()" >
+			         	  	<choose>
+							<when test="item.key == 'id_ticket'">
+								and ( t.id_ticket like ('%' || replace( #{item.value}, ' ', '%')  || '%') 		         	
+				         		) 
+							</when>
+							
+							<otherwise>
+							and  ${item.key} like ('%' || replace( #{item.value}, ' ', '%')  || '%') 
+							</otherwise>
+					  		</choose>
+			           </foreach> 
+            		</if>
+            
+            <if test="sortField != null">
+				order by ${sortField} ${sortOrder}    
+		    </if>
+		    
+		    
+		    
+			 OFFSET #{first} LIMIT #{pageSize} 
+	</select>
+	<select id="countByMedicoPAGINATOR"  resultType="java.lang.Integer">
+		select count(*)
+				from t_ticket t 
+				inner join t_producto pr on pr.id_producto = t.id_producto
+				inner join t_tipo_servicio ts on ts.id_tipo_servicio = t.id_tipo_servicio
+				inner join t_medico m on m.id_medico = t.id_medico 
+				left join t_consulta_medica cm on t.id_ticket= cm.id_ticket
+					where m.id_medico= #{id_medico}	
+						
+						<if test="fecInicio!=null and fecFinal!=null">						
+							and cast(t.fecha_ticket as Date) &gt;= #{fecInicio} and cast(t.fecha_ticket as Date) &lt;= #{fecFinal}
+						</if>	
+						
+						<if test="id_producto!=0">
+							and id_producto = #{id_producto}						
+						</if>
 						
 	</select>
 		

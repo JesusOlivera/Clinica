@@ -1,5 +1,6 @@
 package com.certicom.scpf.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +81,23 @@ public class TicketService implements TicketMapper{
 	public Integer countByPaciente(Integer id_paciente) {
 		// TODO Auto-generated method stub
 		return ticketMapper.countByPaciente(id_paciente);
+	}
+
+	@Override
+	public List<Ticket> findByMedicoPAGINATOR(Date fecInicio, Date fecFinal,
+			Integer id_medico, Integer id_producto, Integer first,
+			Integer pageSize, Map<String, Object> filters, String sortField,
+			String sortOrder) throws Exception {
+		// TODO Auto-generated method stub
+		return ticketMapper.findByMedicoPAGINATOR(fecInicio, fecFinal, id_medico, id_producto, first, pageSize, filters, sortField, sortOrder);
+	}
+
+	@Override
+	public Integer countByMedicoPAGINATOR(Date fecInicio, Date fecFinal,
+			Integer id_medico, Integer id_producto, Map<String, Object> filters)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return ticketMapper.countByMedicoPAGINATOR(fecInicio, fecFinal, id_medico, id_producto, filters);
 	}
 
 	

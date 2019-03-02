@@ -1,5 +1,6 @@
 package com.certicom.scpf.mapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,11 @@ public interface TicketMapper {
 	public List<Ticket> findAllPAGINATOR(@Param("anio") Integer anio, @Param("mes") Integer mes, @Param("id_medico") Integer id_medico,@Param("first") Integer  first, @Param("pageSize") Integer pageSize,  @Param("filters") Map<String,Object> filters, @Param("sortField") String sortField, @Param("sortOrder") String sortOrder) throws Exception;
 
 	public Integer countTicketPAGINATOR(@Param("anio") Integer anio, @Param("mes") Integer mes, @Param("id_medico") Integer id_medico,@Param("filters") Map<String,Object> filters)throws Exception;
+	
+	public List<Ticket> findByMedicoPAGINATOR(@Param("fecInicio") Date fecInicio, @Param("fecFinal") Date fecFinal, @Param("id_medico") Integer id_medico, @Param("id_producto") Integer id_producto,@Param("first") Integer  first, @Param("pageSize") Integer pageSize,  @Param("filters") Map<String,Object> filters, @Param("sortField") String sortField, @Param("sortOrder") String sortOrder) throws Exception;
+
+	public Integer countByMedicoPAGINATOR(@Param("fecInicio") Date fecInicio, @Param("fecFinal") Date fecFinal, @Param("id_medico") Integer id_medico, @Param("id_producto") Integer id_producto,@Param("filters") Map<String,Object> filters)throws Exception;
+	
 	
 	public List<Ticket> findByPaciente(@Param("id_paciente")Integer id_paciente,@Param("first") Integer  first, @Param("pageSize") Integer pageSize,  @Param("filters") Map<String,Object> filters, @Param("sortField") String sortField, @Param("sortOrder") String sortOrder);
 	public Integer countByPaciente(@Param("id_paciente")Integer id_paciente);

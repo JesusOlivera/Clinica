@@ -96,7 +96,8 @@
 					</p:column>
 					
 					<p:column headerText="Consultas" style="width:15%;text-align: center">					
-						<p:commandButton title="Consultas" icon="icon-preparedocs">
+						<p:commandButton title="Consultas" icon="icon-preparedocs" oncomplete="PF('dlgConsultaMedica').show();" 
+										actionListener="#{medicoMB.mostrarTickets(p)}" update=":dlgDetConsultaMedica">
 						</p:commandButton> 		
 					</p:column>
 
@@ -108,6 +109,90 @@
 			<!-- #############    TABLA MAESTRA      ################ -->
 			
 			<!-- dialogo nuevo/editar perfil -->
+			
+			<p:dialog header="Consultas Médicas" widgetVar="dlgConsultaMedica" appendTo="@(body)"
+					resizable="false" id="dlgDetConsultaMedica" modal="true">
+					
+					<h:form id="frmConsultaMedica">
+					
+						<p:panel>
+						
+							<h:panelGrid columns="4">
+							
+								#{"Servicio:"}
+								<p:selectOneMenu id="cmbServicio" value="#{medicoMB.id_producto}" style="width:200px;">
+									<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItems value="#{medicoMB.listProductos}" var="p" 
+									itemLabel="#{p.descripcion_prod_det}" itemValue="#{p.id_producto}" />
+									<p:ajax event="change"></p:ajax> 
+								</p:selectOneMenu>
+								
+								<p:spacer></p:spacer>
+								<p:spacer></p:spacer>
+								
+								#{"Fecha Inicio: "}
+								<p:calendar style="width:200px" readonlyInput="true" value="#{medicoMB.fecIni}" pattern="dd/MM/yyyy" locale="es" 
+										navigator="true"  required="true" requiredMessage="Seleccione una fecha de inicio">
+										<p:ajax event="dateSelect"/>
+								</p:calendar>
+								#{"Fecha Fin: "}
+								<p:calendar style="width:200px" readonlyInput="true" value="#{medicoMB.fecFin}" pattern="dd/MM/yyyy" locale="es" 
+										navigator="true"  required="true" requiredMessage="Seleccione una fecha de fin">
+										<p:ajax event="dateSelect" listener="#{medicoMB.habilitarBoton()}" update=":frmConsultaMedica"/>
+								</p:calendar>
+								#{"Tarifa: "}
+								<p:spacer></p:spacer>
+								<p:commandButton value="Buscar" actionListener="#{medicoMB.busquedaConsultas()}" disabled="#{medicoMB.bBusqueda}"
+										update=":frmConsultaMedica" icon="icon-disk" />
+								
+							</h:panelGrid>
+							
+							<h:panelGrid>
+								<p:dataTable id="dataTicketPaciente" var="p" value="#{medicoMB.listTickets}" widgetVar="dtTicketPaciente" 
+									emptyMessage="No hay Consultas Disponibles." rowIndexVar="nro" 
+									lazy="true" paginator="true" filteredValue="#{medicoMB.listFiltroTickets}" 
+										rows="10" paginatorPosition="bottom"  rowsPerPageTemplate="10,100,200,500"
+										paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" sortField="#{p.id_consulta_medica}" sortOrder="DESCENDING"
+									 style="FONT-SIZE: 10px; width: 1000px">
+									<f:facet name="header">Lista Consultas</f:facet>
+														
+											<p:column headerText="Orden" style="width:15px" >
+												#{nro+1}
+											</p:column>					
+									        
+											<p:column style="width:70px" headerText="Ticket">
+												<h:outputText value="#{p.nro_ticket}"/>
+											</p:column>
+											
+											<p:column style="width:70px" headerText="Fecha" >
+												<h:outputText value="#{p.fecha_consulta}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+											</p:column>
+											
+											<p:column style="width:70px" headerText="Hora">
+												<h:outputText value="#{p.hora_consulta}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+											</p:column>
+											
+											<p:column style="width:100px" headerText="Servicio">
+												<h:outputText value="#{p.des_servicio}"/>
+											</p:column>
+											
+											<p:column width="150px" headerText="Medico">
+												<h:outputText value="#{p.nombre_medico}" />
+											</p:column>
+											
+											<p:column style="width:50px" headerText="Estado">
+												<h:outputText value="#{p.estado}"/>
+											</p:column>
+											
+				
+								</p:dataTable>
+							
+							</h:panelGrid>
+						
+						</p:panel>
+						
+					</h:form>
+			</p:dialog>
 			
 			<p:dialog header="Registrar Medico" widgetVar="dlgNuevoMedico" appendTo="@(body)"
 					resizable="false" id="dlgDetNuevoMedico" modal="true">
