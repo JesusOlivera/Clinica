@@ -103,10 +103,11 @@
 					</p:column>
 					
 					<p:column headerText="Historia Clinica" style="width:15%;text-align: center">					
-						<p:commandButton title="Historia Clinica" icon="icon_expedientepresentados">
+						<p:commandButton title="Historia Clinica" icon="icon_expedientepresentados" 
+						actionListener="#{pacienteMB.consultarHistoriaClinica()}" oncomplete="PF('dlgHistoriaClinica').show();" update=":dlgDetHistoriaClinica">
 						</p:commandButton> 		
 					</p:column>
-
+ 
 				</p:dataTable>
 			</h:form>
 			
@@ -185,6 +186,210 @@
 					
 					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoPaciente').hide()" icon="icon-cancel" />
 					</h:form>	
+			</p:dialog>
+			
+			<p:dialog header="Historia Clinica" widgetVar="dlgHistoriaClinica" appendTo="@(body)"
+					resizable="false" id="dlgDetHistoriaClinica" modal="true" position="left top">
+					
+					<p:scrollPanel style="width:1200px;height:600px" mode="native">
+					
+					<h:form id="frmHistoCli">
+						<h:panelGrid columns="2">
+							#{"Historia Clínica: "}
+							<h:outputLabel style="font-weight:bold" value="#{pacienteMB.pacienteSelec.nombre}"/>
+						</h:panelGrid>	
+						<h:panelGrid>
+							<p:dataTable id="dataTicketPaciente" var="p" value="#{pacienteMB.listTicketsPaciente}" widgetVar="dtTicketPaciente" 
+								emptyMessage="No hay Historias Disponibles." rowIndexVar="nro" 
+								lazy="true" paginator="true" filteredValue="#{pacienteMB.listFiltroTickets}" 
+									rows="10" paginatorPosition="bottom"  rowsPerPageTemplate="10,100,200,500"
+									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" sortField="#{p.id_consulta_medica}" sortOrder="DESCENDING"
+								 style="FONT-SIZE: 10px; width: 1000px">
+								<f:facet name="header">Lista Consultas</f:facet>
+													
+										<p:column headerText="Orden" style="width:15px" >
+											#{nro+1}
+										</p:column>					
+								        
+										<p:column style="width:70px" headerText="Ticket">
+											<h:outputText value="#{p.nro_ticket}"/>
+										</p:column>
+										
+										<p:column style="width:70px" headerText="Fecha" >
+											<h:outputText value="#{p.fecha_consulta}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+										</p:column>
+										
+										<p:column style="width:70px" headerText="Hora">
+											<h:outputText value="#{p.hora_consulta}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+										</p:column>
+										
+										<p:column style="width:100px" headerText="Servicio">
+											<h:outputText value="#{p.des_servicio}"/>
+										</p:column>
+										
+										<p:column width="150px" headerText="Medico">
+											<h:outputText value="#{p.nombre_medico}" />
+										</p:column>
+										
+										<p:column style="width:50px" headerText="Estado">
+											<h:outputText value="#{p.estado}"/>
+										</p:column>
+										
+										<p:column width="150px" headerText="Consulta Médica">
+											<p:commandButton value="Consulta Médica" update=":frmHistoCli" 
+											rendered="#{p.id_tipo_servicio eq '6'}"
+											actionListener="#{pacienteMB.mostrarDetalle(p)}"/>
+										</p:column>
+			
+							</p:dataTable>
+						
+						</h:panelGrid>	
+						
+						<h:panelGrid rendered="#{pacienteMB.bDetalleConsulta}">
+								<h:panelGrid columns="3">
+									#{"Ticket: "}
+									<h:outputLabel value="#{pacienteMB.ticketSelectedHC.nro_ticket}" style="font-weight:bold;color:blue"/>
+									<p:spacer/>
+									#{"Paciente:"}
+									<h:outputLabel value="#{pacienteMB.ticketSelectedHC.paciente.nombre}" style="font-weight:bold;color:blue"/>
+								</h:panelGrid> 
+						
+								<h:panelGrid columns="4">
+									
+									<p:spacer></p:spacer>
+									<p:spacer></p:spacer>
+									
+									#{"Fecha: "}
+									<h:outputText value="#{pacienteMB.consultaMedicaHC.fecha_consulta}" style="font-weight:bold;color:blue"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+									
+									#{"Tipo Servicio: "}
+									<h:outputLabel value="#{pacienteMB.ticketSelectedHC.tipoServicio.descripcion_tipo}" style="font-weight:bold;color:blue"/>
+									
+									#{"Hora: "}
+									<h:outputText value="#{pacienteMB.consultaMedicaHC.hora_consulta}" style="font-weight:bold;color:blue"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+									
+									#{"Servicio: "}
+									<h:outputLabel value="#{pacienteMB.ticketSelectedHC.des_servicio}" style="font-weight:bold;color:blue"/>
+									
+									#{"Fecha Ticket: "}
+									<h:outputText value="#{pacienteMB.ticketSelectedHC.fecha_ticket}" style="font-weight:bold;color:blue"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+									
+									#{"Médico: "}
+									<h:outputLabel value="#{pacienteMB.ticketSelectedHC.medico.nombre_medico}" style="font-weight:bold;color:blue"/>
+									
+									#{"Hora Ticket: "}
+									<h:outputText value="#{pacienteMB.ticketSelectedHC.hora_ticket}" style="font-weight:bold;color:blue"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+																	
+						        </h:panelGrid>	
+						        <br/>
+						        <p:panelGrid>
+						        	
+						        	
+							        	<p:row>
+							        	
+							        		<p:column style="font-weight: bold;"> SIGNOS VITALES  </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> ANAMNESIS </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> LISTADO DE PROBLEMAS </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> IMPRESIÓN DIAGNÓSTICA </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> EXAMENES AUXILIARES </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> DIAGNÓSTICO </p:column>
+							        		
+							        		<p:column style="font-weight: bold;"> RECETA </p:column>
+							        	
+							        	</p:row>
+						        	
+						        		<p:row>
+						        	
+						        		<p:column>
+						        			<h:panelGrid>
+							        			
+							        			<h:panelGrid columns="4">
+							        			#{"Talla: "}
+							        			<h:outputText value="#{pacienteMB.signoVitalHC.talla}"></h:outputText>
+							        			#{"Peso: "}
+							        			<h:outputText value="#{pacienteMB.signoVitalHC.peso}"></h:outputText>
+							        			#{"Ocupacion: "}
+							        			<h:outputText value="#{pacienteMB.signoVitalHC.ocupacion}"></h:outputText>
+							        			#{"Temperatura: "}
+							        			<h:outputText value="#{pacienteMB.signoVitalHC.temperatura}"></h:outputText>
+							        			#{"Alergia: "}
+							        			<h:outputText value="#{pacienteMB.signoVitalHC.alergia}"></h:outputText>
+							        			#{"Frec. Cardiaca: "}
+							        			<h:outputText value="#{pacienteMB.signoVitalHC.frecuencia_cardiaca}"></h:outputText>
+							        			#{"Frec. Respiratoria: "}
+							        			<h:outputText value="#{pacienteMB.signoVitalHC.frecuencia_respiratoria}"></h:outputText>
+							        			#{"Presion Arterial:: "}
+							        			<h:outputText value="#{pacienteMB.signoVitalHC.presion_arterial}"></h:outputText>
+							        			</h:panelGrid>
+						        			</h:panelGrid>
+						        		</p:column>
+						        		
+						        		<p:column>
+						        			<p:inputTextarea value="#{pacienteMB.consultaMedicaHC.anamesis}" disabled="#{pacienteMB.bDetalleConsulta}"></p:inputTextarea>
+						        		</p:column>
+						        		
+						        		<p:column style="width:250px">
+						        			
+						        				
+						        				<p:dataTable id="dataProblemaHC"  var="f" value="#{pacienteMB.listaProblemasHC}"  widgetVar="dtProblemaHC" 
+															 style="FONT-SIZE: 10px; width: 240px">
+						        							
+						        							<p:column  style="width:200px">
+						        								#{f}
+						        							</p:column>
+						        				
+						        				</p:dataTable>					        				
+						        			
+						        			
+						        		</p:column>
+						        		
+						        		<p:column>
+						        			<p:inputTextarea value="#{pacienteMB.consultaMedicaHC.impresion_diagnostica}" disabled="#{pacienteMB.bDetalleConsulta}"></p:inputTextarea>
+						        		</p:column>
+						        		
+						        		<p:column style="width:250px">
+						        			<h:panelGrid>
+							        			
+												<p:dataTable id="dataExamenAuxiliarHC"  var="e" value="#{pacienteMB.listaExamenAuxiliaresHC}"  widgetVar="dtExamenAuxiliarHC"
+													style="FONT-SIZE: 10px; width: 240px">
+													
+													<p:column  style="width:150px">
+						        						Examen :#{e.producto.descripcion_prod_det} --->Resultado #{e.resultado} : #{e.detalle}
+						        					</p:column>
+													
+												</p:dataTable>
+												
+											</h:panelGrid>
+						        		</p:column>
+						        		
+						        		<p:column>
+						        			<p:inputTextarea value="#{pacienteMB.consultaMedicaHC.diagnostico}" disabled="#{pacienteMB.bDetalleConsulta}"></p:inputTextarea>
+						        		</p:column>
+						        		
+						        		<p:column style="width:250px">
+						        			<h:panelGrid>							        			
+												<p:dataTable id="dataRecetaHC"  var="r" value="#{pacienteMB.listaRecetasHC}"  widgetVar="dtRecetaHC"
+													style="FONT-SIZE: 10px; width: 240px">
+													
+													<p:column  style="width:150px">
+						        					  Medicamento: #{r.medicamento} -  Cantidad:#{r.cantidad} - Duracion:#{r.duracion}
+						        					</p:column>
+													
+												</p:dataTable>
+												
+											</h:panelGrid>
+						        		</p:column>
+						        	
+						        	</p:row>
+						        </p:panelGrid>
+						</h:panelGrid>			
+					</h:form>
+				 </p:scrollPanel>
 			</p:dialog>
 			
 
