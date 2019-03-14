@@ -186,6 +186,12 @@
 							#{"Historia Clínica: "}
 							<h:outputLabel style="font-weight:bold" value="#{generaTicketMB.ticketSelected.paciente.nombre}"/>
 						</h:panelGrid>	
+						<h:panelGrid columns="4">
+							#{"Fecha de nacimiento: "}
+							<h:outputText value="#{generaTicketMB.ticketSelected.paciente.fecha_nacimiento}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+							#{"Tipo de Sangre: "}
+							<h:outputLabel style="font-weight:bold" value="#{generaTicketMB.ticketSelected.paciente.tipo_sangre}"/>
+						</h:panelGrid>	
 						<h:panelGrid>
 							<p:dataTable id="dataTicketPaciente" var="p" value="#{generaTicketMB.listTicketsPaciente}" widgetVar="dtTicketPaciente" 
 								emptyMessage="No hay Historias Disponibles." rowIndexVar="nro" 
@@ -713,7 +719,7 @@
 								<p:commandButton value="Historia Clínica" actionListener="#{generaTicketMB.consultarHistoriaClinica()}" oncomplete="PF('dlgHistoriaClinica').show();" update=":dlgDetHistoriaClinica"/>
 							</h:panelGrid>
 					
-							<h:panelGrid columns="4">
+							<h:panelGrid columns="5">
 								
 								<p:spacer></p:spacer>
 								<p:spacer></p:spacer>
@@ -721,11 +727,15 @@
 								#{"Fecha: "}
 								<h:outputText value="#{generaTicketMB.consultaMedica.fecha_consulta}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
 								
+								<p:spacer></p:spacer>
+								
 								#{"Tipo Servicio: "}
 								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_tipo_servicio}"/>
 								
 								#{"Hora: "}
 								<h:outputText value="#{generaTicketMB.consultaMedica.hora_consulta}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+								
+								<p:spacer></p:spacer>
 								
 								#{"Servicio: "}
 								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_servicio}"/>
@@ -733,11 +743,17 @@
 								#{"Fecha Ticket: "}
 								<h:outputText value="#{generaTicketMB.ticketSelected.fecha_ticket}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
 								
+								<p:commandButton title="Descargar pdf"  ajax="false"  
+									icon="icono-pdf" actionListener="#{generaTicketMB.imprimeReceta()}" >  
+							    </p:commandButton>
+								
 								#{"Médico: "}
 								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_medico}"/>
 								
 								#{"Hora Ticket: "}
 								<h:outputText value="#{generaTicketMB.ticketSelected.hora_ticket}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+								
+								<p:spacer></p:spacer>
 																
 					        </h:panelGrid>	
 					        <br/>

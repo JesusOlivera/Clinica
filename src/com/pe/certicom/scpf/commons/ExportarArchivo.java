@@ -1,6 +1,7 @@
 package com.pe.certicom.scpf.commons;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
@@ -10,15 +11,19 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JExcelApiExporter;
 import net.sf.jasperreports.engine.export.JExcelApiExporterParameter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 
 public class ExportarArchivo {
@@ -38,7 +43,10 @@ public class ExportarArchivo {
 	     */
 	    public static byte[] exportPdf(String jasperFile, Map<String, Object> parameters, List<?> dataList) throws Exception {
 	        System.out.println("exportPdf ==>");
-	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperFile, parameters, new JRBeanCollectionDataSource(dataList));
+	        JRDataSource vacio = new JREmptyDataSource(1);
+	        URL url = new URL(jasperFile);
+	        JasperReport reporte = (JasperReport) JRLoader.loadObject(url);
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, new JRBeanCollectionDataSource(dataList));
 	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 	        JRPdfExporter jRPdfExporter = new JRPdfExporter();
 	        jRPdfExporter.setParameter(JRPdfExporterParameter.JASPER_PRINT, jasperPrint);
@@ -49,6 +57,19 @@ public class ExportarArchivo {
 	        return bytes;
 	    }
 	    
+	    
+	    public static byte[] exportPdf2(String jasperFile, Map<String, Object> parameters) throws Exception {
+	        System.out.println("exportPdf ==>");
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperFile, parameters);
+	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+	        JRPdfExporter jRPdfExporter = new JRPdfExporter();
+	        jRPdfExporter.setParameter(JRPdfExporterParameter.JASPER_PRINT, jasperPrint);
+	        jRPdfExporter.setParameter(JRPdfExporterParameter.OUTPUT_STREAM, byteArrayOutputStream);
+	        jRPdfExporter.exportReport();
+	        byte[] bytes = byteArrayOutputStream.toByteArray();
+	        jRPdfExporter = null;
+	        return bytes;
+	    }
 	    
 	    
 	    /**

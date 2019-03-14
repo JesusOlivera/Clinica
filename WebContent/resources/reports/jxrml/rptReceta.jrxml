@@ -6,22 +6,32 @@
 	<parameter name="p_nombre_medico" class="java.lang.String"/>
 	<parameter name="p_nombre_paciente" class="java.lang.String"/>
 	<field name="medicamento" class="java.lang.String"/>
-	<field name="cantidad" class="java.lang.String"/>
+	<field name="cantidad" class="java.math.BigDecimal"/>
 	<field name="dosis" class="java.lang.String"/>
-	<field name="horas" class="java.lang.String"/>
-	<field name="duracion" class="java.lang.String"/>
+	<field name="horas" class="java.math.BigDecimal"/>
+	<field name="duracion" class="java.math.BigDecimal"/>
 	<title>
-		<band height="94" splitType="Stretch">
+		<band height="86" splitType="Stretch">
 			<textField>
-				<reportElement uuid="58fc0344-4c9a-429e-bec0-791b92733277" x="346" y="58" width="100" height="20"/>
+				<reportElement uuid="58fc0344-4c9a-429e-bec0-791b92733277" x="147" y="66" width="181" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{p_nombre_paciente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="f5c3e20c-5916-4ae0-bed5-b62e9df08e7b" x="19" y="38" width="181" height="20"/>
+				<reportElement uuid="f5c3e20c-5916-4ae0-bed5-b62e9df08e7b" x="147" y="38" width="181" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{p_nombre_medico}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="a7065395-4ec9-4fb7-8e09-d1aa976a59b7" x="29" y="38" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Médico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="251e35f1-9f05-41fb-ad57-016c5f76f00e" x="29" y="66" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Paciente]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>
@@ -29,27 +39,27 @@
 			<staticText>
 				<reportElement uuid="32be78c9-bc8a-478d-8708-976052ce0b21" x="0" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[medicamento]]></text>
+				<text><![CDATA[MEDICAMENTO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="a1ac7a52-50f1-482a-8612-11c5b412a8ab" x="100" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[cantidad]]></text>
+				<text><![CDATA[CANTIDAD]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="27b8a0b7-e331-46db-89e1-2f51cf2f6465" x="200" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[dosis]]></text>
+				<text><![CDATA[DOSIS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="1d9018e1-7902-4523-8b57-1a7f43a33eba" x="300" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[horas]]></text>
+				<text><![CDATA[HORAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="d32bd740-b8fb-4731-8039-c4b5d168de97" x="400" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[duracion]]></text>
+				<text><![CDATA[DURACION]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

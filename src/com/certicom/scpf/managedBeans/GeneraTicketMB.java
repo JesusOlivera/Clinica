@@ -17,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -24,6 +25,8 @@ import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -308,6 +311,49 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			 
 		};		
 		
+	}
+	
+	/*public void imprimeReceta(){
+			
+		
+		Map<String, Object> input = new HashMap<String, Object>();
+		input.put("p_nombre_medico", this.ticketSelected.getDes_medico());
+		input.put("p_nombre_paciente", this.ticketSelected.getDes_paciente());		
+		
+			imprimirReceta(input,this.listaRecetas);			
+		
+	}*/
+	
+	public void imprimeReceta(){
+		System.out.println("IMPRIMIENDO PDF");
+	
+
+		try {
+			ServletContext servletContext = (ServletContext) (FacesContext.getCurrentInstance().getExternalContext().getContext());
+			
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			
+			Map<String, Object> input =new  HashMap<String,Object>();
+			
+			input.put("p_nombre_paciente", this.ticketSelected.getPaciente().getNombre());	
+			input.put("p_fecha_nacimiento", this.ticketSelected.getPaciente().getFecha_nacimiento()== null? "" : sdf.format(this.ticketSelected.getPaciente().getFecha_nacimiento()));	
+			input.put("p_tipo_sangre_paciente", this.ticketSelected.getPaciente().getTipo_sangre());
+			
+			//input.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE); // no parte la pagina todo lo mete en un A4
+			
+			
+			String path = ExportarArchivo.getPath("/resources/reports/jxrml/rptHistoriaClinica.jasper");
+			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+			
+			byte[] bytes;
+			bytes = ExportarArchivo.exportPdf(path, input,null);
+			ExportarArchivo.executePdf(bytes, "rptHistoriaClinica.pdf");
+			FacesContext.getCurrentInstance().responseComplete();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 	}
 	
 	public void listarTicketFiltroPaciente(){
@@ -834,6 +880,69 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.bControl = Boolean.FALSE;
 		}
 	}
+	
+	/*public void imprimirReceta(Map<String, Object> input,List<Receta> listaRecetas){
+		System.out.println(" imprimirCadenaBoleta ==>");
+		PrintService service =null;
+		try{
+			service=PrintServiceLookup.lookupDefaultPrintService();
+		}catch(Exception e ){
+			System.out.println("Error ==========> no hay impresora "+e.toString());
+		}
+		System.out.println("Despues de configuracion impresa");
+		
+		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+		
+		
+		DocPrintJob pj = null;
+		
+		try{
+			pj= service.createPrintJob();
+		}catch(Exception e ){			
+			System.out.println("  Error en service "+e.toString());
+		}
+		
+		
+		
+		String ss=new String("Aquí lo que vamos a imprimir.");
+		
+		String cadena="";
+		cadena=cadena+"\t *** RECETA ***"+"\n";
+		cadena=cadena+"\t\t MEDICO:"+ input.get("p_nombre_medico")+"\n";
+		cadena=cadena+"\n";
+		cadena=cadena+"\t\t PACIENTE: "+input.get("p_nombre_paciente")+"\n";
+		
+		cadena=cadena+"MEDICAMENTO	CANTIDAD	DOSIS	HORAS	DURACION"+"\n";
+		cadena=cadena+"================================================"+"\n";
+		
+		for(Receta rec :this.listaRecetas){						
+			cadena=cadena+rec.getMedicamento()+"	"+rec.getCantidad().toString()+"\n";					
+			cadena=cadena+"   			";
+			cadena=cadena+rec.getDosis() +"	"+rec.getHoras().toString()+"	"
+			+rec.getDuracion().toString()+"\n";
+		}
+
+		cadena=cadena+"================================================"+"\n";
+		
+		cadena=cadena+"\n\n";
+		cadena=cadena+"\n\n";
+		cadena=cadena+"\n\n";
+		cadena=cadena+"\n\n";
+		cadena=cadena+"\n\n";
+		
+		System.out.println(" cadena --------->"+cadena);
+		byte[] bytes;
+		bytes=cadena.getBytes();
+		Doc doc=new SimpleDoc(bytes,flavor,null);
+		try {
+			pj.print(doc, null);
+		}
+		catch (PrintException e) {
+		System.out.println("Error al imprimir: "+e.getMessage());
+		}
+		
+		
+	}*/
 	
 	public void nuevaConsultaMedica(Ticket ticket){
 		
