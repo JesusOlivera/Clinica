@@ -1,5 +1,7 @@
 package com.certicom.scpf.managedBeans;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -337,17 +339,28 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			Map<String, Object> input =new  HashMap<String,Object>();
 			
 			input.put("p_nombre_paciente", this.ticketSelected.getPaciente().getNombre());	
-			input.put("p_fecha_nacimiento", this.ticketSelected.getPaciente().getFecha_nacimiento()== null? "" : sdf.format(this.ticketSelected.getPaciente().getFecha_nacimiento()));	
+			input.put("p_fecha_nacimiento_paciente", this.ticketSelected.getPaciente().getFecha_nacimiento()== null? "" : sdf.format(this.ticketSelected.getPaciente().getFecha_nacimiento()));	
 			input.put("p_tipo_sangre_paciente", this.ticketSelected.getPaciente().getTipo_sangre());
 			
-			//input.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE); // no parte la pagina todo lo mete en un A4
+			
+			input.put(JRParameter.REPORT_LOCALE, new Locale("es"));
+//			input.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE); // no parte la pagina todo lo mete en un A4
+			input.put(JRParameter.IS_IGNORE_PAGINATION, false);
 			
 			
-			String path = ExportarArchivo.getPath("/resources/reports/jxrml/rptHistoriaClinica.jasper");
+			String path = ExportarArchivo.getPath("/resources/reports/jxrml/rptHistoriaCli.jasper");
 			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 			
 			byte[] bytes;
-			bytes = ExportarArchivo.exportPdf(path, input,null);
+			bytes = ExportarArchivo.exportPdf2(path, input);
+			/*
+
+			try (OutputStream out = new FileOutputStream("C:\\PDF\\rptReceta.pdf")) {
+				out.write(bytes);
+				}catch(Exception e){
+					System.out.println("Error : "+e.toString());
+				}
+				*/
 			ExportarArchivo.executePdf(bytes, "rptHistoriaClinica.pdf");
 			FacesContext.getCurrentInstance().responseComplete();
 			} catch (Exception e) {

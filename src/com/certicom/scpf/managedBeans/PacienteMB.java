@@ -448,6 +448,48 @@ public class PacienteMB extends GenericBeans implements Serializable {
 
 	public void setConsultaMedicaHC(ConsultaMedica consultaMedicaHC) {
 		this.consultaMedicaHC = consultaMedicaHC;
+	}
+
+	public ConsultaMedicaService getConsultaMedicaService() {
+		return consultaMedicaService;
+	}
+
+	public void setConsultaMedicaService(ConsultaMedicaService consultaMedicaService) {
+		this.consultaMedicaService = consultaMedicaService;
+	}
+
+	public TicketService getTicketService() {
+		return ticketService;
+	}
+
+	public void setTicketService(TicketService ticketService) {
+		this.ticketService = ticketService;
+	}
+
+	public SignoVitalService getSignoVitalService() {
+		return signoVitalService;
+	}
+
+	public void setSignoVitalService(SignoVitalService signoVitalService) {
+		this.signoVitalService = signoVitalService;
+	}
+
+	public ExamenAuxiliarService getExamenAuxiliarService() {
+		return examenAuxiliarService;
+	}
+
+	public void setExamenAuxiliarService(ExamenAuxiliarService examenAuxiliarService) {
+		this.examenAuxiliarService = examenAuxiliarService;
+	}
+
+	public RecetaService getRecetaService() {
+		return recetaService;
+	}
+
+	public void setRecetaService(RecetaService recetaService) {
+		this.recetaService = recetaService;
 	}	
+	
+	
 
 }

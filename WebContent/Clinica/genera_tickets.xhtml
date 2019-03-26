@@ -743,7 +743,7 @@
 								#{"Fecha Ticket: "}
 								<h:outputText value="#{generaTicketMB.ticketSelected.fecha_ticket}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
 								
-								<p:commandButton title="Descargar pdf"  ajax="false"  
+								<p:commandButton title="Descargar pdf"  ajax="false"  value="Descargar Receta"
 									icon="icono-pdf" actionListener="#{generaTicketMB.imprimeReceta()}" >  
 							    </p:commandButton>
 								
