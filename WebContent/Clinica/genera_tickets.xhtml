@@ -61,7 +61,7 @@
 								
 								#{"Médico:"}					        
 								<p:selectOneMenu style="width:400px" value="#{generaTicketMB.id_medico}"  >
-									<f:selectItem itemValue="0" itemLabel="--Seleccione--"></f:selectItem>
+									<f:selectItem itemValue="0" itemLabel="--TODOS--"></f:selectItem>
 									<f:selectItems value="#{generaTicketMB.listMedicos}" 
 									var="p" itemLabel="#{p.nombre_medico}" itemValue="#{p.id_medico}" />
 									
@@ -657,7 +657,7 @@
 						        	<p:spacer></p:spacer>
 							        #{"Doctor: "}
 									<p:selectOneMenu id="cmbMedico" value="#{generaTicketMB.ticketSelected.id_medico}" style="width:200px;">
-										<f:selectItem itemValue="" itemLabel="--Seleccione--"></f:selectItem>
+										<f:selectItem itemValue="" itemLabel="--TODOS--"></f:selectItem>
 										<f:selectItems value="#{generaTicketMB.listMedicos}" var="p" 
 										itemLabel="#{p.nombre_medico}" itemValue="#{p.id_medico}" />
 										<p:ajax event="change" listener="#{generaTicketMB.cargaEspecialidad}"></p:ajax>
@@ -676,7 +676,14 @@
 									</p:calendar>
 									
 									#{"Precio"}
-									<h:outputLabel value="#{generaTicketMB.producto.valor_unitario_prod_det}" id="precio"></h:outputLabel>
+									<p:outputLabel value="#{generaTicketMB.producto.valor_unitario_prod_det}" id="precio">
+										<f:convertNumber pattern="#0.00" />	
+									</p:outputLabel>
+									
+									#{"Precio Editable:"}
+									<p:inputText value="#{generaTicketMB.ticketSelected.precio_final_editado_cliente}" id="precio_editable">
+										<f:convertNumber pattern="#0.00" />								
+									</p:inputText>	
 								</h:panelGrid>
 							</h:panelGrid>
 						
@@ -757,88 +764,67 @@
 																
 					        </h:panelGrid>	
 					        <br/>
-					        <p:panelGrid>
-					        	
-					        	
-						        	<p:row>
-						        	
-						        		<p:column style="font-weight: bold;"> SIGNOS VITALES  </p:column>
-						        		
-						        		<p:column style="font-weight: bold;"> ANAMNESIS </p:column>
-						        		
-						        		<p:column style="font-weight: bold;"> LISTADO DE PROBLEMAS </p:column>
-						        		
-						        		<p:column style="font-weight: bold;"> IMPRESIÓN DIAGNÓSTICA </p:column>
-						        		
-						        		<p:column style="font-weight: bold;"> EXAMENES AUXILIARES </p:column>
-						        		
-						        		<p:column style="font-weight: bold;"> DIAGNÓSTICO </p:column>
-						        		
-						        		<p:column style="font-weight: bold;"> RECETA </p:column>
-						        	
-						        	</p:row>
-					        	
-					        		<p:row>
-					        	
-					        		<p:column>
-					        			<h:panelGrid>
-						        			<p:commandButton value="Actualizar" actionListener="#{generaTicketMB.actualizarSignoVital()}" update=":dlgDetSignosVitales" 
-											 oncomplete="PF('dlgSignosVitales').show();"></p:commandButton>
-						        			<h:panelGrid columns="4">
-						        			#{"Talla: "}
-						        			<h:outputText value="#{generaTicketMB.signoVital.talla}"></h:outputText>
-						        			#{"Peso: "}
-						        			<h:outputText value="#{generaTicketMB.signoVital.peso}"></h:outputText>
-						        			#{"Ocupacion: "}
-						        			<h:outputText value="#{generaTicketMB.signoVital.ocupacion}"></h:outputText>
-						        			#{"Temperatura: "}
-						        			<h:outputText value="#{generaTicketMB.signoVital.temperatura}"></h:outputText>
-						        			#{"Alergia: "}
-						        			<h:outputText value="#{generaTicketMB.signoVital.alergia}"></h:outputText>
-						        			#{"Frec. Cardiaca: "}
-						        			<h:outputText value="#{generaTicketMB.signoVital.frecuencia_cardiaca}"></h:outputText>
-						        			#{"Frec. Respiratoria: "}
-						        			<h:outputText value="#{generaTicketMB.signoVital.frecuencia_respiratoria}"></h:outputText>
-						        			#{"Presion Arterial:: "}
-						        			<h:outputText value="#{generaTicketMB.signoVital.presion_arterial}"></h:outputText>
-						        			</h:panelGrid>
+					        
+					        <p:tabView>
+					        	<p:tab title="SIGNOS VITALES">
+					        		<h:panelGrid>
+					        			<p:commandButton value="Registrar" actionListener="#{generaTicketMB.actualizarSignoVital()}" update=":dlgDetSignosVitales" 
+										 oncomplete="PF('dlgSignosVitales').show();"></p:commandButton>
+					        			<h:panelGrid columns="4">
+							        			#{"Talla: "}
+							        			<h:outputText value="#{generaTicketMB.signoVital.talla}"></h:outputText>
+							        			#{"Peso: "}
+							        			<h:outputText value="#{generaTicketMB.signoVital.peso}"></h:outputText>
+							        			#{"Ocupacion: "}
+							        			<h:outputText value="#{generaTicketMB.signoVital.ocupacion}"></h:outputText>
+							        			#{"Temperatura: "}
+							        			<h:outputText value="#{generaTicketMB.signoVital.temperatura}"></h:outputText>
+							        			#{"Alergia: "}
+							        			<h:outputText value="#{generaTicketMB.signoVital.alergia}"></h:outputText>
+							        			#{"Frec. Cardiaca: "}
+							        			<h:outputText value="#{generaTicketMB.signoVital.frecuencia_cardiaca}"></h:outputText>
+							        			#{"Frec. Respiratoria: "}
+							        			<h:outputText value="#{generaTicketMB.signoVital.frecuencia_respiratoria}"></h:outputText>
+							        			#{"Presion Arterial:: "}
+							        			<h:outputText value="#{generaTicketMB.signoVital.presion_arterial}"></h:outputText>
 					        			</h:panelGrid>
-					        		</p:column>
-					        		
-					        		<p:column>
-					        			<p:inputTextarea value="#{generaTicketMB.consultaMedica.anamesis}"></p:inputTextarea>
-					        		</p:column>
-					        		
-					        		<p:column style="width:250px">
-					        			
-					        			<h:panelGrid columns="2">
-					        			
-					        				<p:inputText value="#{generaTicketMB.problema}"><p:ajax event="blur"/></p:inputText>
+					        		</h:panelGrid>
+					        	
+					        	</p:tab>
+					        	
+					        	<p:tab title="ANAMNESIS">
+					        		<h:panelGrid>
+					        			<p:inputTextarea value="#{generaTicketMB.consultaMedica.anamesis}" style="height:300px;width:700px;"></p:inputTextarea>	
+					        		</h:panelGrid>
+					        						        	
+					        	</p:tab>
+					        	
+					        	<p:tab title="LISTADO DE PROBLEMAS">
+					        			<h:panelGrid columns="2">					        			
+					        				<p:inputText value="#{generaTicketMB.problema}" style="height:100px;width:700px;"><p:ajax event="blur"/></p:inputText>
 					        				<p:commandButton icon="icon-add" actionListener="#{generaTicketMB.agregarProblema()}" update=":formConsultaMedica"></p:commandButton>
-					        			</h:panelGrid>
-					        				
-					        				<p:dataTable id="dataProblema"  var="f" value="#{generaTicketMB.listaProblemas}"  widgetVar="dtProblema" 
-														 style="FONT-SIZE: 10px; width: 240px">
-					        							
-					        							<p:column  style="width:150px">
-					        								#{f}
-					        							</p:column>
-					        							
-					        							<p:column  style="width:40px" >
-					        								<p:commandButton actionListener="#{generaTicketMB.eliminarProblema(f)}" update=":formConsultaMedica" icon="icon-delete"></p:commandButton>
-					        							</p:column>
-					        				
-					        				</p:dataTable>					        				
-					        			
-					        			
-					        		</p:column>
-					        		
-					        		<p:column>
-					        			<p:inputTextarea value="#{generaTicketMB.consultaMedica.impresion_diagnostica}"></p:inputTextarea>
-					        		</p:column>
-					        		
-					        		<p:column style="width:250px">
-					        			<h:panelGrid>
+							        	</h:panelGrid>
+							        				
+				        				<p:dataTable id="dataProblema"  var="f" value="#{generaTicketMB.listaProblemas}"  widgetVar="dtProblema" 
+													 style="FONT-SIZE: 10px; width: 240px">
+				        							
+		        							<p:column  style="width:150px">
+		        								#{f}
+		        							</p:column>
+		        							
+		        							<p:column  style="width:40px" >
+		        								<p:commandButton actionListener="#{generaTicketMB.eliminarProblema(f)}" update=":formConsultaMedica" icon="icon-delete"></p:commandButton>
+		        							</p:column>
+				        				
+				        				</p:dataTable>		
+					        	
+					        	 </p:tab>
+					        	 <p:tab title="IMPRESIÓN DIAGNÓSTICA">
+					        	 	<p:inputTextarea value="#{generaTicketMB.consultaMedica.impresion_diagnostica}" style="height:300px;width:700px;"></p:inputTextarea>
+					        	 </p:tab>
+					        	 
+					        	 <p:tab title="EXAMENES AUXILIARES">
+					        	 	<h:panelGrid>
 						        			<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarExamenAuxiliar()}" update=":dlgDetExamenAuxiliar" 
 												 oncomplete="PF('dlgExameneAuxiliar').show();"></p:commandButton>
 											<p:dataTable id="dataExamenAuxiliar"  var="e" value="#{generaTicketMB.listaExamenAuxiliares}"  widgetVar="dtExamenAuxiliar"
@@ -853,36 +839,37 @@
 					        					</p:column>
 												
 											</p:dataTable>
+													
+									</h:panelGrid>
+					        	 </p:tab>
+					        	 
+					        	 <p:tab title="DIAGNÓSTICO">
+					        	 	<p:inputTextarea value="#{generaTicketMB.consultaMedica.diagnostico}" style="height:300px;width:700px;"></p:inputTextarea>
+					        	 </p:tab>
+					        	 
+					        	 <p:tab title="RECETA">
+					        	 	<h:panelGrid>
+					        			<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarReceta()}" update=":dlgDetReceta" 
+											 oncomplete="PF('dlgReceta').show();"></p:commandButton>
+										<p:dataTable id="dataReceta"  var="r" value="#{generaTicketMB.listaRecetas}"  widgetVar="dtReceta"
+											style="FONT-SIZE: 10px; width: 240px">
 											
-										</h:panelGrid>
-					        		</p:column>
-					        		
-					        		<p:column>
-					        			<p:inputTextarea value="#{generaTicketMB.consultaMedica.diagnostico}"></p:inputTextarea>
-					        		</p:column>
-					        		
-					        		<p:column style="width:250px">
-					        			<h:panelGrid>
-						        			<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarReceta()}" update=":dlgDetReceta" 
-												 oncomplete="PF('dlgReceta').show();"></p:commandButton>
-											<p:dataTable id="dataReceta"  var="r" value="#{generaTicketMB.listaRecetas}"  widgetVar="dtReceta"
-												style="FONT-SIZE: 10px; width: 240px">
-												
-												<p:column  style="width:150px">
-					        					  Medicamento: #{r.medicamento} -  Cantidad:#{r.cantidad} - Duracion:#{r.duracion}
-					        					</p:column>
-					        							
-					        					<p:column  style="width:40px" >
-					        						<p:commandButton actionListener="#{generaTicketMB.eliminarReceta(r)}" update=":formConsultaMedica" icon="icon-delete"></p:commandButton>
-					        					</p:column>
-												
-											</p:dataTable>
+											<p:column  style="width:150px">
+				        					  Medicamento: #{r.medicamento} -  Cantidad:#{r.cantidad} - Duracion:#{r.duracion}
+				        					</p:column>
+				        							
+				        					<p:column  style="width:40px" >
+				        						<p:commandButton actionListener="#{generaTicketMB.eliminarReceta(r)}" update=":formConsultaMedica" icon="icon-delete"></p:commandButton>
+				        					</p:column>
 											
-										</h:panelGrid>
-					        		</p:column>
+										</p:dataTable>
+													
+									</h:panelGrid>
+					        	 </p:tab>
 					        	
-					        	</p:row>
-					        </p:panelGrid>		
+					        </p:tabView>
+					        
+					        		      	
 					        	
 					        <h:panelGrid >
 						        #{"Estado: "}

@@ -39,13 +39,13 @@ public interface TicketMapper {
 	public List<Ticket> findByPaciente(@Param("id_paciente")Integer id_paciente,@Param("first") Integer  first, @Param("pageSize") Integer pageSize,  @Param("filters") Map<String,Object> filters, @Param("sortField") String sortField, @Param("sortOrder") String sortOrder);
 	public Integer countByPaciente(@Param("id_paciente")Integer id_paciente);
 	
-	@Update("update t_ticket set id_producto = #{id_producto}, id_tipo_servicio = #{id_tipo_servicio}, id_medico = #{id_medico}, id_especialidad = #{id_especialidad}, id_paciente = #{id_paciente}, id_cliente = #{id_cliente}, fecha_ticket = #{fecha_ticket}, hora_ticket = #{hora_ticket}, estado = #{estado}, integrado_sunat = #{integrado_sunat}, encolado = #{encolado}, flag_externo = #{flag_externo}, nro_ticket = #{nro_ticket}, tipo_ticket = #{tipo_ticket} "			
+	@Update("update t_ticket set id_producto = #{id_producto}, id_tipo_servicio = #{id_tipo_servicio}, id_medico = #{id_medico}, id_especialidad = #{id_especialidad}, id_paciente = #{id_paciente}, id_cliente = #{id_cliente}, fecha_ticket = #{fecha_ticket}, hora_ticket = #{hora_ticket}, estado = #{estado}, integrado_sunat = #{integrado_sunat}, encolado = #{encolado}, flag_externo = #{flag_externo}, nro_ticket = #{nro_ticket}, tipo_ticket = #{tipo_ticket}, precio_final_editado_cliente = #{precio_final_editado_cliente} "			
 			+ "where id_ticket= #{id_ticket}")
 	@Options(flushCache=true,useCache=true)
 	void actualizarTicket(Ticket ticketSelec);
 
-	@Insert("insert into t_ticket (id_producto,id_tipo_servicio, id_medico, id_especialidad, id_paciente, id_cliente, fecha_ticket, hora_ticket, estado, integrado_sunat, encolado, flag_externo, nro_ticket, tipo_ticket ) "
-			+ " values ( #{id_producto},#{id_tipo_servicio},#{id_medico},#{id_especialidad},#{id_paciente},#{id_cliente},#{fecha_ticket},#{hora_ticket},#{estado},#{integrado_sunat},#{encolado},#{flag_externo},#{nro_ticket},#{tipo_ticket})")
+	@Insert("insert into t_ticket (id_producto,id_tipo_servicio, id_medico, id_especialidad, id_paciente, id_cliente, fecha_ticket, hora_ticket, estado, integrado_sunat, encolado, flag_externo, nro_ticket, tipo_ticket, precio_final_editado_cliente ) "
+			+ " values ( #{id_producto},#{id_tipo_servicio},#{id_medico},#{id_especialidad},#{id_paciente},#{id_cliente},#{fecha_ticket},#{hora_ticket},#{estado},#{integrado_sunat},#{encolado},#{flag_externo},#{nro_ticket},#{tipo_ticket}, #{precio_final_editado_cliente})")
 	void crearTicket(Ticket ticketSelec);
 
 	@Delete("delete from t_ticket  where id_ticket = #{id_ticket}")

@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="direccion" property="direccion" />
 		<result column="telefono" property="telefono" />
 		<result column="email" property="email" />
+		<result column="celular" property="celular" />
 
 		<association property="especialidad" column="id_especialidad"
 			select="selectEspecialidad" />

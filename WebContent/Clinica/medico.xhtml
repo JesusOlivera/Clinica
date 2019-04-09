@@ -81,6 +81,10 @@
 						<h:outputText value="#{p.email}"/>
 					</p:column>
 					
+					<p:column style="width:70px" headerText="Celular">
+						<h:outputText value="#{p.celular}"/>
+					</p:column>
+					
 			        
 			        <p:column headerText="Editar/Elim." style="width:15%;text-align: center">
 					
@@ -397,6 +401,11 @@
 							#{"Teléfono:"} 
 							<p:inputText value="#{medicoMB.medicoSelec.telefono}" id="telefono"
 								 label="telefono" 
+								style="width:200px;" />
+								
+							#{"Celular:"} 
+							<p:inputText value="#{medicoMB.medicoSelec.celular}" id="celular"
+								 label="celular" 
 								style="width:200px;" />
 								
 							#{"Email:"} 

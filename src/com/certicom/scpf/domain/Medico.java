@@ -12,7 +12,8 @@ public class Medico {
 	private Boolean estado;
 	private Date fecha_nacimiento;
 	private String direccion;
-	private String telefono;   
+	private String telefono;
+	private String celular;
 	private String email;   
 
 	private Especialidad especialidad;
@@ -103,6 +104,14 @@ public class Medico {
 
 	public void setEspecialidad(Especialidad especialidad) {
 		this.especialidad = especialidad;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.certicom.scpf.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Ticket {
@@ -37,7 +38,7 @@ public class Ticket {
 	private Date hora_consulta;
 	private Boolean estado_cm;
 	private String nombre_medico;
-	
+	private BigDecimal precio_final_editado_cliente;
 	
 	
 	public Ticket() {
@@ -273,6 +274,14 @@ public class Ticket {
 
 	public void setNombre_medico(String nombre_medico) {
 		this.nombre_medico = nombre_medico;
+	}
+
+	public BigDecimal getPrecio_final_editado_cliente() {
+		return precio_final_editado_cliente;
+	}
+
+	public void setPrecio_final_editado_cliente(BigDecimal precio_final_editado_cliente) {
+		this.precio_final_editado_cliente = precio_final_editado_cliente;
 	}	
 	
 }
