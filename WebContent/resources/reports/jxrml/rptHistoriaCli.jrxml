@@ -7,37 +7,66 @@
 	<parameter name="p_nombre_paciente" class="java.lang.String"/>
 	<parameter name="p_fecha_nacimiento_paciente" class="java.lang.String"/>
 	<parameter name="p_tipo_sangre_paciente" class="java.lang.String"/>
+	<parameter name="p_nombre_medico" class="java.lang.String"/>
+	<parameter name="p_especialidad_medico" class="java.lang.String"/>
+	<parameter name="p_emisor" class="java.lang.String"/>
+	<parameter name="p_direccion" class="java.lang.String"/>
+	<field name="medicamento" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.String"/>
+	<field name="dosis" class="java.lang.String"/>
+	<field name="horas" class="java.lang.String"/>
+	<field name="duracion" class="java.lang.String"/>
 	<group name="historiaClinica" isStartNewPage="true">
 		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
 		<groupHeader>
-			<band height="96">
-				<staticText>
-					<reportElement x="240" y="1" width="100" height="20" uuid="f95ef59f-cdcd-46e1-a880-3c5a58fa4380"/>
-					<text><![CDATA[hola mundo]]></text>
-				</staticText>
+			<band height="172">
 				<textField>
-					<reportElement x="121" y="21" width="100" height="20" uuid="5ce5097c-4cbb-4953-8961-e4317cb1772f"/>
+					<reportElement x="104" y="117" width="451" height="20" uuid="5ce5097c-4cbb-4953-8961-e4317cb1772f"/>
 					<textFieldExpression><![CDATA[$P{p_nombre_paciente}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="121" y="64" width="100" height="20" uuid="0aab2ccb-918b-4c5d-9085-b3f446b2d852"/>
-					<textFieldExpression><![CDATA[$P{p_fecha_nacimiento_paciente}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="438" y="21" width="100" height="20" uuid="2e546b4f-7d35-4279-8e75-12033d2c535f"/>
-					<textFieldExpression><![CDATA[$P{p_tipo_sangre_paciente}]]></textFieldExpression>
-				</textField>
 				<staticText>
-					<reportElement x="21" y="21" width="100" height="20" uuid="4bbadd9f-d05f-4024-bb62-2e33658563ca"/>
+					<reportElement x="3" y="117" width="100" height="20" uuid="4bbadd9f-d05f-4024-bb62-2e33658563ca"/>
 					<text><![CDATA[Paciente]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="121" y="0" width="300" height="20" uuid="81c4fef2-e2e5-4e1c-9e2b-f3a6c823e237"/>
+					<textFieldExpression><![CDATA[$P{p_nombre_medico}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="121" y="20" width="300" height="20" uuid="3e0dc142-12da-44ea-9d28-b805a7a3a9d1"/>
+					<textFieldExpression><![CDATA[$P{p_especialidad_medico}]]></textFieldExpression>
+				</textField>
 				<staticText>
-					<reportElement x="21" y="64" width="100" height="20" uuid="562b0e57-771c-4dee-93d1-08419a3d3d55"/>
-					<text><![CDATA[Fec. Nacimiento]]></text>
+					<reportElement x="0" y="42" width="555" height="20" uuid="65ea2353-896a-4063-bb22-755063159339"/>
+					<text><![CDATA[MEDICINA GENERAL - EMERGENCIAS - ECOGRAFIAS - ENDOSCOPIAS - RAYOS X]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="121" y="62" width="300" height="20" uuid="0a958dcd-1ad2-4047-857f-28474227b9b7"/>
+					<textFieldExpression><![CDATA[$P{p_emisor}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="4" y="95" width="551" height="20" uuid="22894316-677d-4e6e-b8aa-f7f78225cf91"/>
+					<textFieldExpression><![CDATA[$P{p_direccion}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="152" width="147" height="20" uuid="4c7181ce-1db9-4d2f-bcac-0c26b2a05626"/>
+					<text><![CDATA[medicamento]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="338" y="21" width="100" height="20" uuid="5f6d523f-3605-45db-ade4-06ff28856941"/>
-					<text><![CDATA[Tipo Sangre]]></text>
+					<reportElement x="150" y="152" width="100" height="20" uuid="1f7bf503-000a-47dd-8c6b-4a95d3c27584"/>
+					<text><![CDATA[cantidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="250" y="152" width="100" height="20" uuid="84f584e9-e259-4769-be30-09e2cb905d40"/>
+					<text><![CDATA[dosis]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="350" y="152" width="100" height="20" uuid="a6079729-5bbb-495a-b133-605477087c98"/>
+					<text><![CDATA[horas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="450" y="152" width="100" height="20" uuid="03961e64-7a62-4313-8cd7-125c273a9a1d"/>
+					<text><![CDATA[duracion]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
@@ -46,6 +75,27 @@
 		</groupFooter>
 	</group>
 	<detail>
-		<band height="119"/>
+		<band height="119">
+			<textField>
+				<reportElement x="4" y="0" width="146" height="20" uuid="9d907d79-bec9-446f-952a-12ab326da53c"/>
+				<textFieldExpression><![CDATA[$F{medicamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="100" height="20" uuid="16a3ce09-6747-4e04-a52d-e64a71f3b0c8"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="100" height="20" uuid="0ff9e3ca-cbb0-4ef0-8c4d-e4a86da04567"/>
+				<textFieldExpression><![CDATA[$F{dosis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="0" width="100" height="20" uuid="d3fc287f-55be-47ef-b083-008c7e87bed8"/>
+				<textFieldExpression><![CDATA[$F{horas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="26b68de7-89b1-4eea-a489-6771fd7b1c09"/>
+				<textFieldExpression><![CDATA[$F{duracion}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 </jasperReport>

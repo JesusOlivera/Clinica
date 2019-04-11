@@ -28,6 +28,7 @@ public class ConsultaMedica {
 	private Producto producto;
 	
 	private String tipo_control;
+	private String examen_auxiliar;
 	
 	public Integer getId_consulta_medica() {
 		return id_consulta_medica;
@@ -195,6 +196,14 @@ public class ConsultaMedica {
 
 	public void setNombre_medico(String nombre_medico) {
 		this.nombre_medico = nombre_medico;
+	}
+
+	public String getExamen_auxiliar() {
+		return examen_auxiliar;
+	}
+
+	public void setExamen_auxiliar(String examen_auxiliar) {
+		this.examen_auxiliar = examen_auxiliar;
 	}	
 	
 }

@@ -23,17 +23,17 @@ public interface ConsultaMedicaMapper {
 			+ "id_cliente = #{id_cliente}, fecha_consulta = #{fecha_consulta}, hora_consulta = #{hora_consulta}, "
 			+ "estado = #{estado}, anamesis = #{anamesis}, listado_problemas = #{listado_problemas}, "
 			+ "impresion_diagnostica = #{impresion_diagnostica}, diagnostico = #{diagnostico}, "
-			+ "resumen_hospitalizacion = #{resumen_hospitalizacion},id_ticket= #{id_ticket}, tipo_control= #{tipo_control}"			
+			+ "resumen_hospitalizacion = #{resumen_hospitalizacion},id_ticket= #{id_ticket}, tipo_control= #{tipo_control}, examen_auxiliar= #{examen_auxiliar}"			
 			+ "where id_consulta_medica= #{id_consulta_medica}")
 	@Options(flushCache=true,useCache=true)
 	void actualizarConsultaMedica(ConsultaMedica consultaMedica);
 
 	@Insert("insert into t_consulta_medica (id_producto, id_tipo_servicio, id_medico, id_especialidad, id_paciente, id_cliente, "
 			+ "	fecha_consulta, hora_consulta, estado, anamesis, listado_problemas, impresion_diagnostica, diagnostico, "
-			+ " resumen_hospitalizacion, id_ticket, tipo_control) "
+			+ " resumen_hospitalizacion, id_ticket, tipo_control, examen_auxiliar) "
 			+ " values ( #{id_producto}, #{id_tipo_servicio}, #{id_medico}, #{id_especialidad}, #{id_paciente}, #{id_cliente}, "
 			+ "#{fecha_consulta}, #{hora_consulta}, #{estado}, #{anamesis}, #{listado_problemas}, #{impresion_diagnostica}, "
-			+ "#{diagnostico}, #{resumen_hospitalizacion},#{id_ticket}, #{tipo_control})")
+			+ "#{diagnostico}, #{resumen_hospitalizacion},#{id_ticket}, #{tipo_control}, #{examen_auxiliar})")
 	void crearConsultaMedica(ConsultaMedica consultaMedica);
 
 	@Delete("delete from t_consulta_medica where id_consulta_medica = #{id_consulta_medica}")

@@ -50,6 +50,7 @@ import com.certicom.scpf.domain.ModoPago;
 import com.certicom.scpf.domain.Paciente;
 import com.certicom.scpf.domain.Producto;
 import com.certicom.scpf.domain.Receta;
+import com.certicom.scpf.domain.RecetaDetalleRep;
 import com.certicom.scpf.domain.SignoVital;
 import com.certicom.scpf.domain.TablaTablasDetalle;
 import com.certicom.scpf.domain.Ticket;
@@ -339,10 +340,24 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			Map<String, Object> input =new  HashMap<String,Object>();
 			
 			input.put("p_nombre_paciente", this.ticketSelected.getPaciente().getNombre());	
-			input.put("p_fecha_nacimiento_paciente", this.ticketSelected.getPaciente().getFecha_nacimiento()== null? "" : sdf.format(this.ticketSelected.getPaciente().getFecha_nacimiento()));	
-			input.put("p_tipo_sangre_paciente", this.ticketSelected.getPaciente().getTipo_sangre());
+//			input.put("p_fecha_nacimiento_paciente", this.ticketSelected.getPaciente().getFecha_nacimiento()== null? "" : sdf.format(this.ticketSelected.getPaciente().getFecha_nacimiento()));	
+//			input.put("p_tipo_sangre_paciente", this.ticketSelected.getPaciente().getTipo_sangre());
 			
+			input.put("p_nombre_medico",this.ticketSelected.getMedico().getNombre_medico() );
+			input.put("p_especialidad_medico","MEDICO - CIRUJANO");
+			input.put("p_emisor",this.emisorSelec.getRazon_social());
+			input.put("p_direccion",this.emisorSelec.getDescripcion_domicilio_fiscal() );
 			
+			List<RecetaDetalleRep> listaDetalleReporte= new ArrayList<>();
+			for(Receta receta: this.listaRecetas) {
+				RecetaDetalleRep linea=new RecetaDetalleRep();
+				linea.setCantidad(receta.getCantidad().toString());
+				linea.setDosis(String.valueOf(receta.getId_receta()));
+				linea.setDuracion(receta.getDuracion().toString());
+				linea.setHoras(receta.getHoras().toString());
+				linea.setMedicamento(receta.getMedicamento());
+				listaDetalleReporte.add(linea);
+			}
 			input.put(JRParameter.REPORT_LOCALE, new Locale("es"));
 //			input.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE); // no parte la pagina todo lo mete en un A4
 			input.put(JRParameter.IS_IGNORE_PAGINATION, false);
@@ -352,7 +367,8 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 			
 			byte[] bytes;
-			bytes = ExportarArchivo.exportPdf2(path, input);
+//			bytes = ExportarArchivo.exportPdf2(path, input);
+			bytes = ExportarArchivo.exportPdf(path, input, listaDetalleReporte);
 			/*
 
 			try (OutputStream out = new FileOutputStream("C:\\PDF\\rptReceta.pdf")) {
@@ -361,7 +377,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 					System.out.println("Error : "+e.toString());
 				}
 				*/
-			ExportarArchivo.executePdf(bytes, "rptHistoriaClinica.pdf");
+			ExportarArchivo.executePdf(bytes, "Receta.pdf");
 			FacesContext.getCurrentInstance().responseComplete();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -525,7 +541,13 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		ComprobanteDetalle comprobanteDetalle= new ComprobanteDetalle();
 		try {
 			Producto producto=this.ticketSelected.getProducto();
-			producto.setPrecio_final_editado_cliente(producto.getValor_unitario_prod_det());
+			if(this.ticketSelected.getPrecio_final_editado_cliente()!=null){
+				producto.setPrecio_final_editado_cliente(this.ticketSelected.getPrecio_final_editado_cliente());
+				producto.setValor_unitario_prod_det(this.ticketSelected.getPrecio_final_editado_cliente());
+			}else{
+				producto.setPrecio_final_editado_cliente(producto.getValor_unitario_prod_det());
+			}
+			
 			comprobanteDetalle.setId_producto(producto.getId_producto());
 			comprobanteDetalle.setProducto(producto);
 			comprobanteDetalle.setCant_unidades_item_det(new BigDecimal("1.00"));

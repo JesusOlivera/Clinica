@@ -22,6 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="impresion_diagnostica" property="impresion_diagnostica"/>
 	<result column="diagnostico" property="diagnostico"/>
 	<result column="resumen_hospitalizacion" property="resumen_hospitalizacion"/>
+	<result column="examen_auxiliar" property="examen_auxiliar"/>
+	
 	
 	<association property="producto" column="id_producto" select="selectProducto"/>
 
