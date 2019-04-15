@@ -327,8 +327,40 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		
 	}*/
 	
+	public void imprimirHistoriaClinica(){
+		System.out.println("IMPRIMIENDO HISTORIA CLINICA PDF");
+		try {
+		ServletContext servletContext = (ServletContext) (FacesContext.getCurrentInstance().getExternalContext().getContext());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Map<String, Object> input =new  HashMap<String,Object>();
+		
+		List<Object> listaDetalleReporte= new ArrayList<>();
+		input.put(JRParameter.REPORT_LOCALE, new Locale("es"));
+//		input.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE); // no parte la pagina todo lo mete en un A4
+		input.put(JRParameter.IS_IGNORE_PAGINATION, false);
+		
+		
+		String path = ExportarArchivo.getPath("/resources/reports/jxrml/rptHistoriaClinica.jasper");
+		System.out.println("PATH :"+path);
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+		
+		byte[] bytes;
+		
+			bytes = ExportarArchivo.exportPdf(path, input, listaDetalleReporte);
+			
+			ExportarArchivo.executePdf(bytes, "HistoriaClinica.pdf");
+			FacesContext.getCurrentInstance().responseComplete();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	public void imprimeReceta(){
-		System.out.println("IMPRIMIENDO PDF");
+		System.out.println("IMPRIMIENDO RECETA PDF");
 	
 
 		try {
@@ -364,23 +396,14 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			
 			
 			String path = ExportarArchivo.getPath("/resources/reports/jxrml/rptHistoriaCli.jasper");
+			System.out.println("PATH :"+path);
 			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 			
 			byte[] bytes;
-//			bytes = ExportarArchivo.exportPdf2(path, input);
 			bytes = ExportarArchivo.exportPdf(path, input, listaDetalleReporte);
-			/*
-
-			try (OutputStream out = new FileOutputStream("C:\\PDF\\rptReceta.pdf")) {
-				out.write(bytes);
-				}catch(Exception e){
-					System.out.println("Error : "+e.toString());
-				}
-				*/
 			ExportarArchivo.executePdf(bytes, "Receta.pdf");
 			FacesContext.getCurrentInstance().responseComplete();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 	}
@@ -541,11 +564,15 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 		ComprobanteDetalle comprobanteDetalle= new ComprobanteDetalle();
 		try {
 			Producto producto=this.ticketSelected.getProducto();
+			
 			if(this.ticketSelected.getPrecio_final_editado_cliente()!=null){
 				producto.setPrecio_final_editado_cliente(this.ticketSelected.getPrecio_final_editado_cliente());
 				producto.setValor_unitario_prod_det(this.ticketSelected.getPrecio_final_editado_cliente());
+				this.comprobanteSelec.setTotal_precio_venta_cab(this.ticketSelected.getPrecio_final_editado_cliente());
+				this.productoService.actualizarPrecioEditable(producto);
 			}else{
 				producto.setPrecio_final_editado_cliente(producto.getValor_unitario_prod_det());
+				this.comprobanteSelec.setTotal_precio_venta_cab(producto.getValor_unitario_prod_det());
 			}
 			
 			comprobanteDetalle.setId_producto(producto.getId_producto());
@@ -562,6 +589,7 @@ public class GeneraTicketMB extends GenericBeans implements Serializable {
 			this.comprobanteSelec.setSuma_tributos_cab(comprobanteDetalle.getSuma_tributos_det());
 			this.comprobanteSelec.setTotal_valor_venta_cab(comprobanteDetalle.getValor_venta_item_det());
 			this.comprobanteSelec.setImporte_total_venta_cab(comprobanteDetalle.getPrecio_venta_unitario_det());
+			
 			this.comprobanteSelec.setTipo_operacion_cab("0101");
 			this.comprobanteSelec.setId_modo_pago(4);
 			this.comprobanteSelec.setTipo_moneda_cab("PEN");

@@ -442,6 +442,7 @@ public class ComunicacionBajaMB extends GenericBeans implements Serializable{
 		 archivoPlanoCabecera.setTipo_moneda_cab(comprobante.getTipo_moneda_cab());
 		 archivoPlanoCabecera.setSuma_tributos_cab(comprobante.getSuma_tributos_cab().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString());
 		 archivoPlanoCabecera.setTotal_valor_venta_cab(comprobante.getTotal_valor_venta_cab().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString());
+		 System.out.println(" comprobante.getTotal_precio_venta_cab() ---> "+comprobante.getTotal_precio_venta_cab());
 		 archivoPlanoCabecera.setTotal_precio_venta_cab(comprobante.getTotal_precio_venta_cab().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString());
 		
 		 if(comprobante.getTotal_descuentos_cab()!=null){
@@ -485,7 +486,11 @@ public class ComunicacionBajaMB extends GenericBeans implements Serializable{
 				 	archivoPlanodetalle.setTipo_prod_sunat_det("");
 				 	
 				    archivoPlanodetalle.setDescripcion_prod_det(detalle.getProducto().getDescripcion_prod_det());
-				    archivoPlanodetalle.setValor_unitario_prod_det(detalle.getProducto().getValor_unitario_prod_det().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString());
+				    if(detalle.getProducto().getPrecio_final_editado_cliente()!=null){
+				    	archivoPlanodetalle.setValor_unitario_prod_det(detalle.getProducto().getPrecio_final_editado_cliente().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString());
+				    }else{
+				    	archivoPlanodetalle.setValor_unitario_prod_det(detalle.getProducto().getValor_unitario_prod_det().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString());
+				    }
 				    archivoPlanodetalle.setSuma_tributos_det(detalle.getSuma_tributos_det().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString());
 				   	
 				   /** PROVISIONALMENTE **/

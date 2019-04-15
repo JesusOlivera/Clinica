@@ -703,7 +703,14 @@
 								<p:spacer/>
 								#{"Paciente:"}
 								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_paciente}"/>
-								<p:commandButton value="Historia Clínica" actionListener="#{generaTicketMB.consultarHistoriaClinica()}" oncomplete="PF('dlgHistoriaClinica').show();" update=":dlgDetHistoriaClinica"/>
+								<p:commandButton value="Ver Historia Clínica" actionListener="#{generaTicketMB.consultarHistoriaClinica()}" 
+												 oncomplete="PF('dlgHistoriaClinica').show();" 
+												 update=":dlgDetHistoriaClinica">
+								</p:commandButton>
+								
+								<p:commandButton title="Descargar Historia Clinica"  ajax="false"  value="Descargar Historia Clinica" rendered="true"
+											icon="icono-pdf" actionListener="#{generaTicketMB.imprimirHistoriaClinica()}" >  
+							    </p:commandButton>
 							</h:panelGrid>
 					
 							<h:panelGrid columns="5">
@@ -730,9 +737,7 @@
 								#{"Fecha Ticket: "}
 								<h:outputText value="#{generaTicketMB.ticketSelected.fecha_ticket}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
 								
-								<p:commandButton title="Descargar pdf"  ajax="false"  value="Descargar Receta" rendered="false"
-									icon="icono-pdf" actionListener="#{generaTicketMB.imprimeReceta()}" >  
-							    </p:commandButton>
+								
 								
 								#{"Médico: "}
 								<h:outputLabel value="#{generaTicketMB.ticketSelected.des_medico}"/>
@@ -828,22 +833,27 @@
 					        	 </p:tab>
 					        	 
 					        	 <p:tab title="RECETA">
+					        	 	
+					        	 	<h:panelGrid columns="2">
+					        	 		<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarReceta()}" update=":dlgDetReceta" 
+											 oncomplete="PF('dlgReceta').show();">
+										</p:commandButton>
+										
+										<p:commandButton title="Descargar pdf"  ajax="false"  value="Descargar Receta" rendered="true"
+											icon="icono-pdf" actionListener="#{generaTicketMB.imprimeReceta()}" >  
+							    		</p:commandButton>
+					        	 	</h:panelGrid>
+					        	 	
 					        	 	<h:panelGrid>
-					        			<p:commandButton value="Agregar" actionListener="#{generaTicketMB.agregarReceta()}" update=":dlgDetReceta" 
-											 oncomplete="PF('dlgReceta').show();"></p:commandButton>
 										<p:dataTable id="dataReceta"  var="r" value="#{generaTicketMB.listaRecetas}"  widgetVar="dtReceta"
-											style="FONT-SIZE: 12px; width: 1200px;" emptyMessage="No existen recetas">
-											
+											style="FONT-SIZE: 12px; width: 1200px;" emptyMessage="No existen recetas">											
 											<p:column  style="width:95%">
 				        					  Medicamento: #{r.medicamento} -  Cantidad:#{r.cantidad} - Duracion:#{r.duracion}
-				        					</p:column>
-				        							
+				        					</p:column>				        							
 				        					<p:column  style="width:5%" >
 				        						<p:commandButton actionListener="#{generaTicketMB.eliminarReceta(r)}" update=":formConsultaMedica" icon="icon-delete"></p:commandButton>
-				        					</p:column>
-											
-										</p:dataTable>
-													
+				        					</p:column>											
+										</p:dataTable>													
 									</h:panelGrid>
 					        	 </p:tab>
 					        	
@@ -908,7 +918,7 @@
 			
 					<h:form>
 					
-						<h:panelGrid columns="2">
+						<h:panelGrid columns="4">
 						
 						#{"Talla: "}
 						<p:inputText id="talla" value="#{generaTicketMB.signoVital.talla}">
@@ -1027,7 +1037,7 @@
 					
 					<h:form>
 					
-						<h:panelGrid>
+						<h:panelGrid columns="4">
 						
 							#{"Medicamento: "}
 							<p:inputText id="resultado" value="#{generaTicketMB.receta.medicamento}">

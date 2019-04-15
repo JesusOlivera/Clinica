@@ -52,6 +52,10 @@ public interface ProductoMapper {
 	@Options(flushCache=true,useCache=true)
     public void actualizarProducto(Producto producto) throws Exception;
 	
+	@Update("update t_producto set precio_final_editado_cliente=#{precio_final_editado_cliente} where id_producto= #{id_producto}")
+	@Options(flushCache=true,useCache=true)
+	public void actualizarPrecioEditable(Producto producto) throws Exception;
+	
 	@Delete("delete  from t_producto  where id_producto = #{id_producto}")
 	@Options(flushCache=true)
 	public void eliminarProducto(@Param("id_producto") Integer id_producto) throws Exception;

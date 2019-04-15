@@ -60,6 +60,12 @@ public class ProductoService implements ProductoMapper{
 		return productoMapper.findByDescripcionControl(descripcion_prod_det);
 	}
 
+	@Override
+	public void actualizarPrecioEditable(Producto producto) throws Exception {
+		// TODO Auto-generated method stub
+		this.productoMapper.actualizarPrecioEditable(producto);
+	}
+
 	
 	
 }

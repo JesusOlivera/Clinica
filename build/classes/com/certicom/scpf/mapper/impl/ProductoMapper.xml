@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="examen_auxiliar" property="examen_auxiliar"/>
 	<result column="id_tipo_servicio" property="id_tipo_servicio"/>
 	<result column="es_servicio" property="es_servicio"/>
+	<result column="precio_final_editado_cliente" property="precio_final_editado_cliente"/>
 	
 	<association property="tipoServicio" column="id_tipo_servicio" select="selectTipoServicio"/>
 	
